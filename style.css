@@ -1,0 +1,1034 @@
+:root {
+    --bg-dark: #050b14;
+    --panel-bg: #0f172a;
+    --accent: #06b6d4;
+    --text-main: #ffffff;
+    --text-muted: #64748b;
+    --success: #22c55e;
+    --danger: #ef4444;
+    --warning: #fbbf24;
+    --border-radius: 16px;
+    --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* НАЙДИТЕ И ЗАМЕНИТЕ БЛОК body НА: */
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-family);
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    min-height: 100vh;
+    padding: 0;
+    position: relative;
+    
+    /* Скрываем прокрутку с помощью стандартных свойств CSS: */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* АГРЕССИВНОЕ СКРЫТИЕ ПОЛОСЫ ПРОКРУТКИ WEB-KIT: УДАЛЯЕМ ПРОСТРАНСТВО */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+    display: none !important; /* Гарантируем, что невидимо */
+    width: 0 !important; /* Обнуляем ширину */
+    height: 0 !important; /* Обнуляем высоту */
+}
+
+.text-success { color: var(--success) !important; }
+.text-warning { color: var(--warning) !important; }
+.text-danger { color: var(--danger) !important; }
+
+/* --- STARFIELD BACKGROUND --- */
+.ambient-background {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; 
+    background-color: var(--bg-dark);
+}
+#starfield { display: block; width: 100%; height: 100%; }
+
+/* --- HEADER --- */
+.header {
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5, 11, 20, 0.8); 
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo i { color: var(--accent); font-size: 1.4rem; }
+.logo-text h1 { font-size: 1.1rem; font-weight: 600; color: var(--accent); margin-bottom: 2px;}
+.logo-text p { font-size: 0.75rem; color: var(--text-muted); }
+
+/* --- LANGUAGE DROPDOWN STYLES --- */
+.language-dropdown-container {
+    position: relative;
+    user-select: none;
+    z-index: 1000;
+}
+
+.language-trigger {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.language-trigger:hover {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.language-menu {
+    position: absolute;
+    top: 130%; /* Располагаем под триггером */
+    right: 0;
+    width: 150px;
+    background-color: var(--panel-bg);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.language-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.language-option:hover {
+    background-color: rgba(6, 182, 212, 0.1); /* Цвет акцента с прозрачностью */
+    color: var(--accent);
+}
+
+.language-option.active {
+    /* ИЗМЕНЕНИЕ: Цвет как у активной кнопки режима */
+    background: #1e293b; 
+    color: var(--text-main);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#lang-arrow {
+    transition: transform 0.3s;
+}
+
+.language-menu.show ~ .language-trigger #lang-arrow {
+    transform: rotate(180deg);
+}
+
+/* --- LAYOUT --- */
+.dashboard {
+    display: grid;
+    grid-template-columns: 340px 1fr; 
+    grid-template-rows: 1fr auto;
+    gap: 25px;
+    width: 96%; 
+    max-width: 1800px; 
+    padding: 20px 0 40px 0;
+}
+.center-column { grid-column: 2; display: flex; flex-direction: column; gap: 20px; height: 100%; }
+
+/* --- SIDEBAR (GRID LAYOUT) --- */
+.sidebar { 
+    background-color: var(--panel-bg); 
+    border-radius: var(--border-radius); 
+    padding: 20px; 
+    
+    /* Две колонки по умолчанию для Extended Mode */
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-auto-rows: max-content;    
+    gap: 10px;                      
+    
+    border: 1px solid #1e293b; 
+    height: fit-content;
+    
+    position: sticky;
+    top: 20px;
+    z-index: 90;
+    
+    /* >>> НОВОЕ: Стиль для Standard Mode по умолчанию <<< */
+    transition: all 0.3s ease; /* Для плавной смены вида */
+}
+
+.sidebar.standard-mode {
+    grid-template-columns: 1fr; /* Одна колонка */
+    gap: 15px; /* УВЕЛИЧЕННЫЙ отступ между элементами */
+    padding: 25px; /* УВЕЛИЧЕН общий padding */
+}
+
+/* Заголовок растягиваем на всю ширину (на 2 колонки) */
+.sidebar-title { 
+    grid-column: 1 / -1; 
+    font-size: 0.9rem; 
+    color: var(--warning); 
+    margin-bottom: 5px; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Карточки факторов: БАЗОВЫЕ СТИЛИ (Для Extended Mode) */
+.factor-item { 
+    background-color: rgba(255,255,255,0.03); 
+    padding: 10px 30px 10px 12px; 
+    border-radius: 10px; 
+    
+    /* Вертикальный Flex для Extended Mode */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2px;
+    
+    border: 1px solid transparent; 
+    transition: border-color 0.3s, background-color 0.3s; /* Оставляем только hover-эффекты */
+    min-height: 65px; 
+    position: relative;
+    
+    /* НОВЫЕ СВОЙСТВА ДЛЯ АНИМАЦИИ (УДАЛЕНЫ TRANSITIONS) */
+    opacity: 1;
+    max-height: 200px; 
+    overflow: hidden;
+}
+
+/* НОВЫЙ КЛАСС: Скрывает элемент, но с анимацией */
+.factor-item.hidden-factor {
+    border: none;
+    display: none !important; 
+    pointer-events: none;
+}
+
+
+.factor-item:hover { 
+    border-color: rgba(255,255,255,0.1); 
+    background-color: rgba(255,255,255,0.06);
+}
+
+/* Информация внутри карточки: БАЗОВЫЕ СТИЛИ (Для Extended Mode) */
+.factor-info { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 3px; 
+    width: 100%;
+}
+
+.factor-label { 
+    font-size: 0.7rem; 
+    color: var(--text-muted); 
+    display: flex; 
+    align-items: center; 
+    gap: 6px; 
+    white-space: nowrap; 
+}
+
+.factor-value { 
+    font-size: 1rem; 
+    font-weight: 600; 
+    color: var(--accent); 
+    transition: color 0.3s ease; 
+    margin-top: 2px;
+}
+
+/* Иконка тренда: БАЗОВЫЕ СТИЛИ (Для Extended Mode) */
+.trend-icon { 
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.8rem; 
+    transition: color 0.3s ease; 
+    opacity: 0.7;
+}
+
+/* Затемненный (отключенный) блок */
+.factor-item.disabled {
+    opacity: 0.25; 
+    filter: grayscale(100%); 
+    background-color: rgba(0,0,0,0.2);
+    border: 1px dashed #334155;
+}
+
+/* --- TOP BAR --- */
+.top-bar { display: grid; grid-template-columns: 1fr auto; gap: 20px; }
+
+.car-block {
+    background-color: var(--panel-bg); border: 1px solid #1e293b; 
+    padding: 15px 30px 15px 15px; /* ИЗМЕНЕНО: 15px слева, 30px справа. */
+    border-radius: var(--border-radius);
+    display: flex; justify-content: space-between; align-items: center; cursor: pointer; position: relative; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.car-block:hover { border-color: var(--accent); background-color: #131c33; }
+
+.toggle-block {
+    background-color: var(--panel-bg); border: 1px solid #1e293b; 
+    padding: 20px; /* УВЕЛИЧЕННЫЙ ОТСТУП */
+    border-radius: var(--border-radius);
+    display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.car-info { display: flex; align-items: center; gap: 20px; }
+.car-thumb { 
+    width: 60px; /* Уменьшаем, но делаем квадратным */
+    height: 60px; /* Стал квадратным */
+    background: #334155; 
+    border-radius: 14px; /* Чуть больший радиус */
+    overflow: hidden; 
+}
+.car-thumb img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+.car-specs { display: flex; gap: 30px; text-align: right; margin-right: 10px; align-items: center; }
+.spec-box { text-align: right; }
+.spec-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.spec-val { font-size: 1rem; font-weight: 600; color: #fff; }
+
+/* Dropdown Menu */
+.car-dropdown-menu {
+    position: absolute; top: 120%; left: 0; width: 100%;
+    background-color: rgba(15, 23, 42, 0.98); backdrop-filter: blur(15px);
+    border: 1px solid #334155; border-radius: 16px; padding: 20px;
+    display: none; flex-direction: column; z-index: 999; box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+}
+.car-dropdown-menu.show { display: flex; animation: fadeIn 0.2s ease-out; }
+
+.search-container { position: relative; margin-bottom: 15px; }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; }
+#car-search-input {
+    width: 100%; background: rgba(0,0,0,0.3); border: 1px solid #334155;
+    border-radius: 10px; padding: 12px 12px 12px 40px; color: #fff;
+    font-size: 0.95rem; outline: none; font-family: var(--font-family);
+}
+#car-search-input:focus { border-color: var(--accent); background: rgba(0,0,0,0.5); }
+
+#car-list-container {
+    max-height: 400px; 
+    overflow-y: auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-bottom: 15px; 
+    padding-right: 5px;
+    
+    /* === ДОБАВЛЕНО: УСИЛЕНИЕ ОПТИМИЗАЦИИ ПРОКРУТКИ КОНТЕЙНЕРА === */
+    will-change: transform, scroll-position;
+}
+#car-list-container::-webkit-scrollbar { width: 6px; }
+#car-list-container::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 3px; }
+#car-list-container::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+#car-list-container::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* === НОВЫЕ СТИЛИ ДЛЯ ГРУППЫ БРЕНДОВ === */
+.car-brand-header {
+    padding: 15px 12px 10px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #334155;
+}
+
+.brand-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    width: 28px; 
+    height: 28px; 
+    /* ФИЛЬТР УДАЛЕН для сохранения оригинальных цветов */
+}
+/* ======================================= */
+
+.car-list-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 12px; 
+    border-radius: 12px; 
+    transition: background 0.2s; 
+    cursor: pointer; 
+    border-bottom: 1px solid rgba(255,255,255,0.03); 
+    
+    /* === ДОБАВЛЕНО: АППАРАТНОЕ УСКОРЕНИЕ === */
+    transform: translateZ(0); 
+}
+.car-list-item:hover { background-color: rgba(255,255,255,0.08); }
+.car-item-left { display: flex; align-items: center; gap: 15px; }
+.car-item-thumb { width: 60px; height: 35px; background: #334155; border-radius: 4px; overflow: hidden; }
+.car-item-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.car-item-specs { display: flex; gap: 20px; text-align: right; }
+
+.other-car-btn { background-color: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px dashed #334155; padding: 12px 20px; border-radius: 8px; text-align: center; font-size: 0.9rem; cursor: pointer; width: 100%; transition: 0.2s; }
+.other-car-btn:hover { background-color: rgba(255,255,255,0.1); color: #fff; border-color: var(--accent); }
+
+/* =========================================================
+   НОВЫЕ СТИЛИ ДЛЯ ПЕРЕКЛЮЧАТЕЛЯ РЕЖИМОВ (MODERN SLIDER)
+   ========================================================= */
+
+.mode-toggle {
+    display: flex;
+    position: relative;
+    width: 270px; /* Фиксированная ширина для лучшего вида */
+    background-color: #0b1120; /* Фон контейнера */
+    border: 1px solid #334155;
+    border-radius: 10px; 
+    padding: 3px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    height: 48px;
+}
+
+.mode-toggle input[type="radio"] {
+    display: none; /* Скрываем стандартные радиокнопки */
+}
+
+.mode-toggle label {
+    flex: 1; 
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-muted); 
+    font-size: 1rem; 
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 2; /* Поверх ползунка */
+    transition: color 0.3s ease; 
+}
+
+/* Цвет текста при наведении */
+.mode-toggle label:hover {
+    color: #fff;
+}
+
+/* Цвет текста для активной метки */
+.mode-toggle input[type="radio"]:checked + label {
+    color: white; 
+    font-weight: 600; 
+}
+
+/* Динамический ползунок (::before) */
+.mode-toggle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px); /* Половина ширины минус отступ */
+    height: calc(100% - 6px); 
+    background: #1e293b; 
+    border-radius: 8px;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out; 
+}
+
+/* Перемещение ползунка при наличии класса extended-active (УПРАВЛЯЕТСЯ JS) */
+.mode-toggle.extended-active::before {
+    transform: translateX(100%); /* Перемещаем ползунок вправо */
+}
+
+/* ===========================================================
+   MAIN DISPLAY 
+   =========================================================== */
+
+.main-display { 
+    background-color: var(--panel-bg); 
+    border-radius: var(--border-radius); 
+    padding: 30px; 
+    border: 1px solid #1e293b; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 450px; 
+    position: relative;
+    gap: 10px; 
+}
+
+.gauge-container { 
+    position: relative;
+    width: 320px; 
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circle-progress { 
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%; 
+    transform: rotate(-90deg); 
+    z-index: 1; 
+}
+
+.circle-bg { fill: none; stroke: #1e293b; stroke-width: 12; }
+.circle-val { 
+    fill: none; 
+    /* ИЗМЕНЕНО: Убираем статический фильтр, чтобы JS мог его установить */
+    stroke: #334155; 
+    stroke-width: 12; 
+    stroke-linecap: round; 
+    stroke-dasharray: 750; 
+    stroke-dashoffset: 100; 
+    transition: stroke-dashoffset 0.5s ease; 
+}
+
+.gauge-content { 
+    position: relative;
+    z-index: 2; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.gauge-content > div:first-child {
+    font-size: 0.85rem !important;
+    color: var(--text-muted);
+    margin-bottom: 0 !important; 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1;
+}
+
+.gauge-value { 
+    font-size: 5rem; 
+    font-weight: 700; 
+    color: var(--accent); 
+    line-height: 1; 
+    letter-spacing: -2px; 
+    /* ИЗМЕНЕНИЕ: Убираем статическое свечение текста, если оно было */
+    text-shadow: none; 
+    margin: 5px 0;
+}
+
+.gauge-unit { 
+    font-size: 0.95rem; 
+    color: var(--text-muted); 
+    margin-bottom: 15px; 
+    display: block; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-weight: 500;
+}
+
+.gauge-status { 
+    padding: 6px 20px; 
+    border-radius: 30px; 
+    font-size: 0.85rem; 
+    display: inline-block; 
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+}
+
+.gauge-status.status-good { color: #cbd5e1; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.1); }
+.gauge-status.status-warn { color: var(--warning); background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.3); }
+.gauge-status.status-danger { color: var(--danger); background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+.gauge-footer { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 40px; 
+    width: 100%; 
+    margin-top: 10px; 
+}
+.footer-item { text-align: left; }
+.footer-item.border-right { border-right: 1px solid #334155; padding-right: 40px; }
+.footer-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; }
+.footer-val { font-size: 1.1rem; color: #fff; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.footer-val i, .footer-val span { color: var(--accent); }
+
+
+/* ===========================================================
+   CONTROLS (SLIM DESIGN)
+   =========================================================== */
+
+.controls-row { 
+    grid-column: 1 / -1; 
+    display: grid; 
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 15px; 
+    align-items: stretch;
+}
+
+.control-group { 
+    background-color: var(--panel-bg); 
+    border: 1px solid #1e293b; 
+    border-radius: var(--border-radius); 
+    padding: 12px 15px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    justify-content: center; 
+    transition: border-color 0.2s;
+}
+.control-group:hover { border-color: #334155; }
+
+.contents-wrapper { display: contents; }
+
+.control-label { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    margin-bottom: 0; 
+    font-weight: 500;
+}
+.control-label i { color: var(--accent); font-size: 0.9rem; opacity: 0.8; }
+.label-val { margin-left: auto; color: var(--accent); font-size: 0.8rem; font-weight: 600; }
+
+/* SLIDERS */
+input[type=range] { width: 100%; -webkit-appearance: none; background: transparent; margin: 5px 0; }
+input[type=range]::-webkit-slider-thumb { 
+    -webkit-appearance: none; 
+    height: 14px; width: 14px; 
+    border-radius: 50%; 
+    background: #fff; 
+    cursor: pointer; 
+    margin-top: -5px; 
+    box-shadow: 0 0 10px rgba(255,255,255,0.5); 
+    border: 2px solid var(--bg-dark); 
+}
+input[type=range]::-webkit-slider-runnable-track { 
+    width: 100%; 
+    height: 4px; 
+    cursor: pointer; 
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--percent, 50%), #334155 var(--percent, 50%)); 
+    border-radius: 2px; 
+}
+
+/* PILL BUTTONS (СЛАЙДЕР) */
+.pill-group { 
+    display: flex;
+    position: relative; 
+    background: #0b1120; 
+    border-radius: 12px; 
+    padding: 3px; 
+    gap: 3px; 
+    align-items: center; 
+    flex-grow: 1; 
+    height: 36px; 
+    
+    /* === ИЗМЕНЕНО ДЛЯ АНИМАЦИИ СЛАЙДЕРА === */
+    overflow: hidden; 
+    z-index: 1; 
+}
+
+/* === СЛАЙДЕР/ПОЛЗУНОК ::before (ИЗМЕНЕНО) === */
+.pill-group::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    /* Используем переменные, установленные JS */
+    width: calc(var(--slider-width, 33.33%) - 6px); 
+    transform: translateX(var(--slider-x, 0));
+    
+    height: calc(100% - 6px);
+    background: #1e293b; 
+    border-radius: 9px;
+    z-index: 1;
+    transition: transform 0.3s ease, width 0.3s ease; /* Анимация перемещения и размера */
+}
+
+.pill-btn { 
+    flex: 1; 
+    border: none; 
+    background: transparent; 
+    color: var(--text-muted); 
+    padding: 0 5px; 
+    height: 100%; 
+    border-radius: 9px; 
+    font-size: 0.8rem; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    text-align: center; 
+    white-space: nowrap; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 500;
+    
+    /* !!! ВАЖНО: Размещаем кнопки над ползунком !!! */
+    position: relative; 
+    z-index: 2; 
+}
+
+.pill-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+
+/* УДАЛЕН СТАТИЧЕСКИЙ ФОН С АКТИВНОЙ КНОПКИ (ИЗМЕНЕНО) */
+.pill-btn.active { 
+    background: transparent; 
+    color: #fff; 
+    box-shadow: none; 
+    border: none; 
+    font-weight: 600;
+}
+
+.pill-btn[data-value="eco"].active { color: var(--success); }
+.pill-btn[data-value="sport"].active { color: var(--danger); }
+
+/* CLIMATE BUTTONS */
+.climate-toggle { display: flex; gap: 8px; flex-grow: 1; align-items: stretch; height: 36px; }
+.climate-btn { 
+    flex: 1; 
+    padding: 0 10px; 
+    border-radius: 12px; 
+    border: 1px solid #334155; 
+    background: transparent; 
+    color: var(--text-muted); 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 600;
+    transition: 0.2s;
+}
+.climate-btn:hover { border-color: #64748b; }
+.climate-btn.active.on { background: rgba(239, 68, 68, 0.15); border-color: var(--danger); color: var(--danger); }
+.climate-btn.active.off { background: rgba(34, 197, 94, 0.15); border-color: var(--success); color: var(--success); }
+
+/* --- CLIMATE CONTROL GROUP (Extended Mode) (ИСПРАВЛЕНО) --- */
+
+#ext-climate-group {
+    /* Добавляем стили, чтобы он работал как pill-group для слайдера */
+    display: flex; 
+    background: #0b1120; 
+    border-radius: 12px; 
+    padding: 3px; 
+    gap: 3px; 
+    align-items: center; 
+    flex-grow: 1; 
+    height: 36px; 
+    
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; 
+}
+
+/* Применяем ползунок к этой группе */
+#ext-climate-group::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(var(--slider-width, 33.33%) - 6px); /* 33.33% для трех кнопок */
+    transform: translateX(var(--slider-x, 0));
+    
+    height: calc(100% - 6px);
+    background: #1e293b; 
+    border-radius: 9px;
+    z-index: 1;
+    transition: transform 0.3s ease, width 0.3s ease; 
+}
+
+/* Теперь кнопки Climate Pro должны быть прозрачными и над ползунком */
+#ext-climate-group .pill-btn {
+    flex: 1; 
+    border: none;
+    background: transparent; /* Делаем фон прозрачным */
+    color: var(--text-muted); 
+    padding: 0 5px; 
+    height: 100%; 
+    border-radius: 9px; 
+    font-size: 0.8rem; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    text-align: center; 
+    white-space: nowrap; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 500;
+    position: relative; /* Чтобы быть над ползунком */
+    z-index: 2; 
+}
+
+/* Обновляем стили активного состояния для кнопок Climate Pro */
+#ext-climate-group .pill-btn.active {
+    background: transparent;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Специальные цвета для ON/OFF */
+#ext-climate-group .pill-btn[data-value="heater"].active { color: var(--danger); }
+#ext-climate-group .pill-btn[data-value="ac"].active { color: var(--warning); }
+#ext-climate-group .pill-btn[data-value="off"].active { color: var(--success); }
+
+
+/* GRID LOGIC */
+
+/* 1. BATTERY (Всегда во всю ширину) */
+.controls-row > .control-group:nth-child(1) { grid-column: 1 / -1; }
+
+/* === STANDARD MODE LAYOUT === */
+#standard-controls .control-group:nth-child(1) { grid-column: span 2; } /* Weight */
+#standard-controls .control-group:nth-child(2) { grid-column: span 2; } /* Season */
+#standard-controls .control-group:nth-child(3) { grid-column: span 2; } /* Road */
+#standard-controls .control-group:nth-child(4) { grid-column: span 3; } /* Mode */
+#standard-controls .control-group:nth-child(5) { grid-column: span 3; } /* Climate */
+
+/* === EXTENDED MODE LAYOUT === */
+/* Теперь у нас 7 элементов в #extended-controls. Ставим их по 3 в ряд (span 2). */
+#extended-controls .control-group:nth-child(1),
+#extended-controls .control-group:nth-child(2),
+#extended-controls .control-group:nth-child(3),
+#extended-controls .control-group:nth-child(4),
+#extended-controls .control-group:nth-child(5),
+#extended-controls .control-group:nth-child(6),
+#extended-controls .control-group:nth-child(7) 
+{
+    grid-column: span 2; 
+}
+
+/* НОВЫЙ БЛОК ДЛЯ DEGRADATION И DRIVING MODE */
+#mode-ext-controls {
+    grid-column: 1 / -1; /* Растягиваем на всю ширину controls-row */
+    display: contents; /* чтобы его дочерние элементы участвовали в сетке controls-row */
+}
+
+/* Задаем элементам внутри нового блока нужную ширину (2 колонки) */
+#mode-ext-controls .control-group {
+    grid-column: span 2; 
+}
+
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1100px) {
+    .dashboard { 
+        grid-template-columns: 280px 1fr; 
+        width: 98%;
+    }
+    
+    #standard-controls .control-group:nth-child(1) { grid-column: span 3; }
+    #standard-controls .control-group:nth-child(2) { grid-column: span 3; }
+    #standard-controls .control-group:nth-child(3) { grid-column: span 6; }
+
+    /* На планшете перестраиваем Extended в 2 колонки */
+    #extended-controls .control-group:nth-child(1),
+    #extended-controls .control-group:nth-child(2),
+    #extended-controls .control-group:nth-child(3),
+    #extended-controls .control-group:nth-child(4),
+    #extended-controls .control-group:nth-child(5),
+    #extended-controls .control-group:nth-child(6),
+    #extended-controls .control-group:nth-child(7)
+    {
+        grid-column: span 3;
+    }
+    
+    /* Новый блок на планшете */
+    #mode-ext-controls .control-group {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr; 
+        grid-template-rows: auto;
+    }
+    .sidebar { display: none; }
+    .controls-row { grid-template-columns: 1fr; }
+    .control-group,
+    .controls-row > .control-group:nth-child(1),
+    #extended-controls .control-group,
+    #standard-controls .control-group {
+        grid-column: 1 / -1 !important;
+    }
+    
+    /* Новый блок на мобильных */
+    #mode-ext-controls .control-group {
+        grid-column: 1 / -1 !important;
+    }
+    
+    .gauge-value { font-size: 3.5rem; }
+    .gauge-container { width: 280px; height: 280px; }
+    
+    .mode-toggle { width: 100%; } /* На мобильных растягиваем на всю ширину */
+}
+
+
+/* --- MODAL --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; z-index: 2000; animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-content { background-color: #0f172a; border: 1px solid #334155; padding: 35px; border-radius: 20px; width: 420px; max-width: 90%; box-shadow: 0 25px 60px rgba(0,0,0,0.8); display: flex; flex-direction: column; gap: 25px; }
+.modal-content h3 { margin-bottom: 5px; font-size: 1.2rem; color: #fff; text-align: center; }
+.input-group { display: flex; flex-direction: column; gap: 8px; }
+.input-group label { font-size: 0.85rem; color: #cbd5e1; font-weight: 500; }
+.input-wrapper { display: flex; align-items: center; background: #050b14; padding: 10px 15px; border-radius: 10px; border: 1px solid #334155; transition: border-color 0.2s; }
+.input-wrapper:focus-within { border-color: var(--accent); }
+.input-wrapper span { color: var(--text-muted); font-size: 0.9rem; }
+.input-wrapper input { background: transparent; border: none; color: #fff; width: 100%; text-align: right; font-size: 1.1rem; font-weight: bold; outline: none; padding: 0 10px; font-family: var(--font-family); }
+
+.modal-buttons { display: flex; gap: 15px; margin-top: 10px; }
+.modal-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: 0.2s; }
+.modal-btn.cancel { background: transparent; color: var(--text-muted); border: 1px solid #334155; }
+.modal-btn.cancel:hover { color: #fff; border-color: #cbd5e1; }
+.modal-btn.done { background: var(--accent); color: #000; }
+.modal-btn.done:hover { background: #22d3ee; transform: translateY(-1px); }
+
+/* --- TOGGLEABLE CONTROLS STYLES --- */
+
+/* Скрываем стандартный чекбокс */
+.feature-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Состояние Checked */
+.feature-checkbox:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Галочка внутри */
+.feature-checkbox:checked::after {
+    content: '✔';
+    position: absolute;
+    color: #000;
+    font-size: 10px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+/* Когда блок отключен (Disabled) */
+.control-group.disabled {
+    opacity: 0.4; /* Делаем прозрачным */
+    pointer-events: none; /* Запрещаем клики по ползункам */
+}
+
+/* Но разрешаем кликать по заголовку, чтобы включить обратно */
+.control-group.disabled .control-label {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+/* В отключенном состоянии делаем текст лейбла чуть тусклее */
+.control-group.disabled .control-label i,
+.control-group.disabled .control-label {
+    color: var(--text-muted);
+}
+
+/* --- DISABLED SIDEBAR ITEM --- */
+.factor-item.disabled {
+    opacity: 0.3; /* Делаем блок темным/прозрачным */
+    filter: grayscale(100%); /* Убираем цвет */
+    transition: all 0.3s ease;
+}
+
+/* =========================================================
+!!! СТИЛИЗАЦИЯ ДЛЯ STANDARD MODE НА ШИРОКОМ ЭКРАНЕ !!!
+Применяется только когда сайдбар имеет класс "standard-mode"
+=========================================================
+*/
+@media (min-width: 1101px) {
+    
+    /* 0. Настройка контейнера сайдбара для Standard Mode */
+    .sidebar.standard-mode {
+        grid-template-columns: 1fr; 
+        gap: 15px;
+        padding: 22px 25px; /* Идеальный вертикальный padding */
+    }
+
+    /* 1. Карточки факторов: возвращаем вертикальный макет по умолчанию, но с компактным padding */
+    .dashboard .sidebar.standard-mode .factor-item:not(.hidden-factor) {
+        grid-column: 1 / -1; 
+        padding: 10px 12px; /* Компактный padding */
+        min-height: 65px; 
+    }
+    
+    /* 2. Информация внутри карточки: возвращаем дефолтный вертикальный макет */
+    .dashboard .sidebar.standard-mode .factor-item:not(.hidden-factor) .factor-info {
+        flex-direction: column; 
+        gap: 3px;
+        width: 100%; 
+    }
+    
+    /* 3. Значение */
+    .dashboard .sidebar.standard-mode .factor-item:not(.hidden-factor) .factor-value { 
+        margin-top: 2px; 
+        font-size: 1rem; 
+        flex-shrink: 1; 
+    }
+    
+    /* 4. Иконка тренда: возвращаем абсолютное позиционирование справа сверху */
+    .dashboard .sidebar.standard-mode .factor-item:not(.hidden-factor) .trend-icon { 
+        position: absolute; 
+        top: 10px; 
+        right: 10px;
+        opacity: 0.7;
+        margin-left: 0; 
+        flex-shrink: 0; 
+    }
+    
+    /* ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ STANDARD MODE (Увеличенный шрифт и центрирование иконки) */
+    .dashboard .sidebar.standard-mode .factor-item .factor-label {
+        font-size: 0.85rem; /* Увеличенный размер шрифта только для Standard Mode */
+    }
+
+    .dashboard .sidebar.standard-mode .factor-item .trend-icon { 
+        font-size: 1.0rem;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+    }
+}

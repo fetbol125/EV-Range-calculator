@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">EV Range Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="ambient-background">
+        <canvas id="starfield"></canvas>
+    </div>
+
+    <header class="header">
+        <div class="logo">
+            <i class="fa-solid fa-bolt"></i>
+            <div class="logo-text">
+                <h1 data-i18n="title">EV Range calculator</h1>
+                <p data-i18n="subtitle">Calculate your electric vehicle's estimated range based on real-world conditions</p>
+            </div>
+        </div>
+        
+        <div class="language-dropdown-container">
+            <div id="language-switcher-trigger" class="language-trigger">
+                <span data-i18n="language" id="current-language-text">Language: English</span> <i class="fa-solid fa-chevron-down" id="lang-arrow"></i>
+            </div>
+            
+            <div id="language-menu" class="language-menu">
+                <div class="language-option active" data-lang="en">
+                    English
+                </div>
+                <div class="language-option" data-lang="ru">
+                    Русский
+                </div>
+            </div>
+        </div>
+        </header>
+
+    <div class="dashboard">
+        
+        <aside class="sidebar">
+            <div class="sidebar-title">
+                <i class="fa-solid fa-chart-line"></i> <span data-i18n="impactFactors">Impact Factors</span>
+            </div>
+
+            <div class="factor-item">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-battery-half"></i> <span data-i18n="sidebarBattery">Battery Level</span></div>
+                    <div class="factor-value" id="summary-battery">65%</div>
+                </div>
+                <div class="trend-icon" id="icon-battery">-</div>
+            </div>
+
+            <div class="factor-item">
+                <div class="factor-info">
+                    <div class="factor-label">
+                        <i class="fa-regular fa-snowflake" id="lbl-icon-season"></i> 
+                        <span id="lbl-text-season" data-i18n="sidebarSeason">Season</span>
+                    </div>
+                    <div class="factor-value" id="summary-season">Summer</div>
+                </div>
+                <div class="trend-icon" id="icon-season"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+
+            <div class="factor-item" id="sidebar-block-road">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-road"></i> <span data-i18n="sidebarConditions">Driving conditions</span></div>
+                    <div class="factor-value" id="summary-road">City</div>
+                </div>
+                <div class="trend-icon" id="icon-road"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+
+            <div class="factor-item">
+                <div class="factor-info">
+                    <div class="factor-label">
+                        <i class="fa-solid fa-bolt" id="lbl-icon-mode"></i>
+                        <span id="lbl-text-mode" data-i18n="sidebarMode">Driving Mode</span>
+                    </div>
+                    <div class="factor-value" id="summary-mode">Eco</div>
+                </div>
+                <div class="trend-icon" id="icon-mode"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+
+            <div class="factor-item">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-weight-hanging"></i> <span data-i18n="sidebarWeight">Weight load</span></div>
+                    <div class="factor-value" id="summary-weight">Driver</div>
+                </div>
+                <div class="trend-icon" id="icon-weight"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+
+            <div class="factor-item">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarClimate">Climate Control</span></div>
+                    <div class="factor-value" id="summary-climate">Off</div>
+                </div>
+                <div class="trend-icon" id="icon-climate"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+            
+            <div class="factor-item" id="sidebar-block-mode-ext">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Driving Mode</span></div>
+                    <div class="factor-value" id="summary-mode-ext">Eco</div>
+                </div>
+                <div class="trend-icon" id="icon-mode-ext"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
+
+            <div class="factor-item" id="sidebar-block-wheels">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheel Size</span></div>
+                    <div class="factor-value" id="summary-wheels">19"</div>
+                </div>
+                <div class="trend-icon" id="icon-wheels"><i class="fa-solid fa-minus"></i></div>
+            </div>
+
+            <div class="factor-item" id="sidebar-block-wind">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarWind">Wind</span></div>
+                    <div class="factor-value" id="summary-wind">0 m/s</div>
+                </div>
+                <div class="trend-icon" id="icon-wind"><i class="fa-solid fa-minus"></i></div>
+            </div>
+
+            <div class="factor-item" id="sidebar-block-tires">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span></div>
+                    <div class="factor-value" id="summary-tires">Normal</div>
+                </div>
+                <div class="trend-icon" id="icon-tires"><i class="fa-solid fa-minus"></i></div>
+            </div>
+
+            <div class="factor-item" id="sidebar-block-deg">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-battery-quarter"></i> <span data-i18n="sidebarDegradation">Degradation</span></div>
+                    <div class="factor-value" id="summary-deg">0%</div>
+                </div>
+                <div class="trend-icon" id="icon-deg"><i class="fa-solid fa-arrow-trend-down"></i></div>
+            </div>
+            
+        </aside>
+
+        <div class="center-column">
+            
+            <div class="top-bar">
+                <div class="car-block" id="car-dropdown-trigger">
+                    <div class="car-info" onclick="toggleCarMenu()">
+                        <div class="car-thumb">
+                            <img id="current-car-img" src="" alt="Car">
+                        </div>
+                        <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);" id="current-car-brand">Brand</div>
+                                <div style="font-weight: bold;" id="current-car-name">Model S</div>
+                        </div>
+                    </div>
+
+                    <div class="car-specs" onclick="toggleCarMenu()">
+                        <div class="spec-box">
+                            <div class="spec-label" data-i18n="maxRange">Max Range</div>
+                            <div class="spec-val"><span id="current-car-range">573</span>km</div>
+                        </div>
+                        <div class="spec-box">
+                            <div class="spec-label" data-i18n="currentBattery">Battery</div>
+                            <div class="spec-val"><span id="current-car-battery">77</span>kWh</div>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="car-arrow" style="margin-top: 5px; transition: transform 0.3s;"></i>
+                    </div>
+
+                    <div class="car-dropdown-menu" id="car-dropdown">
+                        <div class="search-container">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="car-search-input" data-i18n-placeholder="carSearchPlaceholder" placeholder="Search brand or model..." autocomplete="off">
+                        </div>
+                        <div id="car-list-container"></div>
+                        <button class="other-car-btn" data-i18n="carOther">Other car:</button>
+                    </div>
+                </div>
+
+                <div class="toggle-block">
+                    <div class="mode-toggle">
+                        <input type="radio" id="mode-standard" name="rangeMode" value="standard" checked>
+                        <label for="mode-standard" data-i18n="standard">Standard</label>
+                        <input type="radio" id="mode-extended" name="rangeMode" value="extended">
+                        <label for="mode-extended" data-i18n="extended">Extended</label>
+                    </div>
+                </div>
+            </div>
+
+            <main class="main-display">
+                <div class="gauge-container">
+                    <svg class="circle-progress" viewBox="0 0 280 280">
+                        <circle class="circle-bg" cx="140" cy="140" r="120"></circle>
+                        <circle id="gauge-fill" class="circle-val" cx="140" cy="140" r="120"></circle>
+                    </svg>
+                    
+                    <div class="gauge-content">
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px;" data-i18n="estimatedRange">Estimated Range</div>
+                        <div class="gauge-value" id="range-display">0</div>
+                        <span class="gauge-unit" data-i18n="kilometers">kilometers</span>
+                        <div class="gauge-status" id="gauge-status">Good Range</div>
+                    </div>
+                </div>
+                
+                <div class="gauge-footer">
+                    <div class="footer-item border-right">
+                        <div class="footer-label" data-i18n="currentBattery">Current Battery</div>
+                        <div class="footer-val">
+                            <i class="fa-solid fa-battery-half"></i> <span id="footer-battery">65%</span>
+                        </div>
+                    </div>
+                    <div class="footer-item">
+                        <div class="footer-label" data-i18n="maxRange">Max Range</div>
+                        <div class="footer-val"><span id="footer-max-range">573</span> km</div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+
+        <div class="controls-row">
+            
+            <div class="control-group">
+                <div class="control-label">
+                    <i class="fa-solid fa-battery-half"></i> <span data-i18n="sidebarBattery">Battery Level</span>
+                    <span class="label-val" id="slider-val-display">65%</span>
+                </div>
+                <input type="range" id="battery-slider" min="0" max="100" value="65">
+            </div>
+
+            <div id="standard-controls" class="contents-wrapper">
+                <div class="control-group">
+                    <div class="control-label"><i class="fa-solid fa-weight-hanging"></i> <span data-i18n="sidebarWeight">Weight load</span></div>
+                    <div class="pill-group" id="weight-group">
+                        <button class="pill-btn active" data-value="driver" data-i18n="weightDriver">driver</button>
+                        <button class="pill-btn" data-value="partial" data-i18n="weightPartial">half</button>
+                        <button class="pill-btn" data-value="full" data-i18n="weightFull">full</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label"><i class="fa-regular fa-snowflake"></i> <span data-i18n="sidebarSeason">Season</span></div>
+                    <div class="pill-group" id="season-group">
+                        <button class="pill-btn active" data-value="summer" data-i18n="seasonSummer">summer</button>
+                        <button class="pill-btn" data-value="spring" data-i18n="seasonSpring">spr/aut</button>
+                        <button class="pill-btn" data-value="winter" data-i18n="seasonWinter">winter</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label"><i class="fa-solid fa-road"></i> <span data-i18n="sidebarConditions">Conditions</span></div>
+                    <div class="pill-group" id="road-group">
+                        <button class="pill-btn active" data-value="city" data-i18n="roadCity">city</button>
+                        <button class="pill-btn" data-value="highway" data-i18n="roadHighway">highway</button>
+                        <button class="pill-btn" data-value="mixed" data-i18n="roadMixed">mixed</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label"><i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Mode</span></div>
+                    <div class="pill-group" id="mode-group">
+                        <button class="pill-btn active" data-value="eco" data-i18n="modeEco">eco</button>
+                        <button class="pill-btn" data-value="normal" data-i18n="modeNormal">normal</button>
+                        <button class="pill-btn" data-value="sport" data-i18n="modeSport">sport</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarClimate">Climate</span></div>
+                    <div class="climate-toggle">
+                        <button class="climate-btn on" onclick="toggleClimate(true)" data-i18n="climateOn">ON</button>
+                        <button class="climate-btn off active" onclick="toggleClimate(false)" data-i18n="climateOff">OFF</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="extended-controls" class="contents-wrapper" style="display: none;">
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <i class="fa-solid fa-gauge-high"></i> <span data-i18n="speed">Speed</span>
+                        <span class="label-val" id="val-speed">90 km/h</span>
+                    </div>
+                    <input type="range" id="speed-slider" min="30" max="180" value="90">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <i class="fa-solid fa-weight-hanging"></i> <span data-i18n="payload">Payload</span>
+                        <span class="label-val" id="val-ext-weight">75 kg</span>
+                    </div>
+                    <input type="range" id="ext-weight-slider" min="0" max="500" step="5" value="75">
+                    <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                        <span>0 kg</span><span>500 kg</span>
+                    </div>
+                </div>
+
+                <div class="control-group" id="group-wheels">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-wheels" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheel Size</span>
+                        </div>
+                        <span class="label-val" id="val-wheels">19"</span>
+                    </div>
+                    <input type="range" id="wheels-slider" min="18" max="22" step="1" value="19">
+                     <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                        <span>18"</span><span>20"</span><span>22"</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature">Temperature</span>
+                        <span class="label-val" id="val-temp">20°C</span>
+                    </div>
+                    <input type="range" id="temp-slider" min="-20" max="40" value="20">
+                </div>
+
+                <div class="control-group" id="group-wind">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-wind" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-wind"></i> <span data-i18n="sidebarWind">Wind</span>
+                        </div>
+                        <span class="label-val" id="val-wind">0 m/s</span>
+                    </div>
+                    <input type="range" id="wind-slider" min="-20" max="20" step="1" value="0">
+                    <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                        <span data-i18n="windTailwind">Tailwind</span><span data-i18n="windHeadwind">Headwind</span>
+                    </div>
+                </div>
+
+                <div class="control-group" id="group-tires">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-tires" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span>
+                        </div>
+                        <span class="label-val" id="val-tires">Normal</span>
+                    </div>
+                    <input type="range" id="tires-slider" min="0" max="2" step="1" value="1">
+                    <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                        <span data-i18n="tireLow">Low</span><span data-i18n="tireNorm">Norm</span><span data-i18n="tireHigh">High</span>
+                    </div>
+                </div>
+
+                <div class="control-group" id="climate-control-group">
+                    <div class="control-label">
+                        <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Pro</span>
+                        <span class="label-val" id="val-ext-climate">Off</span>
+                    </div>
+                    <div class="pill-group" id="ext-climate-group">
+                        <button class="pill-btn active" data-value="off" data-i18n="climateOff">Off</button>
+                        <button class="pill-btn" data-value="ac" data-i18n="climateAC">A/C</button>
+                        <button class="pill-btn" data-value="heater" data-i18n="climateHeater">Heater</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="mode-ext-controls" class="contents-wrapper" style="display: none;">
+                
+                <div class="control-group" id="group-deg" style="grid-column: span 2;">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-deg" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-battery-quarter"></i> <span data-i18n="sidebarDegradation">Degradation</span>
+                        </div>
+                        <span class="label-val" id="val-deg">0%</span>
+                    </div>
+                    <input type="range" id="deg-slider" min="0" max="30" step="1" value="0">
+                    <div style="font-size:0.6rem; color:var(--text-muted); margin-top:-5px;" data-i18n="batteryHealthLoss">Battery Health Loss</div>
+                </div>
+                
+                <div class="control-group" id="group-mode-ext" style="grid-column: span 2;">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-mode-ext" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Driving Mode</span>
+                        </div>
+                        <span class="label-val" id="val-mode-ext">Eco</span>
+                    </div>
+                    <div class="pill-group" id="mode-group-ext">
+                        <button class="pill-btn active" data-value="eco" data-i18n="modeEco">eco</button>
+                        <button class="pill-btn" data-value="normal" data-i18n="modeNormal">normal</button>
+                        <button class="pill-btn" data-value="sport" data-i18n="modeSport">sport</button>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+    </div>
+
+    <div id="custom-car-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 data-i18n="modalTitle">Enter custom car data</h3>
+            <div class="input-group">
+                <label data-i18n="modalRangeLabel">Maximum range on a single charge?</label>
+                <div class="input-wrapper">
+                    <span data-i18n="modalWrite">Write: </span>
+                    <input type="number" id="custom-range" placeholder="...">
+                    <span>km</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label data-i18n="modalBatteryLabel">How many kilowatts does the battery have?</label>
+                <div class="input-wrapper">
+                    <span data-i18n="modalWrite">Write: </span>
+                    <input type="number" id="custom-battery" placeholder="...">
+                    <span>kWh</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label data-i18n="modalWeightLabel">The weight of an electric car?</label>
+                <div class="input-wrapper">
+                    <span data-i18n="modalWrite">Write: </span>
+                    <input type="number" id="custom-weight" placeholder="...">
+                    <span>kg</span>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" onclick="closeCustomModal()" data-i18n="modalCancel">Cancel</button>
+                <button class="modal-btn done" onclick="applyCustomCar()" data-i18n="modalDone">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="brands.js"></script>
+    <script src="standard.js"></script>
+    <script src="extended.js"></script>
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
