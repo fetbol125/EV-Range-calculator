@@ -86,6 +86,15 @@ function calculateExtendedRangeForConsumption(baseRange, s, factors, carWeight, 
     if (tempFactor < 0.4) tempFactor = 0.4;
     currentRange *= tempFactor;
 
+    // === АВТОМАТИЧЕСКИЙ ПОДОГРЕВ/ОХЛАЖДЕНИЕ БАТАРЕИ ===
+    if (t <= BATTERY_HEATING_THRESHOLD) {
+        // Подогрев батареи при низких температурах
+        currentRange *= (1 - BATTERY_HEATING_IMPACT);
+    } else if (t >= BATTERY_COOLING_THRESHOLD) {
+        // Охлаждение батареи при высоких температурах
+        currentRange *= (1 - BATTERY_COOLING_IMPACT);
+    }
+
     // === ФАКТОР: ДАВЛЕНИЕ В ШИНАХ (Tires) - ПОДКЛЮЧАЕМЫЙ ===
     if (s.enableTires) {
         let tireFactor = 1.0;
@@ -131,6 +140,19 @@ function calculateExtendedRangeForConsumption(baseRange, s, factors, carWeight, 
         climateProFactor = 0.78;
     }
     currentRange *= climateProFactor;
+
+    // === ФАКТОР: ПОТРЕБИТЕЛИ ЭНЕРГИИ (Energy Consumers) - ПОДКЛЮЧАЕМЫЙ ===
+    if (s.enableEnergyConsumers) {
+        if (s.seatHeating) {
+            currentRange *= (1 - SEAT_HEATING_IMPACT);
+        }
+        if (s.windowHeating) {
+            currentRange *= (1 - WINDOW_HEATING_IMPACT);
+        }
+        if (s.multimedia) {
+            currentRange *= (1 - MULTIMEDIA_IMPACT);
+        }
+    }
 
     // === ФАКТОР: РЕЖИМ ВОЖДЕНИЯ (Driving Mode) - ПОДКЛЮЧАЕМЫЙ ===
     if (s.enableExtMode) {

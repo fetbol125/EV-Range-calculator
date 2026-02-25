@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguageMenu();
     initCarMenuHandlers();
     initCarSearch();
+    initEnergyConsumersDropdown();
     initModals();
     
     // Установка начального режима
@@ -43,9 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentCarImg.complete) {
         // Если картинка уже в кэше браузера
         updateUI();
+        updateBatteryThermalStatus();
     } else {
         // Ждём загрузки картинки
-        currentCarImg.onload = () => updateUI();
-        currentCarImg.onerror = () => updateUI(); // Обновляем UI даже если картинка не загрузилась
+        currentCarImg.onload = () => {
+            updateUI();
+            updateBatteryThermalStatus();
+        };
+        currentCarImg.onerror = () => {
+            updateUI();
+            updateBatteryThermalStatus();
+        };
     }
 });

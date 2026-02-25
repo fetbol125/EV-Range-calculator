@@ -13,6 +13,13 @@ let allCars = [];
 const CIRCUMFERENCE = 2 * Math.PI * 120;
 const ADDED_WEIGHT_KG = { driver: 75, partial: 200, full: 400 };
 const CLIMATE_IMPACT = 0.10;
+const SEAT_HEATING_IMPACT = 0.03;
+const WINDOW_HEATING_IMPACT = 0.04;
+const MULTIMEDIA_IMPACT = 0.02;
+const BATTERY_HEATING_IMPACT = 0.05; // Подогрев батареи при t <= 5°C
+const BATTERY_COOLING_IMPACT = 0.04; // Охлаждение батареи при t >= 30°C
+const BATTERY_HEATING_THRESHOLD = 5; // Порог включения подогрева
+const BATTERY_COOLING_THRESHOLD = 30; // Порог включения охлаждения
 
 // Факторы влияния на дальность
 const factors = {
@@ -41,12 +48,18 @@ const state = {
     extDeg: 0,
     extWind: 0,
     extClimateMode: 'off',
-    extMode: 'eco', 
+    extMode: 'eco',
+    
+    // Energy Consumers
+    seatHeating: false,
+    windowHeating: false,
+    multimedia: false,
     
     // Состояния включения/отключения факторов Extended Mode
     enableWheels: true,
     enableWind: true,
     enableTires: true,
     enableDeg: true,
-    enableExtMode: true 
+    enableExtMode: true,
+    enableEnergyConsumers: true
 };

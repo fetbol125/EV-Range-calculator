@@ -178,6 +178,15 @@
                 </div>
                 <div class="trend-icon" id="icon-deg"><i class="fa-solid fa-arrow-trend-down"></i></div>
             </div>
+
+            <!-- Фактор потребителей энергии (Расширенный режим) -->
+            <div class="factor-item" id="sidebar-block-energy-consumers">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-plug"></i> <span data-i18n="energyConsumers">Energy Consumers</span></div>
+                    <div class="factor-value" id="summary-energy-consumers">Off</div>
+                </div>
+                <div class="trend-icon" id="icon-energy-consumers"><i class="fa-solid fa-minus"></i></div>
+            </div>
             
         </aside>
 
@@ -385,6 +394,58 @@
                     </div>
                 </div>
 
+                <!-- Energy Consumers Dropdown -->
+                <div class="control-group energy-consumers-dropdown-container" id="energy-consumers-dropdown" style="grid-column: span 2;">
+                    <!-- Trigger Button -->
+                    <div class="control-label energy-consumers-trigger" id="energy-consumers-trigger" style="cursor: pointer;">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-energy-consumers" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-plug"></i> <span data-i18n="energyConsumers">Energy Consumers</span>
+                        </div>
+                        <span class="label-val" id="val-energy-consumers">Off</span>
+                        <i class="fa-solid fa-chevron-down" id="energy-arrow" style="margin-left: auto; font-size: 0.8rem;"></i>
+                    </div>
+                    
+                    <!-- Energy Consumers Menu -->
+                    <div class="energy-consumers-menu" id="energy-consumers-menu">
+                        <!-- Seat/Wheel Heating Toggle -->
+                        <div class="control-group energy-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-couch"></i> <span data-i18n="seatHeating">Seat/Wheel Heating</span>
+                                <span class="label-val" id="val-seat-heating">Off</span>
+                            </div>
+                            <div class="climate-toggle">
+                                <button class="climate-btn on" onclick="toggleSeatHeating(true)" data-i18n="climateOn">ON</button>
+                                <button class="climate-btn off active" onclick="toggleSeatHeating(false)" data-i18n="climateOff">OFF</button>
+                            </div>
+                        </div>
+
+                        <!-- Window Heating Toggle -->
+                        <div class="control-group energy-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-snowflake"></i> <span data-i18n="windowHeating">Window Heating</span>
+                                <span class="label-val" id="val-window-heating">Off</span>
+                            </div>
+                            <div class="climate-toggle">
+                                <button class="climate-btn on" onclick="toggleWindowHeating(true)" data-i18n="climateOn">ON</button>
+                                <button class="climate-btn off active" onclick="toggleWindowHeating(false)" data-i18n="climateOff">OFF</button>
+                            </div>
+                        </div>
+
+                        <!-- Multimedia Toggle -->
+                        <div class="control-group energy-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-music"></i> <span data-i18n="multimedia">Multimedia</span>
+                                <span class="label-val" id="val-multimedia">Off</span>
+                            </div>
+                            <div class="climate-toggle">
+                                <button class="climate-btn on" onclick="toggleMultimedia(true)" data-i18n="climateOn">ON</button>
+                                <button class="climate-btn off active" onclick="toggleMultimedia(false)" data-i18n="climateOff">OFF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Ползунок размера колёс с чекбоксом -->
                 <div class="control-group" id="group-wheels">
                     <div class="control-label">
@@ -404,6 +465,7 @@
                 <div class="control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature">Temperature</span>
+                        <span id="battery-thermal-status" class="battery-thermal-warning" style="display: none;"></span>
                         <span class="label-val" id="val-temp">20°C</span>
                     </div>
                     <input type="range" id="temp-slider" min="-20" max="40" value="20">

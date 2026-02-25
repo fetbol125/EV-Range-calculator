@@ -27,9 +27,10 @@ function updateUI() {
     const blockWind = document.getElementById('sidebar-block-wind');
     const blockTires = document.getElementById('sidebar-block-tires');
     const blockDeg = document.getElementById('sidebar-block-deg');
-    const blockModeExt = document.getElementById('sidebar-block-mode-ext'); 
+    const blockModeExt = document.getElementById('sidebar-block-mode-ext');
+    const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
 
-    const extendedBlocks = [blockWheels, blockWind, blockTires, blockDeg, blockModeExt];
+    const extendedBlocks = [blockWheels, blockWind, blockTires, blockDeg, blockModeExt, blockEnergyConsumers];
 
     const sumWheels = document.getElementById('summary-wheels');
     const sumWind = document.getElementById('summary-wind');
@@ -163,6 +164,37 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
     if(sumModeExt) sumModeExt.innerText = capitalize(state.extMode); 
     if(document.getElementById('val-mode-ext')) document.getElementById('val-mode-ext').innerText = capitalize(state.extMode);
 
+    // Update Energy Consumers
+    const seatText = state.seatHeating ? t.climateOn : t.climateOff;
+    const windowText = state.windowHeating ? t.climateOn : t.climateOff;
+    const multText = state.multimedia ? t.climateOn : t.climateOff;
+    if(document.getElementById('val-seat-heating')) document.getElementById('val-seat-heating').innerText = seatText;
+    if(document.getElementById('val-window-heating')) document.getElementById('val-window-heating').innerText = windowText;
+    if(document.getElementById('val-multimedia')) document.getElementById('val-multimedia').innerText = multText;
+
+    // Update Energy Consumers summary
+    const activeCount = [state.seatHeating, state.windowHeating, state.multimedia].filter(Boolean).length;
+    const valEnergyConsumers = document.getElementById('val-energy-consumers');
+    if (valEnergyConsumers) {
+        if (activeCount === 0) {
+            valEnergyConsumers.innerText = t.climateOff;
+        } else {
+            valEnergyConsumers.innerText = activeCount + ' ' + t.energyActive;
+        }
+    }
+    
+    if(sumEnergyConsumers) {
+        if (activeCount === 0) {
+            sumEnergyConsumers.innerText = t.climateOff;
+        } else if (activeCount === 1) {
+            if (state.seatHeating) sumEnergyConsumers.innerText = t.seatHeating;
+            else if (state.windowHeating) sumEnergyConsumers.innerText = t.windowHeating;
+            else sumEnergyConsumers.innerText = t.multimedia;
+        } else {
+            sumEnergyConsumers.innerText = activeCount + ' ' + t.energyActive;
+        }
+    }
+
     updateExtendedDisabledStates();
 }
 
@@ -175,8 +207,10 @@ function updateExtendedDisabledStates() {
     const blockTires = document.getElementById('sidebar-block-tires');
     const blockDeg = document.getElementById('sidebar-block-deg');
     const blockModeExt = document.getElementById('sidebar-block-mode-ext');
+    const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
     const groupDeg = document.getElementById('group-deg');
     const groupModeExt = document.getElementById('group-mode-ext');
+    const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
 
     if (!state.enableWheels) blockWheels.classList.add('disabled'); 
     else blockWheels.classList.remove('disabled');
@@ -201,6 +235,14 @@ function updateExtendedDisabledStates() {
     } else {
         if(blockModeExt) blockModeExt.classList.remove('disabled');
         if(groupModeExt) groupModeExt.classList.remove('disabled');
+    }
+    
+    if (!state.enableEnergyConsumers) { 
+        if(blockEnergyConsumers) blockEnergyConsumers.classList.add('disabled');
+        if(groupEnergyConsumers) groupEnergyConsumers.classList.add('disabled');
+    } else {
+        if(blockEnergyConsumers) blockEnergyConsumers.classList.remove('disabled');
+        if(groupEnergyConsumers) groupEnergyConsumers.classList.remove('disabled');
     }
 }
 
@@ -242,11 +284,13 @@ function updateImpactVisuals() {
     const iconDeg = document.getElementById('icon-deg');
     const sumModeExt = document.getElementById('summary-mode-ext');
     const iconModeExt = document.getElementById('icon-mode-ext');
+    const sumEnergyConsumers = document.getElementById('summary-energy-consumers');
+    const iconEnergyConsumers = document.getElementById('icon-energy-consumers');
     
     if (state.rangeType === 'standard') {
         updateStandardModeVisuals(setVisual);
     } else {
-        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt);
+        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers);
     }
 }
 
@@ -277,10 +321,16 @@ function updateStandardModeVisuals(setVisual) {
 /**
  * Обновляет визуальные индикаторы для Extended режима
  */
-function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt) {
-    if (state.extTemp >= 20 && state.extTemp <= 25) setVisual(sumSeason, iconSeason, 'good'); 
-    else if(state.extTemp < 5 || state.extTemp > 30) setVisual(sumSeason, iconSeason, 'bad');
-    else setVisual(sumSeason, iconSeason, 'warn');
+function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers) {
+    // Temperature визуализация с учетом подогрева/охлаждения батареи
+    if (state.extTemp >= 20 && state.extTemp <= 25) {
+        setVisual(sumSeason, iconSeason, 'good'); 
+    } else if (state.extTemp <= BATTERY_HEATING_THRESHOLD || state.extTemp >= BATTERY_COOLING_THRESHOLD) {
+        // При активном подогреве или охлаждении батареи - желтый цвет
+        setVisual(sumSeason, iconSeason, 'warn');
+    } else {
+        setVisual(sumSeason, iconSeason, 'warn');
+    }
 
     if (state.extSpeed <= 60) setVisual(sumMode, iconMode, 'good');
     else if (state.extSpeed > 110) setVisual(sumMode, iconMode, 'bad');
@@ -330,6 +380,29 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
         else setVisual(sumDeg, iconDeg, 'bad');
     } else {
         setNeutralVisual(sumDeg, iconDeg);
+    }
+
+    // Energy Consumers visualization - combined impact
+    if (state.enableEnergyConsumers) {
+        let totalImpact = 0;
+        if (state.seatHeating) totalImpact += SEAT_HEATING_IMPACT;
+        if (state.windowHeating) totalImpact += WINDOW_HEATING_IMPACT;
+        if (state.multimedia) totalImpact += MULTIMEDIA_IMPACT;
+
+        if (totalImpact === 0) {
+            setNeutralVisual(sumEnergyConsumers, iconEnergyConsumers);
+        } else if (totalImpact <= 0.02) {
+            // Only multimedia (2%) - green
+            setVisual(sumEnergyConsumers, iconEnergyConsumers, 'good');
+        } else if (totalImpact <= 0.05) {
+            // Multimedia + one heating OR one heating only (3-5%) - yellow
+            setVisual(sumEnergyConsumers, iconEnergyConsumers, 'warn');
+        } else {
+            // Multiple items (>5%) - red
+            setVisual(sumEnergyConsumers, iconEnergyConsumers, 'bad');
+        }
+    } else {
+        setNeutralVisual(sumEnergyConsumers, iconEnergyConsumers);
     }
 }
 
@@ -406,5 +479,29 @@ function toggleControlMode(mode) {
         extControls.style.display = 'none';
         modeExtControls.style.display = 'none';
         if(sidebar) sidebar.classList.add('standard-mode');
+    }
+}
+
+/**
+ * Обновляет индикатор подогрева/охлаждения батареи
+ */
+function updateBatteryThermalStatus() {
+    const statusElement = document.getElementById('battery-thermal-status');
+    if (!statusElement) return;
+
+    const t = translations[state.lang];
+    const temp = state.extTemp;
+
+    if (temp <= BATTERY_HEATING_THRESHOLD) {
+        // Показываем подогрев батареи
+        statusElement.innerHTML = `<i class="fa-solid fa-fire"></i> <span>${t.batteryHeating || 'Battery Heating'}</span>`;
+        statusElement.style.display = 'inline-flex';
+    } else if (temp >= BATTERY_COOLING_THRESHOLD) {
+        // Показываем охлаждение батареи
+        statusElement.innerHTML = `<i class="fa-solid fa-snowflake"></i> <span>${t.batteryCooling || 'Battery Cooling'}</span>`;
+        statusElement.style.display = 'inline-flex';
+    } else {
+        // Скрываем индикатор
+        statusElement.style.display = 'none';
     }
 }

@@ -33,6 +33,10 @@ const sidebar = document.querySelector('.sidebar');
 const sumModeExt = document.getElementById('summary-mode-ext');
 const iconModeExt = document.getElementById('icon-mode-ext');
 
+// Energy Consumers elements
+const sumEnergyConsumers = document.getElementById('summary-energy-consumers');
+const iconEnergyConsumers = document.getElementById('icon-energy-consumers');
+
 // Элементы выбора автомобиля
 const currentCarName = document.getElementById('current-car-name');
 const currentCarImg = document.getElementById('current-car-img');
@@ -54,6 +58,11 @@ const languageTrigger = document.getElementById('language-switcher-trigger');
 const languageMenu = document.getElementById('language-menu');
 const languageOptions = document.querySelectorAll('.language-option');
 const currentLanguageText = document.getElementById('current-language-text');
+
+// Energy Consumers Dropdown elements
+const energyConsumersTrigger = document.getElementById('energy-consumers-trigger');
+const energyConsumersMenu = document.getElementById('energy-consumers-menu');
+const energyConsumersDropdown = document.getElementById('energy-consumers-dropdown');
 
 // Модальные окна
 const customModal = document.getElementById('custom-car-modal');

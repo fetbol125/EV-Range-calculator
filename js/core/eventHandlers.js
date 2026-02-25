@@ -18,7 +18,8 @@ function initExtendedListeners() {
     const checkWind = document.getElementById('check-wind');
     const checkTires = document.getElementById('check-tires');
     const checkDeg = document.getElementById('check-deg');
-    const checkModeExt = document.getElementById('check-mode-ext'); 
+    const checkModeExt = document.getElementById('check-mode-ext');
+    const checkEnergyConsumers = document.getElementById('check-energy-consumers'); 
     
     // Группы контролов
     const groupWheels = document.getElementById('group-wheels');
@@ -26,6 +27,7 @@ function initExtendedListeners() {
     const groupTires = document.getElementById('group-tires');
     const groupDeg = document.getElementById('group-deg'); 
     const groupModeExt = document.getElementById('group-mode-ext');
+    const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
 
     if(speedS) {
         speedS.addEventListener('input', (e) => {
@@ -50,6 +52,7 @@ function initExtendedListeners() {
     if(tempS) tempS.addEventListener('input', (e) => {
         state.extTemp = parseInt(e.target.value);
         document.getElementById('val-temp').innerText = state.extTemp + '°C';
+        updateBatteryThermalStatus();
         updateUI();
     });
     
@@ -93,6 +96,7 @@ function initExtendedListeners() {
     if(checkTires) checkTires.addEventListener('change', (e) => toggleState(e.target, groupTires, 'enableTires'));
     if(checkDeg) checkDeg.addEventListener('change', (e) => toggleState(e.target, groupDeg, 'enableDeg')); 
     if(checkModeExt) checkModeExt.addEventListener('change', (e) => toggleState(e.target, groupModeExt, 'enableExtMode'));
+    if(checkEnergyConsumers) checkEnergyConsumers.addEventListener('change', (e) => toggleState(e.target, groupEnergyConsumers, 'enableEnergyConsumers'));
 
     // Climate кнопки
     const climateGroup = document.getElementById('ext-climate-group');
@@ -162,6 +166,66 @@ window.toggleClimate = function(isOn) {
         if(btnOff) btnOff.classList.add('active'); 
         if(btnOn) btnOn.classList.remove('active'); 
     }
+    updateUI();
+}
+
+/**
+ * Toggles Seat/Wheel Heating
+ */
+window.toggleSeatHeating = function(isOn) {
+    state.seatHeating = isOn;
+    const seatGroup = document.querySelector('#val-seat-heating').closest('.control-group');
+    const btnOn = seatGroup ? seatGroup.querySelector('.climate-btn.on') : null;
+    const btnOff = seatGroup ? seatGroup.querySelector('.climate-btn.off') : null;
+    if (isOn) {
+        if (btnOn) btnOn.classList.add('active');
+        if (btnOff) btnOff.classList.remove('active');
+    } else {
+        if (btnOff) btnOff.classList.add('active');
+        if (btnOn) btnOn.classList.remove('active');
+    }
+    const valEl = document.getElementById('val-seat-heating');
+    if (valEl) valEl.innerText = isOn ? translations[state.lang].climateOn : translations[state.lang].climateOff;
+    updateUI();
+}
+
+/**
+ * Toggles Window Heating
+ */
+window.toggleWindowHeating = function(isOn) {
+    state.windowHeating = isOn;
+    const windowGroup = document.querySelector('#val-window-heating').closest('.control-group');
+    const btnOn = windowGroup ? windowGroup.querySelector('.climate-btn.on') : null;
+    const btnOff = windowGroup ? windowGroup.querySelector('.climate-btn.off') : null;
+    if (isOn) {
+        if (btnOn) btnOn.classList.add('active');
+        if (btnOff) btnOff.classList.remove('active');
+    } else {
+        if (btnOff) btnOff.classList.add('active');
+        if (btnOn) btnOn.classList.remove('active');
+    }
+    const valEl = document.getElementById('val-window-heating');
+    if (valEl) valEl.innerText = isOn ? translations[state.lang].climateOn : translations[state.lang].climateOff;
+    updateUI();
+}
+
+/**
+ * Toggles Multimedia
+ */
+window.toggleMultimedia = function(isOn) {
+    state.multimedia = isOn;
+    const multGroup = document.querySelector('#val-multimedia').closest('.control-group');
+    const btnOn = multGroup ? multGroup.querySelector('.climate-btn.on') : null;
+    const btnOff = multGroup ? multGroup.querySelector('.climate-btn.off') : null;
+    if (isOn) {
+        if (btnOn) btnOn.classList.add('active');
+        if (btnOff) btnOff.classList.remove('active');
+    } else {
+        if (btnOff) btnOff.classList.add('active');
+        if (btnOn) btnOn.classList.remove('active');
+    }
+    const valEl = document.getElementById('val-multimedia');
+    if (valEl) valEl.innerText = isOn ? translations[state.lang].climateOn : translations[state.lang].climateOff;
     updateUI();
 }
 
@@ -260,4 +324,26 @@ function initPillGroups() {
     setupPillGroup('road-group', 'road');
     setupPillGroup('mode-group', 'mode');
     setupPillGroup('weight-group', 'weight');
+}
+
+/**
+ * Инициализирует dropdown меню Energy Consumers
+ */
+function initEnergyConsumersDropdown() {
+    if (energyConsumersTrigger && energyConsumersMenu) {
+        energyConsumersTrigger.addEventListener('click', (e) => {
+            // Не открываем меню при клике на чекбокс
+            if (e.target.id === 'check-energy-consumers' || e.target.type === 'checkbox') {
+                return;
+            }
+            e.stopPropagation();
+            energyConsumersMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (energyConsumersMenu && !energyConsumersMenu.contains(e.target) && !energyConsumersTrigger.contains(e.target)) {
+                energyConsumersMenu.classList.remove('show');
+            }
+        });
+    }
 }

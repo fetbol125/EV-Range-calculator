@@ -124,7 +124,8 @@ input[type=range]::-moz-range-track {
     padding: 3px; 
     gap: 3px; 
     align-items: center; 
-    flex-grow: 1; 
+    flex-grow: 1;
+    width: 100%;
     height: 36px; 
     overflow: hidden; 
     z-index: 1; 
@@ -342,6 +343,28 @@ input[type=range]::-moz-range-track {
     color: var(--text-muted);
 }
 
+/* Battery Thermal Warning */
+.battery-thermal-warning {
+    font-size: 0.65rem;
+    color: var(--warning);
+    padding: 2px 6px;
+    background: rgba(251, 191, 36, 0.15);
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
+.battery-thermal-warning i {
+    font-size: 0.7rem;
+}
+
+.battery-thermal-warning i.fa-fire {
+    color: var(--warning);
+}
+
 /* Grid Layout */
 .controls-row > .control-group:nth-child(1) { 
     grid-column: 1 / -1; 
@@ -361,7 +384,8 @@ input[type=range]::-moz-range-track {
 #extended-controls .control-group:nth-child(4),
 #extended-controls .control-group:nth-child(5),
 #extended-controls .control-group:nth-child(6),
-#extended-controls .control-group:nth-child(7) {
+#extended-controls .control-group:nth-child(7),
+#extended-controls .control-group:nth-child(8) {
     grid-column: span 2; 
 }
 
@@ -409,4 +433,117 @@ input[type=range]::-moz-range-track {
     #mode-ext-controls .control-group {
         grid-column: 1 / -1 !important;
     }
+}
+
+/* Energy Consumers Dropdown */
+.energy-consumers-dropdown-container {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.energy-consumers-trigger {
+    background-color: var(--panel-bg);
+    border: 1px solid #1e293b;
+    border-radius: var(--border-radius);
+    padding: 12px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: all 0.2s;
+    width: 100%;
+    min-height: 48px;
+    margin-bottom: 0 !important;
+}
+
+.energy-consumers-trigger:hover {
+    border-color: #334155;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.energy-consumers-trigger .fa-chevron-down {
+    transition: transform 0.3s ease-in-out;
+    margin-left: auto;
+}
+
+.energy-consumers-trigger .fa-plug {
+    margin-left: 0;
+}
+
+.energy-consumers-dropdown-container:has(.energy-consumers-menu.show) .energy-consumers-trigger {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.energy-consumers-dropdown-container:has(.energy-consumers-menu.show) #energy-arrow {
+    transform: rotate(180deg);
+}
+
+.energy-consumers-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background-color: var(--panel-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.energy-consumers-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.energy-item {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    gap: 6px;
+    margin-bottom: 0;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.energy-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.energy-item .control-label {
+    margin-bottom: 8px;
+}
+
+.energy-item .climate-toggle {
+    display: flex;
+    gap: 2px;
+}
+
+/* Disabled state for energy consumers dropdown */
+.energy-consumers-dropdown-container.disabled .energy-consumers-trigger {
+    cursor: default;
+}
+
+.energy-consumers-dropdown-container.disabled .energy-consumers-trigger:hover {
+    border-color: #1e293b;
+    background-color: var(--panel-bg);
+}
+
+.energy-consumers-dropdown-container.disabled .energy-consumers-menu {
+    pointer-events: none;
 }

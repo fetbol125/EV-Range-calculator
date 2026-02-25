@@ -34,6 +34,13 @@ const translations = {
         sidebarTires: "Tire Pressure",
         sidebarDegradation: "Degradation",
 
+        // ENERGY CONSUMERS
+        energyConsumers: "Energy Consumers",
+        seatHeating: "Seat/Wheel Heating",
+        windowHeating: "Window Heating",
+        multimedia: "Multimedia",
+        energyActive: "Active",
+
         // STANDARD CONTROLS
         weightDriver: "driver",
         weightPartial: "half",
@@ -54,6 +61,8 @@ const translations = {
         speed: "Speed",
         payload: "Payload",
         temperature: "Temperature",
+        batteryHeating: "Battery Heating",
+        batteryCooling: "Battery Cooling",
         windTailwind: "Tailwind",
         windHeadwind: "Headwind",
         tireLow: "Low",
@@ -157,6 +166,11 @@ const translations = {
         sidebarTires: "Tlak v Pneumatikách",
         sidebarDegradation: "Degradácia",
 
+        // ENERGY CONSUMERS
+        energyConsumers: "Spotrebitelia Energie",
+        seatHeating: "Vyhrievanie Sedačiek/Volantu",
+        windowHeating: "Vyhrievanie Skíel",
+        multimedia: "Multimédiá",        energyActive: "Aktívne",
         // STANDARD CONTROLS
         weightDriver: "vodič",
         weightPartial: "polovica",
@@ -177,6 +191,8 @@ const translations = {
         speed: "Rýchlosť",
         payload: "Užitočný Náklad",
         temperature: "Teplota",
+        batteryHeating: "Ohrev Batérie",
+        batteryCooling: "Chladenie Batérie",
         windTailwind: "Попутný",
         windHeadwind: "Protivietor",
         tireLow: "Nízko",
@@ -280,6 +296,13 @@ const translations = {
         sidebarTires: "Давл. в Шинах",
         sidebarDegradation: "Деградация",
 
+        // ENERGY CONSUMERS
+        energyConsumers: "Потребители Энергии",
+        seatHeating: "Подогрев Сидений/Руля",
+        windowHeating: "Подогрев Стёкол",
+        multimedia: "Мультимедиа",
+        energyActive: "Активно",
+
         // STANDARD CONTROLS
         weightDriver: "водитель",
         weightPartial: "половина",
@@ -300,6 +323,8 @@ const translations = {
         speed: "Скорость",
         payload: "Полезная нагрузка",
         temperature: "Температура",
+        batteryHeating: "Подогрев Батареи",
+        batteryCooling: "Охлаждение Батареи",
         windTailwind: "Попутный",
         windHeadwind: "Встречный",
         tireLow: "Низкое",
@@ -403,6 +428,13 @@ const translations = {
         sidebarTires: "Тиск в Шинах",
         sidebarDegradation: "Деградація",
 
+        // ENERGY CONSUMERS
+        energyConsumers: "Споживачі Енергії",
+        seatHeating: "Підігрів Сидінь/Керма",
+        windowHeating: "Підігрів Скла",
+        multimedia: "Мультимедіа",
+        energyActive: "Активно",
+
         // STANDARD CONTROLS
         weightDriver: "водій",
         weightPartial: "половина",
@@ -423,6 +455,8 @@ const translations = {
         speed: "Швидкість",
         payload: "Корисне Навантаження",
         temperature: "Температура",
+        batteryHeating: "Підігрів Батареї",
+        batteryCooling: "Охолодження Батареї",
         windTailwind: "Попутний Вітер",
         windHeadwind: "Зустрічний Вітер",
         tireLow: "Низько",
