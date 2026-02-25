@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Кодировка и настройки viewport -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Заголовок страницы (переводится через i18n) -->
     <title data-i18n="title">EV Range Calculator</title>
+    
+    <!-- Иконка сайта -->
+    <link rel="icon" type="image/png" href="img/favicon/favicon2.png">
+    
+    <!-- Внешние библиотеки -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Основные стили -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/modals/carInfoModal.css">
+    
+    <!-- Адаптивная таблица стилей для мобильных устройств -->
+    <link rel="stylesheet" href="css/ui/mobile.css" media="(max-width: 768px)">
 </head>
 <body>
 
+    <!-- Фоновый слой со звёздным полем анимации -->
     <div class="ambient-background">
         <canvas id="starfield"></canvas>
     </div>
 
+    <!-- РАЗДЕЛ ЗАГОЛОВКА -->
     <header class="header">
+        <!-- Логотип и блок заголовка -->
         <div class="logo">
             <i class="fa-solid fa-bolt"></i>
             <div class="logo-text">
@@ -22,29 +39,42 @@
             </div>
         </div>
         
+        <!-- Переключатель языка в виде выпадающего списка -->
         <div class="language-dropdown-container">
+            <!-- Кнопка триггера выбора языка -->
             <div id="language-switcher-trigger" class="language-trigger">
                 <span data-i18n="language" id="current-language-text">Language: English</span> <i class="fa-solid fa-chevron-down" id="lang-arrow"></i>
             </div>
             
+            <!-- Меню опций языков -->
             <div id="language-menu" class="language-menu">
                 <div class="language-option active" data-lang="en">
                     English
                 </div>
+                <div class="language-option" data-lang="sk">
+                    Slovenčina
+                </div>
                 <div class="language-option" data-lang="ru">
                     Русский
                 </div>
+                <div class="language-option" data-lang="uk">
+                    Українська
+                </div>
             </div>
         </div>
-        </header>
+    </header>
 
+    <!-- ОСНОВНОЙ МАКЕТ ПАНЕЛИ -->
     <div class="dashboard">
         
+        <!-- ЛЕВАЯ БОКОВАЯ ПАНЕЛЬ: Отображение факторов влияния -->
         <aside class="sidebar">
+            <!-- Заголовок боковой панели -->
             <div class="sidebar-title">
                 <i class="fa-solid fa-chart-line"></i> <span data-i18n="impactFactors">Impact Factors</span>
             </div>
 
+            <!-- Фактор уровня батареи -->
             <div class="factor-item">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-battery-half"></i> <span data-i18n="sidebarBattery">Battery Level</span></div>
@@ -53,6 +83,7 @@
                 <div class="trend-icon" id="icon-battery">-</div>
             </div>
 
+            <!-- Фактор сезона -->
             <div class="factor-item">
                 <div class="factor-info">
                     <div class="factor-label">
@@ -64,6 +95,7 @@
                 <div class="trend-icon" id="icon-season"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
+            <!-- Фактор условий вождения -->
             <div class="factor-item" id="sidebar-block-road">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-road"></i> <span data-i18n="sidebarConditions">Driving conditions</span></div>
@@ -72,6 +104,7 @@
                 <div class="trend-icon" id="icon-road"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
+            <!-- Фактор режима вождения (Стандартный режим) -->
             <div class="factor-item">
                 <div class="factor-info">
                     <div class="factor-label">
@@ -83,6 +116,7 @@
                 <div class="trend-icon" id="icon-mode"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
+            <!-- Фактор нагрузки веса -->
             <div class="factor-item">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-weight-hanging"></i> <span data-i18n="sidebarWeight">Weight load</span></div>
@@ -91,6 +125,7 @@
                 <div class="trend-icon" id="icon-weight"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
+            <!-- Фактор климат-контроля -->
             <div class="factor-item">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarClimate">Climate Control</span></div>
@@ -99,6 +134,7 @@
                 <div class="trend-icon" id="icon-climate"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
             
+            <!-- Фактор режима вождения (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-mode-ext">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Driving Mode</span></div>
@@ -107,6 +143,7 @@
                 <div class="trend-icon" id="icon-mode-ext"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
+            <!-- Фактор размера колёс (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-wheels">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheel Size</span></div>
@@ -115,6 +152,7 @@
                 <div class="trend-icon" id="icon-wheels"><i class="fa-solid fa-minus"></i></div>
             </div>
 
+            <!-- Фактор ветра (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-wind">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarWind">Wind</span></div>
@@ -123,6 +161,7 @@
                 <div class="trend-icon" id="icon-wind"><i class="fa-solid fa-minus"></i></div>
             </div>
 
+            <!-- Фактор давления в шинах (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-tires">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span></div>
@@ -131,6 +170,7 @@
                 <div class="trend-icon" id="icon-tires"><i class="fa-solid fa-minus"></i></div>
             </div>
 
+            <!-- Фактор деградации батареи (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-deg">
                 <div class="factor-info">
                     <div class="factor-label"><i class="fa-solid fa-battery-quarter"></i> <span data-i18n="sidebarDegradation">Degradation</span></div>
@@ -141,11 +181,15 @@
             
         </aside>
 
+        <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА: Основная область контента -->
         <div class="center-column">
             
+            <!-- Верхняя панель с выбором автомобиля и переключением режима -->
             <div class="top-bar">
+                <!-- Выпадающий селектор модели автомобиля -->
                 <div class="car-block" id="car-dropdown-trigger">
-                    <div class="car-info" onclick="toggleCarMenu()">
+                    <!-- Отображение информации о текущем автомобиле -->
+                    <div class="car-info">
                         <div class="car-thumb">
                             <img id="current-car-img" src="" alt="Car">
                         </div>
@@ -155,7 +199,8 @@
                         </div>
                     </div>
 
-                    <div class="car-specs" onclick="toggleCarMenu()">
+                    <!-- Отображение спецификаций текущего автомобиля -->
+                    <div class="car-specs">
                         <div class="spec-box">
                             <div class="spec-label" data-i18n="maxRange">Max Range</div>
                             <div class="spec-val"><span id="current-car-range">573</span>km</div>
@@ -167,16 +212,29 @@
                         <i class="fa-solid fa-chevron-down" id="car-arrow" style="margin-top: 5px; transition: transform 0.3s;"></i>
                     </div>
 
+                    <!-- Выпадающее меню выбора автомобиля -->
                     <div class="car-dropdown-menu" id="car-dropdown">
+                        <!-- Поле поиска автомобиля -->
                         <div class="search-container">
                             <i class="fa-solid fa-magnifying-glass search-icon"></i>
                             <input type="text" id="car-search-input" data-i18n-placeholder="carSearchPlaceholder" placeholder="Search brand or model..." autocomplete="off">
                         </div>
+                        
+                        <!-- Кнопки действий меню автомобиля -->
+                        <div class="car-menu-buttons">
+                            <button class="car-menu-btn" id="all-brands-btn" data-i18n="allBrands" data-i18n-keep-html><i class="fa-solid fa-list"></i> All Brands</button>
+                            <button class="car-menu-btn" id="info-car-btn" data-i18n="infoCar" data-i18n-keep-html><i class="fa-solid fa-circle-info"></i> Info Car</button>
+                        </div>
+                        
+                        <!-- Контейнер списка автомобилей (заполняется JavaScript) -->
                         <div id="car-list-container"></div>
+                        
+                        <!-- Опция пользовательского автомобиля -->
                         <button class="other-car-btn" data-i18n="carOther">Other car:</button>
                     </div>
                 </div>
 
+                <!-- Переключение между Стандартным и Расширенным режимами -->
                 <div class="toggle-block">
                     <div class="mode-toggle">
                         <input type="radio" id="mode-standard" name="rangeMode" value="standard" checked>
@@ -187,39 +245,62 @@
                 </div>
             </div>
 
+            <!-- Основная область отображения с датчиками диапазона -->
             <main class="main-display">
-                <div class="gauge-container">
-                    <svg class="circle-progress" viewBox="0 0 280 280">
-                        <circle class="circle-bg" cx="140" cy="140" r="120"></circle>
-                        <circle id="gauge-fill" class="circle-val" cx="140" cy="140" r="120"></circle>
-                    </svg>
-                    
-                    <div class="gauge-content">
-                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px;" data-i18n="estimatedRange">Estimated Range</div>
-                        <div class="gauge-value" id="range-display">0</div>
-                        <span class="gauge-unit" data-i18n="kilometers">kilometers</span>
-                        <div class="gauge-status" id="gauge-status">Good Range</div>
-                    </div>
-                </div>
-                
-                <div class="gauge-footer">
-                    <div class="footer-item border-right">
-                        <div class="footer-label" data-i18n="currentBattery">Current Battery</div>
-                        <div class="footer-val">
-                            <i class="fa-solid fa-battery-half"></i> <span id="footer-battery">65%</span>
+                <div class="gauges-wrapper">
+                    <!-- ЛЕВЫЙ ДАТЧИК: Отображение расчётного диапазона -->
+                    <div class="gauge-with-footer">
+                        <!-- Круговой индикатор прогресса -->
+                        <div class="gauge-container">
+                            <svg class="circle-progress" viewBox="0 0 280 280">
+                                <!-- Фоновый круг -->
+                                <circle class="circle-bg" cx="140" cy="140" r="120"></circle>
+                                <!-- Анимированный круг заполнения -->
+                                <circle id="gauge-fill" class="circle-val" cx="140" cy="140" r="120"></circle>
+                            </svg>
+                            
+                            <!-- Содержимое центра датчика -->
+                            <div class="gauge-content">
+                                <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px;" data-i18n="estimatedRange">Estimated Range</div>
+                                <div class="gauge-value" id="range-display">0</div>
+                                <span class="gauge-unit" data-i18n="kilometers">kilometers</span>
+                                <div class="gauge-status" id="gauge-status">Good Range</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Нижней колонтитул датчика с дополнительной информацией -->
+                        <div class="gauge-footer">
+                            <div class="footer-item border-right">
+                                <div class="footer-label" data-i18n="currentBattery">Current Battery</div>
+                                <div class="footer-val">
+                                    <i class="fa-solid fa-battery-half" id="battery-icon"></i> <span id="footer-battery">65%</span>
+                                </div>
+                            </div>
+                            <div class="footer-item">
+                                <div class="footer-label" data-i18n="maxRange">Max Range</div>
+                                <div class="footer-val"><span id="footer-max-range">573</span> km</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="footer-item">
-                        <div class="footer-label" data-i18n="maxRange">Max Range</div>
-                        <div class="footer-val"><span id="footer-max-range">573</span> km</div>
+
+                    <!-- ПРАВЫЙ ДАТЧИК: Отображение расхода энергии (Расширенный режим) -->
+                    <div class="gauge-container consumption-container" id="consumption-gauge" style="display: none;">
+                        <div class="gauge-content">
+                            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; display: flex; align-items: center; justify-content: center; gap: 8px;" data-i18n="consumption" data-i18n-keep-html><i class="fa-solid fa-bolt" style="color: #fbbf24;"></i>Consumption</div>
+                            <div class="gauge-value" id="consumption-display">0</div>
+                            <span class="gauge-unit">kWh/100km</span>
+                            <div class="gauge-status" id="consumption-status">Efficient</div>
+                        </div>
                     </div>
                 </div>
             </main>
 
         </div>
 
+        <!-- ПРАВЫЙ РАЗДЕЛ: Ползунки управления и кнопки -->
         <div class="controls-row">
             
+            <!-- Универсальный элемент управления ползунком батареи -->
             <div class="control-group">
                 <div class="control-label">
                     <i class="fa-solid fa-battery-half"></i> <span data-i18n="sidebarBattery">Battery Level</span>
@@ -228,7 +309,9 @@
                 <input type="range" id="battery-slider" min="0" max="100" value="65">
             </div>
 
+            <!-- ЭЛЕМЕНТЫ УПРАВЛЕНИЯ СТАНДАРТНОГО РЕЖИМА -->
             <div id="standard-controls" class="contents-wrapper">
+                <!-- Селектор нагрузки веса -->
                 <div class="control-group">
                     <div class="control-label"><i class="fa-solid fa-weight-hanging"></i> <span data-i18n="sidebarWeight">Weight load</span></div>
                     <div class="pill-group" id="weight-group">
@@ -238,6 +321,7 @@
                     </div>
                 </div>
 
+                <!-- Селектор сезона -->
                 <div class="control-group">
                     <div class="control-label"><i class="fa-regular fa-snowflake"></i> <span data-i18n="sidebarSeason">Season</span></div>
                     <div class="pill-group" id="season-group">
@@ -247,6 +331,7 @@
                     </div>
                 </div>
 
+                <!-- Селектор условий вождения -->
                 <div class="control-group">
                     <div class="control-label"><i class="fa-solid fa-road"></i> <span data-i18n="sidebarConditions">Conditions</span></div>
                     <div class="pill-group" id="road-group">
@@ -256,6 +341,7 @@
                     </div>
                 </div>
 
+                <!-- Селектор режима вождения -->
                 <div class="control-group">
                     <div class="control-label"><i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Mode</span></div>
                     <div class="pill-group" id="mode-group">
@@ -265,6 +351,7 @@
                     </div>
                 </div>
 
+                <!-- Переключатель климат-контроля -->
                 <div class="control-group">
                     <div class="control-label"><i class="fa-solid fa-wind"></i> <span data-i18n="sidebarClimate">Climate</span></div>
                     <div class="climate-toggle">
@@ -274,27 +361,31 @@
                 </div>
             </div>
 
+            <!-- ЭЛЕМЕНТЫ УПРАВЛЕНИЯ РАСШИРЕННОГО РЕЖИМА -->
             <div id="extended-controls" class="contents-wrapper" style="display: none;">
                 
+                <!-- Ползунок скорости -->
                 <div class="control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-gauge-high"></i> <span data-i18n="speed">Speed</span>
-                        <span class="label-val" id="val-speed">90 km/h</span>
+                        <span class="label-val" id="val-speed">50 km/h</span>
                     </div>
-                    <input type="range" id="speed-slider" min="30" max="180" value="90">
+                    <input type="range" id="speed-slider" min="30" max="180" value="50">
                 </div>
 
+                <!-- Ползунок полезной нагрузки (вес) -->
                 <div class="control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-weight-hanging"></i> <span data-i18n="payload">Payload</span>
                         <span class="label-val" id="val-ext-weight">75 kg</span>
                     </div>
-                    <input type="range" id="ext-weight-slider" min="0" max="500" step="5" value="75">
+                    <input type="range" id="ext-weight-slider" min="50" max="500" step="5" value="75">
                     <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
-                        <span>0 kg</span><span>500 kg</span>
+                        <span>50 kg</span><span>500 kg</span>
                     </div>
                 </div>
 
+                <!-- Ползунок размера колёс с чекбоксом -->
                 <div class="control-group" id="group-wheels">
                     <div class="control-label">
                         <div style="display:flex; align-items:center;">
@@ -309,6 +400,7 @@
                     </div>
                 </div>
 
+                <!-- Ползунок температуры -->
                 <div class="control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature">Temperature</span>
@@ -317,6 +409,7 @@
                     <input type="range" id="temp-slider" min="-20" max="40" value="20">
                 </div>
 
+                <!-- Ползунок скорости ветра с чекбоксом -->
                 <div class="control-group" id="group-wind">
                     <div class="control-label">
                         <div style="display:flex; align-items:center;">
@@ -331,6 +424,7 @@
                     </div>
                 </div>
 
+                <!-- Ползунок давления в шинах с чекбоксом -->
                 <div class="control-group" id="group-tires">
                     <div class="control-label">
                         <div style="display:flex; align-items:center;">
@@ -345,6 +439,7 @@
                     </div>
                 </div>
 
+                <!-- Продвинутый селектор климат-контроля -->
                 <div class="control-group" id="climate-control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Pro</span>
@@ -358,8 +453,10 @@
                 </div>
             </div>
             
+            <!-- СПЕЦИФИЧНЫЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ РАСШИРЕННОГО РЕЖИМА (показывается при выборе вкладки Расширенный) -->
             <div id="mode-ext-controls" class="contents-wrapper" style="display: none;">
                 
+                <!-- Ползунок деградации батареи с чекбоксом -->
                 <div class="control-group" id="group-deg" style="grid-column: span 2;">
                     <div class="control-label">
                         <div style="display:flex; align-items:center;">
@@ -372,6 +469,7 @@
                     <div style="font-size:0.6rem; color:var(--text-muted); margin-top:-5px;" data-i18n="batteryHealthLoss">Battery Health Loss</div>
                 </div>
                 
+                <!-- Селектор режима вождения для расширенного режима -->
                 <div class="control-group" id="group-mode-ext" style="grid-column: span 2;">
                     <div class="control-label">
                         <div style="display:flex; align-items:center;">
@@ -391,9 +489,13 @@
             </div>
     </div>
 
+    <!-- МОДАЛЬНЫЕ ОКНА -->
+    <!-- Модальное окно: Ввод пользовательского автомобиля -->
     <div id="custom-car-modal" class="modal-overlay">
         <div class="modal-content">
             <h3 data-i18n="modalTitle">Enter custom car data</h3>
+            
+            <!-- Ввод максимального диапазона -->
             <div class="input-group">
                 <label data-i18n="modalRangeLabel">Maximum range on a single charge?</label>
                 <div class="input-wrapper">
@@ -402,6 +504,8 @@
                     <span>km</span>
                 </div>
             </div>
+            
+            <!-- Ввод ёмкости батареи -->
             <div class="input-group">
                 <label data-i18n="modalBatteryLabel">How many kilowatts does the battery have?</label>
                 <div class="input-wrapper">
@@ -410,6 +514,8 @@
                     <span>kWh</span>
                 </div>
             </div>
+            
+            <!-- Ввод веса автомобиля -->
             <div class="input-group">
                 <label data-i18n="modalWeightLabel">The weight of an electric car?</label>
                 <div class="input-wrapper">
@@ -418,6 +524,8 @@
                     <span>kg</span>
                 </div>
             </div>
+            
+            <!-- Кнопки модального окна -->
             <div class="modal-buttons">
                 <button class="modal-btn cancel" onclick="closeCustomModal()" data-i18n="modalCancel">Cancel</button>
                 <button class="modal-btn done" onclick="applyCustomCar()" data-i18n="modalDone">Done</button>
@@ -425,11 +533,270 @@
         </div>
     </div>
 
-    <script src="data.js"></script>
-    <script src="brands.js"></script>
-    <script src="standard.js"></script>
-    <script src="extended.js"></script>
-    <script src="i18n.js"></script>
-    <script src="script.js"></script>
+    <!-- Модальное окно: Отображение информации об автомобиле -->
+    <div id="info-car-modal" class="modal-overlay">
+        <div class="modal-content car-info-modal">
+            <!-- Заголовок информации об автомобиле с логотипом и кнопкой закрытия -->
+            <div class="car-info-header">
+                <div class="car-info-title">
+                    <img id="info-car-logo" src="" alt="Brand Logo" class="info-car-logo">
+                    <div>
+                        <h3 id="info-car-name">Car Name</h3>
+                        <p id="info-car-brand" class="info-car-brand-text">Brand</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" onclick="closeInfoCarModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Сетка спецификаций автомобиля -->
+            <div class="car-specs-grid">
+                <!-- Спецификация максимального диапазона -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-road"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="maxRange">Max Range</div>
+                        <div class="spec-value" id="info-car-range">520 km</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация ёмкости батареи -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-battery-full"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="currentBattery">Battery</div>
+                        <div class="spec-value" id="info-car-battery">77 kWh</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация веса автомобиля -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-weight-hanging"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoWeight">Weight</div>
+                        <div class="spec-value" id="info-car-weight">2050 kg</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация мощности двигателя -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-bolt"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoPower">Power</div>
+                        <div class="spec-value" id="info-car-power">150 kW</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация ускорения 0-100 -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-stopwatch"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoAcceleration">0-100 km/h</div>
+                        <div class="spec-value" id="info-car-acceleration">8.5 s</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация максимальной скорости -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-tachometer-alt"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoTopSpeed">Top Speed</div>
+                        <div class="spec-value" id="info-car-topspeed">160 km/h</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация зарядки DC -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-charging-station"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoCharging">DC Charging</div>
+                        <div class="spec-value" id="info-car-charging">125 kW</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация типа привода -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-cogs"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoDriveType">Drive Type</div>
+                        <div class="spec-value" id="info-car-drivetype">RWD</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация количества мест -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-users"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoSeats">Seats</div>
+                        <div class="spec-value" id="info-car-seats">5</div>
+                    </div>
+                </div>
+                
+                <!-- Спецификация года выпуска -->
+                <div class="spec-item">
+                    <i class="fa-solid fa-calendar"></i>
+                    <div>
+                        <div class="spec-label" data-i18n="infoYear">Year</div>
+                        <div class="spec-value" id="info-car-year">2021-2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ИНИЦИАЛИЗАЦИЯ СКРИПТОВ -->
+    <!-- Данные и информация об автомобилях -->
+    <script src="js/cars/data.js"></script>
+    <script src="js/cars/brands.js"></script>
+    
+    <!-- Формулы расчётов -->
+    <script src="js/formulas/standard.js"></script>
+    <script src="js/formulas/extended.js"></script>
+    <script src="js/formulas/consumption.js"></script>
+    
+    <!-- Локализация -->
+    <script src="js/languages/i18n.js"></script>
+    
+    <!-- Основные модули приложения -->
+    <script src="js/core/config.js"></script>
+    <script src="js/core/dom.js"></script>
+    <script src="js/core/utils.js"></script>
+    <script src="js/formulas/calculations.js"></script>
+    <script src="js/cars/carSelector.js"></script>
+    <script src="js/ui/modals.js"></script>
+    <script src="js/ui/starfield.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/core/eventHandlers.js"></script>
+    <script src="js/languages/localization.js"></script>
+    
+    <!-- Инициализация приложения -->
+    <script src="js/core/main.js"></script>
+
+    <!-- Модальное окно: О проекте -->
+    <div id="about-modal" class="modal-overlay">
+        <div class="modal-content about-content">
+            <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="aboutTitle">About</span></h3>
+            
+            <!-- Введение в проект -->
+            <div class="about-section">
+                <p data-i18n="aboutText1">This site was developed as part of a bachelor's degree qualification work and is a web application for calculating the estimated range of an electric vehicle.</p>
+            </div>
+
+            <!-- Цели проекта -->
+            <div class="about-section">
+                <p data-i18n="aboutText2">The goal of the project is to provide the user with a convenient tool for assessing the possible distance of travel on an electric vehicle, taking into account key parameters such as:</p>
+                <ul>
+                    <li data-i18n="aboutParam1">battery charge level,</li>
+                    <li data-i18n="aboutParam2">battery capacity,</li>
+                    <li data-i18n="aboutParam3">driving style and operating conditions,</li>
+                    <li data-i18n="aboutParam4">additional factors affecting energy consumption.</li>
+                </ul>
+            </div>
+
+            <!-- Особенности проекта -->
+            <div class="about-section">
+                <p data-i18n="aboutText3">Within the project, the following were implemented:</p>
+                <ul>
+                    <li data-i18n="aboutImpl1">intuitive and user-friendly interface,</li>
+                    <li data-i18n="aboutImpl2">range calculation algorithm,</li>
+                    <li data-i18n="aboutImpl3">adaptive design for various devices,</li>
+                    <li data-i18n="aboutImpl4">the ability to provide feedback to the developer.</li>
+                </ul>
+            </div>
+
+            <!-- Назначение проекта -->
+            <div class="about-section">
+                <p data-i18n="aboutText4">The project has an educational and practical character and can be used as a demonstration example of a web application in the field of electric transport.</p>
+            </div>
+
+            <!-- Кнопка возврата -->
+            <button class="modal-btn close-btn" onclick="closeAboutModal()" data-i18n="contactsBackButton">Back to Calculator</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Информация -->
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content about-content">
+            <h3><i class="fa-solid fa-lightbulb"></i> <span data-i18n="infoTitle">Info</span></h3>
+            
+            <div class="about-section">
+                <p data-i18n="infoText1">This is an interactive calculator for estimating the range of electric vehicles.</p>
+            </div>
+
+            <div class="about-section">
+                <p data-i18n="infoText2">You can:</p>
+                <ul>
+                    <li data-i18n="infoFunc1">Select your electric vehicle from the database,</li>
+                    <li data-i18n="infoFunc2">Adjust battery charge level,</li>
+                    <li data-i18n="infoFunc3">Set driving conditions and style,</li>
+                    <li data-i18n="infoFunc4">View real-time range calculation.</li>
+                </ul>
+            </div>
+
+            <button class="modal-btn close-btn" onclick="closeInfoModal()" data-i18n="contactsBackButton">Back to Calculator</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Контактная информация -->
+    <div id="contacts-modal" class="modal-overlay">
+        <div class="modal-content contacts-content">
+            <h3><i class="fa-solid fa-phone"></i> <span data-i18n="contactsTitle">Contact Us</span></h3>
+            
+            <!-- Контакт электронной почты -->
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label" data-i18n="contactsEmail">EMAIL</div>
+                    <a href="mailto:eror2k18@gmail.com" class="contact-value">eror2k18@gmail.com</a>
+                </div>
+            </div>
+
+            <!-- Контакт GitHub -->
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fa-brands fa-github"></i>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label" data-i18n="contactsGithub">GITHUB</div>
+                    <a href="https://github.com/fetbol125" class="contact-value" target="_blank" data-i18n="contactsGithubLink">Visit on GitHub</a>
+                </div>
+            </div>
+
+            <!-- Контакт LinkedIn -->
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fa-brands fa-linkedin"></i>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-label" data-i18n="contactsLinkedin">LINKEDIN</div>
+                    <a href="https://linkedin.com" class="contact-value" target="_blank" data-i18n="contactsLinkedinLink">Visit on LinkedIn</a>
+                </div>
+            </div>
+
+            <!-- Кнопка возврата -->
+            <button class="modal-btn close-btn" onclick="closeContactsModal()" data-i18n="contactsBackButton">Back to Calculator</button>
+        </div>
+    </div>
 </body>
+
+<!-- НИЖНИЙ КОЛОНТИТУЛ СТРАНИЦЫ -->
+<footer class="footer">
+    <div class="footer-content">
+        <!-- Уведомление об авторских правах -->
+        <p>&copy; 2026 EV Range Calculator. All rights reserved.</p>
+        
+        <!-- Ссылка О проекте -->
+        <a href="#info" class="footer-link" onclick="openAboutModal(); return false;" data-i18n="aboutLink">About</a>
+        
+        <!-- Ссылка Информация -->
+        <a href="#info" class="footer-link" onclick="openInfoModal(); return false;" data-i18n="infoLink">Info</a>
+        
+        <!-- Ссылка Контакты -->
+        <a href="#" class="footer-link" onclick="openContactsModal(); return false;" data-i18n="contactsLink">Contact</a>
+    </div>
+</footer>
+
 </html>

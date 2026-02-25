@@ -1,0 +1,24 @@
+/* Основной CSS файл - Импортирует все модули */
+
+/* Переменные */
+@import url('variables.css');
+
+/* Основные стили UI */
+@import url('ui/background.css');
+@import url('ui/mobile.css');
+
+/* Макет страницы */
+@import url('layout/header.css');
+@import url('layout/sidebar.css');
+@import url('layout/footer.css');
+@import url('layout/layout.css');
+
+/* Компоненты */
+@import url('components/car-selector.css');
+@import url('components/mode-toggle.css');
+@import url('components/gauge.css');
+@import url('components/controls.css');
+
+/* Модальные окна */
+@import url('modals/modal.css');
+@import url('modals/carInfoModal.css');

@@ -1,0 +1,238 @@
+@media (max-width: 768px) {
+    body {
+        align-items: stretch;
+    }
+
+    .header {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        position: sticky;
+        top: 0;
+        background: rgba(5, 11, 20, 0.95);
+        backdrop-filter: blur(10px);
+    }
+
+    .logo {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .logo-text h1 { font-size: 1rem; }
+    .logo-text p { font-size: 0.7rem; }
+
+    .language-dropdown-container {
+        width: 100%;
+        display: none;
+    }
+
+    .language-trigger {
+        width: 100%;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+    }
+
+    .language-menu {
+        width: 100%;
+        right: 0;
+    }
+
+    .dashboard {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 16px;
+        width: 100%;
+        padding: 10px 12px 24px;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .center-column {
+        grid-column: 1;
+        gap: 14px;
+    }
+
+    .top-bar {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .car-block {
+        width: 100%;
+        padding: 12px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .car-info {
+        width: 100%;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .car-specs {
+        width: 100%;
+        justify-content: space-between;
+        gap: 14px;
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .car-specs .spec-box {
+        flex: 1;
+        min-width: 140px;
+        text-align: left;
+    }
+
+    #car-arrow {
+        align-self: flex-end;
+        margin-top: 4px;
+        font-size: 1.1rem;
+    }
+
+    .toggle-block {
+        width: 100%;
+        padding: 12px;
+        justify-content: center;
+    }
+
+    .mode-toggle {
+        width: 100%;
+    }
+
+    .main-display {
+        width: 100%;
+        padding: 18px 14px;
+        min-height: 340px;
+    }
+
+    .gauge-container {
+        width: 240px;
+        height: 240px;
+    }
+
+    .gauge-value { font-size: 3.2rem; }
+    .gauge-unit { font-size: 0.8rem; }
+    .gauge-status { font-size: 0.8rem; }
+
+    .gauges-wrapper {
+        gap: 20px !important;
+    }
+
+    .gauge-footer {
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .footer-item {
+        text-align: center;
+        width: 100%;
+    }
+
+    .footer-item.border-right {
+        border-right: none;
+        padding-right: 0;
+        border-bottom: 1px solid #334155;
+        padding-bottom: 8px;
+    }
+
+    .footer-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .controls-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .control-group {
+        width: 100%;
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .control-label {
+        font-size: 0.9rem;
+    }
+
+    .pill-group,
+    #ext-climate-group {
+        height: 44px;
+        padding: 4px;
+    }
+
+    .pill-group::before,
+    #ext-climate-group::before {
+        top: 4px;
+        left: 4px;
+        height: calc(100% - 8px);
+        border-radius: 10px;
+    }
+
+    .pill-group .pill-btn,
+    #ext-climate-group .pill-btn {
+        font-size: 0.95rem;
+        padding: 0 10px;
+    }
+
+    .climate-toggle {
+        height: 44px;
+    }
+
+    .climate-toggle .climate-btn {
+        font-size: 0.95rem;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        height: 16px;
+        width: 16px;
+    }
+    
+    input[type=range]::-moz-range-thumb {
+        height: 16px;
+        width: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 12px;
+    }
+
+    .car-block {
+        padding: 10px 12px;
+    }
+
+    .car-thumb {
+        width: 52px;
+        height: 52px;
+    }
+
+    .car-specs {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .main-display {
+        padding: 16px 12px;
+        min-height: 300px;
+    }
+
+    .gauge-container {
+        width: 210px;
+        height: 210px;
+    }
+
+    .gauge-value { font-size: 2.8rem; }
+}

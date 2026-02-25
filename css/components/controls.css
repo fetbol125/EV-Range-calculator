@@ -1,0 +1,412 @@
+/* Controls */
+.controls-row { 
+    grid-column: 1 / -1; 
+    display: grid; 
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 15px; 
+    align-items: stretch;
+}
+
+.control-group { 
+    background-color: var(--panel-bg); 
+    border: 1px solid #1e293b; 
+    border-radius: var(--border-radius); 
+    padding: 12px 15px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    justify-content: center; 
+    transition: border-color 0.2s;
+}
+
+.control-group:hover { 
+    border-color: #334155; 
+}
+
+.contents-wrapper { 
+    display: contents; 
+}
+
+.control-label { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    margin-bottom: 0; 
+    font-weight: 500;
+}
+
+.control-label i { 
+    color: var(--accent); 
+    font-size: 0.9rem; 
+    opacity: 0.8; 
+}
+
+.label-val { 
+    margin-left: auto; 
+    color: var(--accent); 
+    font-size: 0.8rem; 
+    font-weight: 600; 
+}
+
+/* Sliders */
+input[type=range] { 
+    width: 100%; 
+    appearance: none; 
+    -webkit-appearance: none; 
+    background: transparent; 
+    margin: 5px 0; 
+}
+
+input[type=range]::-webkit-slider-thumb { 
+    -webkit-appearance: none; 
+    height: 18px; 
+    width: 18px; 
+    border-radius: 50%; 
+    background: #e2e8f0; 
+    cursor: pointer; 
+    margin-top: -7px; 
+    border: 3px solid #1e293b; 
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background: #fff;
+}
+
+input[type=range]::-webkit-slider-thumb:active {
+    transform: scale(0.95);
+}
+
+input[type=range]::-webkit-slider-runnable-track { 
+    width: 100%; 
+    height: 4px; 
+    cursor: pointer; 
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent) var(--percent, 50%), #334155 var(--percent, 50%)); 
+    border-radius: 2px; 
+}
+
+input[type=range]::-moz-range-thumb {
+    height: 18px; 
+    width: 18px; 
+    border-radius: 50%; 
+    background: #e2e8f0; 
+    cursor: pointer; 
+    border: 3px solid #1e293b; 
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+input[type=range]::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    background: #fff;
+}
+
+input[type=range]::-moz-range-thumb:active {
+    transform: scale(0.95);
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%; 
+    height: 4px; 
+    cursor: pointer; 
+    background: #334155;
+    border-radius: 2px; 
+}
+
+/* Pill Buttons */
+.pill-group { 
+    display: flex;
+    position: relative; 
+    background: #0b1120; 
+    border-radius: 12px; 
+    padding: 3px; 
+    gap: 3px; 
+    align-items: center; 
+    flex-grow: 1; 
+    height: 36px; 
+    overflow: hidden; 
+    z-index: 1; 
+}
+
+.pill-group::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(var(--slider-width, 33.33%) - 6px); 
+    transform: translateX(var(--slider-x, 0));
+    height: calc(100% - 6px);
+    background: #1e293b; 
+    border-radius: 9px;
+    z-index: 1;
+    transition: transform 0.3s ease, width 0.3s ease;
+}
+
+.pill-btn { 
+    flex: 1; 
+    border: none; 
+    background: transparent; 
+    color: var(--text-muted); 
+    padding: 0 5px; 
+    height: 100%; 
+    border-radius: 9px; 
+    font-size: 0.8rem; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    text-align: center; 
+    white-space: nowrap; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 500;
+    position: relative; 
+    z-index: 2; 
+}
+
+.pill-btn:hover { 
+    color: #fff; 
+    background: rgba(255,255,255,0.05); 
+}
+
+.pill-btn.active { 
+    background: transparent; 
+    color: #fff; 
+    box-shadow: none; 
+    border: none; 
+    font-weight: 600;
+}
+
+.pill-btn[data-value="eco"].active { 
+    color: var(--success); 
+}
+
+.pill-btn[data-value="sport"].active { 
+    color: var(--danger); 
+}
+
+/* Climate Buttons */
+.climate-toggle { 
+    display: flex; 
+    gap: 8px; 
+    flex-grow: 1; 
+    align-items: stretch; 
+    height: 36px; 
+}
+
+.climate-btn { 
+    flex: 1; 
+    padding: 0 10px; 
+    border-radius: 12px; 
+    border: 1px solid #334155; 
+    background: transparent; 
+    color: var(--text-muted); 
+    cursor: pointer; 
+    font-size: 0.8rem; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.climate-btn:hover { 
+    border-color: #64748b; 
+}
+
+.climate-btn.active.on { 
+    background: rgba(239, 68, 68, 0.15); 
+    border-color: var(--danger); 
+    color: var(--danger); 
+}
+
+.climate-btn.active.off { 
+    background: rgba(34, 197, 94, 0.15); 
+    border-color: var(--success); 
+    color: var(--success); 
+}
+
+/* Extended Climate Control */
+#ext-climate-group {
+    display: flex; 
+    background: #0b1120; 
+    border-radius: 12px; 
+    padding: 3px; 
+    gap: 3px; 
+    align-items: center; 
+    flex-grow: 1; 
+    height: 36px; 
+    position: relative; 
+    overflow: hidden; 
+    z-index: 1; 
+}
+
+#ext-climate-group::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(var(--slider-width, 33.33%) - 6px);
+    transform: translateX(var(--slider-x, 0));
+    height: calc(100% - 6px);
+    background: #1e293b; 
+    border-radius: 9px;
+    z-index: 1;
+    transition: transform 0.3s ease, width 0.3s ease; 
+}
+
+#ext-climate-group .pill-btn {
+    flex: 1; 
+    border: none;
+    background: transparent;
+    color: var(--text-muted); 
+    padding: 0 5px; 
+    height: 100%; 
+    border-radius: 9px; 
+    font-size: 0.8rem; 
+    cursor: pointer; 
+    transition: all 0.2s; 
+    text-align: center; 
+    white-space: nowrap; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: 500;
+    position: relative;
+    z-index: 2; 
+}
+
+#ext-climate-group .pill-btn.active {
+    background: transparent;
+    color: #fff;
+    font-weight: 600;
+}
+
+#ext-climate-group .pill-btn[data-value="heater"].active { 
+    color: var(--danger); 
+}
+
+#ext-climate-group .pill-btn[data-value="ac"].active { 
+    color: var(--warning); 
+}
+
+#ext-climate-group .pill-btn[data-value="off"].active { 
+    color: var(--success); 
+}
+
+/* Feature Checkbox */
+.feature-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    margin-right: 8px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.feature-checkbox:checked {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+
+.feature-checkbox:checked::after {
+    content: '✔';
+    position: absolute;
+    color: #000;
+    font-size: 10px;
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+.control-group.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.control-group.disabled .control-label {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+.control-group.disabled .control-label i,
+.control-group.disabled .control-label {
+    color: var(--text-muted);
+}
+
+/* Grid Layout */
+.controls-row > .control-group:nth-child(1) { 
+    grid-column: 1 / -1; 
+}
+
+/* Standard Mode Layout */
+#standard-controls .control-group:nth-child(1) { grid-column: span 2; }
+#standard-controls .control-group:nth-child(2) { grid-column: span 2; }
+#standard-controls .control-group:nth-child(3) { grid-column: span 2; }
+#standard-controls .control-group:nth-child(4) { grid-column: span 3; }
+#standard-controls .control-group:nth-child(5) { grid-column: span 3; }
+
+/* Extended Mode Layout */
+#extended-controls .control-group:nth-child(1),
+#extended-controls .control-group:nth-child(2),
+#extended-controls .control-group:nth-child(3),
+#extended-controls .control-group:nth-child(4),
+#extended-controls .control-group:nth-child(5),
+#extended-controls .control-group:nth-child(6),
+#extended-controls .control-group:nth-child(7) {
+    grid-column: span 2; 
+}
+
+#mode-ext-controls {
+    grid-column: 1 / -1;
+    display: contents;
+}
+
+#mode-ext-controls .control-group {
+    grid-column: span 2; 
+}
+
+@media (max-width: 1100px) {
+    #standard-controls .control-group:nth-child(1) { grid-column: span 3; }
+    #standard-controls .control-group:nth-child(2) { grid-column: span 3; }
+    #standard-controls .control-group:nth-child(3) { grid-column: span 6; }
+
+    #extended-controls .control-group:nth-child(1),
+    #extended-controls .control-group:nth-child(2),
+    #extended-controls .control-group:nth-child(3),
+    #extended-controls .control-group:nth-child(4),
+    #extended-controls .control-group:nth-child(5),
+    #extended-controls .control-group:nth-child(6),
+    #extended-controls .control-group:nth-child(7) {
+        grid-column: span 3;
+    }
+    
+    #mode-ext-controls .control-group {
+        grid-column: span 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .controls-row { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .control-group,
+    .controls-row > .control-group:nth-child(1),
+    #extended-controls .control-group,
+    #standard-controls .control-group {
+        grid-column: 1 / -1 !important;
+    }
+    
+    #mode-ext-controls .control-group {
+        grid-column: 1 / -1 !important;
+    }
+}

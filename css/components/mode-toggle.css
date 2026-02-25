@@ -1,0 +1,73 @@
+/* Mode Toggle Switch */
+.toggle-block {
+    background-color: var(--panel-bg); 
+    border: 1px solid #1e293b; 
+    padding: 20px;
+    border-radius: var(--border-radius);
+    display: flex; 
+    align-items: center; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mode-toggle {
+    display: flex;
+    position: relative;
+    width: 270px;
+    background-color: #0b1120;
+    border: 1px solid #334155;
+    border-radius: 10px; 
+    padding: 3px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    height: 48px;
+}
+
+.mode-toggle input[type="radio"] {
+    display: none;
+}
+
+.mode-toggle label {
+    flex: 1; 
+    padding: 0 15px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-muted); 
+    font-size: 1rem; 
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease; 
+}
+
+.mode-toggle label:hover {
+    color: #fff;
+}
+
+.mode-toggle input[type="radio"]:checked + label {
+    color: white; 
+    font-weight: 600; 
+}
+
+.mode-toggle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    height: calc(100% - 6px); 
+    background: #1e293b; 
+    border-radius: 8px;
+    z-index: 1;
+    transition: transform 0.3s ease-in-out; 
+}
+
+.mode-toggle.extended-active::before {
+    transform: translateX(100%);
+}
+
+@media (max-width: 768px) {
+    .mode-toggle { 
+        width: 100%; 
+    }
+}

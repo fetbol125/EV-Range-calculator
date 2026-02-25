@@ -1,0 +1,110 @@
+/* Header */
+.header {
+    width: 100%;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(5, 11, 20, 0.8); 
+    backdrop-filter: blur(5px);
+    z-index: 10;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+}
+
+.logo i { 
+    color: var(--accent); 
+    font-size: 1.4rem; 
+}
+
+.logo-text h1 { 
+    font-size: 1.1rem; 
+    font-weight: 600; 
+    color: var(--accent); 
+    margin-bottom: 2px;
+}
+
+.logo-text p { 
+    font-size: 0.75rem; 
+    color: var(--text-muted); 
+}
+
+/* Language Dropdown */
+.language-dropdown-container {
+    position: relative;
+    user-select: none;
+    z-index: 1000;
+}
+
+.language-trigger {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.language-trigger:hover {
+    color: var(--text-main);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.language-menu {
+    position: absolute;
+    top: 130%;
+    right: 0;
+    width: 150px;
+    background-color: var(--panel-bg);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+.language-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.language-option:hover {
+    background-color: rgba(6, 182, 212, 0.1);
+    color: var(--accent);
+}
+
+.language-option.active {
+    background: #1e293b; 
+    color: var(--text-main);
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#lang-arrow {
+    transition: transform 0.3s ease-in-out;
+}
+
+.language-dropdown-container:has(.language-menu.show) #lang-arrow {
+    transform: rotate(180deg);
+}

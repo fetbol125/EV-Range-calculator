@@ -1,0 +1,268 @@
+/* ============================================
+   MAIN GAUGE DISPLAY CONTAINER
+   ============================================ */
+
+/* Основной контейнер для отображения датчиков */
+.main-display { 
+    background-color: var(--panel-bg); 
+    border-radius: var(--border-radius); 
+    padding: 30px; 
+    border: 1px solid #1e293b; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    min-height: 450px; 
+    position: relative;
+    gap: 0; 
+    overflow: visible;
+}
+
+/* Обертка для расположения двух датчиков рядом */
+.gauges-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 150px; /* Расстояние между датчиками */
+    flex-wrap: wrap; /* Переносит датчики на новую строку на мобильных устройствах */
+    width: 100%;
+}
+
+/* Контейнер для датчика с подстрочником (footer) */
+.gauge-with-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+
+/* ============================================
+   GAUGE CONTAINER & CIRCULAR PROGRESS
+   ============================================ */
+
+/* Контейнер для круглого датчика с SVG */
+.gauge-container { 
+    position: relative;
+    width: 320px; 
+    height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+}
+
+/* SVG элемент отображение прогресса */
+.circle-progress { 
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    transform: rotate(-90deg); /* Разворот для начала сверху */
+    z-index: 1; 
+}
+
+/* Фоновый круг (статичный) */
+.circle-bg { 
+    fill: none; 
+    stroke: #1e293b; /* Темный цвет фона */
+    stroke-width: 12; 
+}
+
+/* Активный круг прогресса (динамический) */
+.circle-val { 
+    fill: none; 
+    stroke: #334155; /* Цвет значения */
+    stroke-width: 12; 
+    stroke-linecap: round; /* Закругленные концы линии */
+    stroke-dasharray: 750; /* Длина окружности */
+    stroke-dashoffset: 100; /* Начальное смещение (прогресс) */
+    transition: stroke-dashoffset 0.5s ease; /* Плавная анимация при изменении значения */
+}
+
+
+/* ============================================
+   GAUGE CONTENT & TEXT STYLING
+   ============================================ */
+
+/* Основной контент датчика (размещается в центре круга) */
+.gauge-content { 
+    position: relative;
+    z-index: 2; /* Выше фонового круга */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Заголовок датчика (первый div - описание метрики) */
+.gauge-content > div:first-child {
+    font-size: 0.85rem !important;
+    color: var(--text-muted);
+    margin-bottom: 0 !important; 
+    text-transform: uppercase; /* Прописные буквы */
+    letter-spacing: 1px; /* Увеличенный интервал между буквами */
+    line-height: 1;
+}
+
+/* Основное числовое значение датчика */
+.gauge-value { 
+    font-size: 5rem; /* Большой размер */
+    font-weight: 700; /* Жирный текст */
+    color: var(--accent); /* Цветное выделение */
+    line-height: 1; 
+    letter-spacing: -2px; /* Отрицательный интервал для компактности */
+    text-shadow: none; 
+    margin: 5px 0;
+}
+
+/* Единица измерения (km/h, l/100km и т.д.) */
+.gauge-unit { 
+    font-size: 0.95rem; 
+    color: var(--text-muted); 
+    margin-bottom: 15px; 
+    display: block; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-weight: 500;
+}
+
+
+/* ============================================
+   GAUGE STATUS BADGES
+   ============================================ */
+
+/* Общие стили для бейджика статуса */
+.gauge-status { 
+    padding: 6px 20px; 
+    border-radius: 30px; /* Закругленные углы */
+    font-size: 0.85rem; 
+    display: inline-block; 
+    font-weight: 600; 
+    letter-spacing: 0.5px;
+}
+
+/* Хороший статус (нормальное состояние) */
+.gauge-status.status-good { 
+    color: #cbd5e1; 
+    background: rgba(255, 255, 255, 0.1); 
+    border: 1px solid rgba(255,255,255,0.1); 
+}
+
+/* Предупреждение (повышенное значение) */
+.gauge-status.status-warn { 
+    color: var(--warning); 
+    background: rgba(251, 191, 36, 0.1); 
+    border: 1px solid rgba(251, 191, 36, 0.3); 
+}
+
+/* Опасность (критическое значение) */
+.gauge-status.status-danger { 
+    color: var(--danger); 
+    background: rgba(239, 68, 68, 0.1); 
+    border: 1px solid rgba(239, 68, 68, 0.3); 
+}
+
+
+/* ============================================
+   GAUGE FOOTER (Additional Info)
+   ============================================ */
+
+/* Контейнер нижней информации с дополнительными данными */
+.gauge-footer { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 40px; /* Расстояние между элементами */
+    width: 320px; 
+    margin-top: 25px;
+}
+
+/* Отдельный элемент в footer (например, батарея, температура) */
+.footer-item { 
+    text-align: left; 
+}
+
+/* Элемент footer с разделителем справа */
+.footer-item.border-right { 
+    border-right: 1px solid #334155; 
+    padding-right: 40px; 
+}
+
+/* Заголовок элемента footer */
+.footer-label { 
+    font-size: 0.8rem; 
+    color: var(--text-muted); 
+    margin-bottom: 6px; 
+    text-transform: uppercase; 
+}
+
+/* Значение в footer (число и иконка) */
+.footer-val { 
+    font-size: 1.1rem; 
+    color: #fff; 
+    font-weight: 600; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+
+/* Стилизация иконки и текста значения в footer */
+.footer-val i, 
+.footer-val span { 
+    color: var(--accent); 
+}
+
+/* Иконка батареи и значение батареи с переходом */
+#battery-icon,
+#footer-battery {
+    transition: color 0.5s ease, filter 0.3s ease; /* Плавная смена цвета */
+}
+
+
+/* ============================================
+   CONSUMPTION CONTAINER
+   ============================================ */
+
+/* Контейнер для отображения расхода топлива (только текст, без круга) */
+.consumption-container {
+    width: auto;
+    height: auto;
+    padding: 30px 40px;
+    background: transparent;
+    border: 1px solid #334155;
+    border-radius: 15px;
+    align-self: flex-start;
+    margin-top: 40px;
+}
+
+/* Контент внутри контейнера расхода */
+.consumption-container .gauge-content {
+    width: auto;
+    height: auto;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN (Мобильные устройства)
+   ============================================ */
+
+@media (max-width: 768px) {
+    /* Уменьшенный размер значения на мобильных */
+    .gauge-value { 
+        font-size: 3.5rem; 
+    }
+    
+    /* Меньший размер контейнера датчика на мобильных */
+    .gauge-container { 
+        width: 280px; 
+        height: 280px; 
+    }
+    
+    /* Адаптивная ширина footer на мобильных */
+    .gauge-footer {
+        width: 280px;
+    }
+}
