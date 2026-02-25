@@ -91,7 +91,7 @@ const translations = {
         contactsTitle: "Contact Us",
         contactsEmail: "EMAIL",
         contactsGithub: "GITHUB",
-        contactsGithubLink: "Visit on GitHub",
+        contactsGithubLink: "fetbol125",
         contactsLinkedin: "LINKEDIN",
         contactsLinkedinLink: "Visit on LinkedIn",
         contactsBackButton: "Close",
