@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarMenuHandlers();
     initCarSearch();
     initEnergyConsumersDropdown();
+    initWeatherDropdown();
     initWheelsDropdown();
     initModals();
     
@@ -46,15 +47,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Если картинка уже в кэше браузера
         updateUI();
         updateBatteryThermalStatus();
+        updateWeatherValue();
     } else {
         // Ждём загрузки картинки
         currentCarImg.onload = () => {
             updateUI();
             updateBatteryThermalStatus();
+            updateWeatherValue();
         };
         currentCarImg.onerror = () => {
             updateUI();
             updateBatteryThermalStatus();
+            updateWeatherValue();
         };
     }
 });

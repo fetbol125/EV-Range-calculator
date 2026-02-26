@@ -18,13 +18,15 @@ function initExtendedListeners() {
     const checkWind = document.getElementById('check-wind');
     const checkDeg = document.getElementById('check-deg');
     const checkModeExt = document.getElementById('check-mode-ext');
-    const checkEnergyConsumers = document.getElementById('check-energy-consumers'); 
+    const checkEnergyConsumers = document.getElementById('check-energy-consumers');
+    const checkWeather = document.getElementById('check-weather');
     
     // Группы контролов
     const groupWind = document.getElementById('group-wind');
     const groupDeg = document.getElementById('group-deg'); 
     const groupModeExt = document.getElementById('group-mode-ext');
     const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
+    const groupWeather = document.getElementById('weather-dropdown');
 
     if(speedS) {
         speedS.addEventListener('input', (e) => {
@@ -50,6 +52,7 @@ function initExtendedListeners() {
         state.extTemp = parseInt(e.target.value);
         document.getElementById('val-temp').innerText = state.extTemp + '°C';
         updateBatteryThermalStatus();
+        updateWeatherValue();
         updateUI();
     });
     
@@ -75,6 +78,7 @@ function initExtendedListeners() {
         if(state.extWind > 0) text = '+' + text + ` (${head})`;
         if(state.extWind < 0) text = text + ` (${tail})`;
         document.getElementById('val-wind').innerText = text;
+        updateWeatherValue();
         updateUI();
     });
 
@@ -93,6 +97,7 @@ function initExtendedListeners() {
     if(checkDeg) checkDeg.addEventListener('change', (e) => toggleState(e.target, groupDeg, 'enableDeg')); 
     if(checkModeExt) checkModeExt.addEventListener('change', (e) => toggleState(e.target, groupModeExt, 'enableExtMode'));
     if(checkEnergyConsumers) checkEnergyConsumers.addEventListener('change', (e) => toggleState(e.target, groupEnergyConsumers, 'enableEnergyConsumers'));
+    if(checkWeather) checkWeather.addEventListener('change', (e) => toggleState(e.target, groupWeather, 'enableWeather'));
 
     // Climate кнопки
     const climateGroup = document.getElementById('ext-climate-group');
@@ -120,6 +125,7 @@ function initExtendedListeners() {
     }
     
     setupPillGroup('mode-group-ext', 'extMode');
+    setupPillGroup('precip-group', 'extPrecip');
 }
 
 /**
@@ -144,6 +150,9 @@ function setupPillGroup(groupId, stateKey) {
             updatePillSlider(group, btn);
             
             updateUI();
+            if (stateKey === 'extPrecip') {
+                updateWeatherValue();
+            }
         });
     });
 }
@@ -345,6 +354,28 @@ function initEnergyConsumersDropdown() {
 }
 
 /**
+ * Инициализирует dropdown меню Weather
+ */
+function initWeatherDropdown() {
+    if (weatherTrigger && weatherMenu) {
+        weatherTrigger.addEventListener('click', (e) => {
+            // Не открываем меню при клике на чекбокс
+            if (e.target.id === 'check-weather' || e.target.type === 'checkbox') {
+                return;
+            }
+            e.stopPropagation();
+            weatherMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (weatherMenu && !weatherMenu.contains(e.target) && !weatherTrigger.contains(e.target)) {
+                weatherMenu.classList.remove('show');
+            }
+        });
+    }
+}
+
+/**
  * Инициализирует dropdown меню Wheels
  */
 function initWheelsDropdown() {
@@ -363,5 +394,39 @@ function initWheelsDropdown() {
                 wheelsMenu.classList.remove('show');
             }
         });
+    }
+}
+
+/**
+ * Обновляет отображаемое значение в триггере Weather и сайдбаре
+ */
+function updateWeatherValue() {
+    const t = translations[state.lang];
+    const temp = state.extTemp + '°C';
+    let wind = state.extWind + ' m/s';
+    
+    if (state.extWind > 0) {
+        wind = '+' + wind;
+    }
+    
+    const precipLabels = {
+        none: t.precipNone,
+        rain: t.precipRain,
+        snow: t.precipSnow
+    };
+    const precipText = precipLabels[state.extPrecip] || t.precipNone;
+    
+    const weatherText = `${temp}, ${wind}, ${precipText}`;
+    
+    // Обновляем триггер Weather dropdown
+    const valWeatherEl = document.getElementById('val-weather');
+    if (valWeatherEl) {
+        valWeatherEl.innerText = weatherText;
+    }
+    
+    // Обновляем сайдбар Weather
+    const summaryWeatherEl = document.getElementById('summary-weather');
+    if (summaryWeatherEl) {
+        summaryWeatherEl.innerText = weatherText;
     }
 }

@@ -18,6 +18,8 @@ const WINDOW_HEATING_IMPACT = 0.04;
 const MULTIMEDIA_IMPACT = 0.02;
 const BATTERY_HEATING_IMPACT = 0.05; // Подогрев батареи при t <= 5°C
 const BATTERY_COOLING_IMPACT = 0.04; // Охлаждение батареи при t >= 30°C
+const PRECIP_RAIN_IMPACT = 0.05;
+const PRECIP_SNOW_IMPACT = 0.12;
 const BATTERY_HEATING_THRESHOLD = 5; // Порог включения подогрева
 const BATTERY_COOLING_THRESHOLD = 30; // Порог включения охлаждения
 
@@ -47,6 +49,7 @@ const state = {
     extTires: 1,     
     extDeg: 0,
     extWind: 0,
+    extPrecip: 'none',
     extClimateMode: 'off',
     extMode: 'eco',
     
@@ -61,5 +64,6 @@ const state = {
     enableTires: true,
     enableDeg: true,
     enableExtMode: true,
-    enableEnergyConsumers: true
+    enableEnergyConsumers: true,
+    enableWeather: true
 };

@@ -53,6 +53,7 @@ function setLanguage(newLang) {
     // Обновляем динамические тексты
     updateUI(); 
     updateBatteryThermalStatus();
+    updateWeatherValue();
     
     // Обновляем ползунки после смены языка
     document.querySelectorAll('.pill-group, #ext-climate-group').forEach(group => {

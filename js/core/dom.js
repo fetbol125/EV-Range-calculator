@@ -64,6 +64,11 @@ const energyConsumersTrigger = document.getElementById('energy-consumers-trigger
 const energyConsumersMenu = document.getElementById('energy-consumers-menu');
 const energyConsumersDropdown = document.getElementById('energy-consumers-dropdown');
 
+// Weather Dropdown elements
+const weatherTrigger = document.getElementById('weather-trigger');
+const weatherMenu = document.getElementById('weather-menu');
+const weatherDropdown = document.getElementById('weather-dropdown');
+
 // Wheels Dropdown elements
 const wheelsTrigger = document.getElementById('wheels-trigger');
 const wheelsMenu = document.getElementById('wheels-menu');

@@ -35,6 +35,13 @@ const translations = {
         sidebarTires: "Tire Pressure",
         sidebarDegradation: "Degradation",
 
+        // WEATHER
+        weather: "Weather",
+        precipitation: "Precipitation",
+        precipNone: "none",
+        precipRain: "rain",
+        precipSnow: "snow",
+        
         // ENERGY CONSUMERS
         energyConsumers: "Energy Consumers",
         seatHeating: "Seat/Wheel Heating",
@@ -167,8 +174,13 @@ const translations = {
         sidebarWind: "Vietor",
         sidebarTires: "Tlak v Pneumatikách",
         sidebarDegradation: "Degradácia",
-
-        // ENERGY CONSUMERS
+        // WEATHER
+        weather: "Počasie",
+        precipitation: "Zrážky",
+        precipNone: "žiadne",
+        precipRain: "dážď",
+        precipSnow: "sneh",
+            // ENERGY CONSUMERS
         energyConsumers: "Spotrebitelia Energie",
         seatHeating: "Vyhrievanie Sedačiek/Volantu",
         windowHeating: "Vyhrievanie Skíel",
@@ -298,8 +310,13 @@ const translations = {
         sidebarWind: "Ветер",
         sidebarTires: "Давл. в Шинах",
         sidebarDegradation: "Деградация",
-
-        // ENERGY CONSUMERS
+        // WEATHER
+        weather: "Погода",
+        precipitation: "Осадки",
+        precipNone: "нет",
+        precipRain: "дождь",
+        precipSnow: "снег",
+            // ENERGY CONSUMERS
         energyConsumers: "Потребители Энергии",
         seatHeating: "Подогрев Сидений/Руля",
         windowHeating: "Подогрев Стёкол",
@@ -431,8 +448,13 @@ const translations = {
         sidebarWind: "Вітер",
         sidebarTires: "Тиск в Шинах",
         sidebarDegradation: "Деградація",
-
-        // ENERGY CONSUMERS
+        // WEATHER
+        weather: "Погода",
+        precipitation: "Опади",
+        precipNone: "немає",
+        precipRain: "дощ",
+        precipSnow: "сніг",
+            // ENERGY CONSUMERS
         energyConsumers: "Споживачі Енергії",
         seatHeating: "Підігрів Сидінь/Керма",
         windowHeating: "Підігрів Скла",

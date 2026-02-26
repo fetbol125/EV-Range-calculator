@@ -132,6 +132,15 @@ function calculateExtendedRangeForConsumption(baseRange, s, factors, carWeight, 
         currentRange *= windFactor;
     }
 
+    // === ФАКТОР: ОСАДКИ (Precipitation) - Всегда активен в Weather ===
+    if (s.enableWeather) {
+        if (s.extPrecip === 'rain') {
+            currentRange *= (1 - PRECIP_RAIN_IMPACT);
+        } else if (s.extPrecip === 'snow') {
+            currentRange *= (1 - PRECIP_SNOW_IMPACT);
+        }
+    }
+
     // === ФАКТОР: КЛИМАТ PRO (Climate) - Всегда активен (есть кнопка Off) ===
     let climateProFactor = 1.0;
     if (s.extClimateMode === 'ac') {
