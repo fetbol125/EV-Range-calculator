@@ -16,15 +16,12 @@ function initExtendedListeners() {
     // Чекбоксы
     const checkWheels = document.getElementById('check-wheels');
     const checkWind = document.getElementById('check-wind');
-    const checkTires = document.getElementById('check-tires');
     const checkDeg = document.getElementById('check-deg');
     const checkModeExt = document.getElementById('check-mode-ext');
     const checkEnergyConsumers = document.getElementById('check-energy-consumers'); 
     
     // Группы контролов
-    const groupWheels = document.getElementById('group-wheels');
     const groupWind = document.getElementById('group-wind');
-    const groupTires = document.getElementById('group-tires');
     const groupDeg = document.getElementById('group-deg'); 
     const groupModeExt = document.getElementById('group-mode-ext');
     const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
@@ -91,9 +88,8 @@ function initExtendedListeners() {
         updateUI();
     };
 
-    if(checkWheels) checkWheels.addEventListener('change', (e) => toggleState(e.target, groupWheels, 'enableWheels'));
+    if(checkWheels) checkWheels.addEventListener('change', (e) => toggleState(e.target, wheelsDropdown, 'enableWheels'));
     if(checkWind) checkWind.addEventListener('change', (e) => toggleState(e.target, groupWind, 'enableWind'));
-    if(checkTires) checkTires.addEventListener('change', (e) => toggleState(e.target, groupTires, 'enableTires'));
     if(checkDeg) checkDeg.addEventListener('change', (e) => toggleState(e.target, groupDeg, 'enableDeg')); 
     if(checkModeExt) checkModeExt.addEventListener('change', (e) => toggleState(e.target, groupModeExt, 'enableExtMode'));
     if(checkEnergyConsumers) checkEnergyConsumers.addEventListener('change', (e) => toggleState(e.target, groupEnergyConsumers, 'enableEnergyConsumers'));
@@ -343,6 +339,28 @@ function initEnergyConsumersDropdown() {
         document.addEventListener('click', (e) => {
             if (energyConsumersMenu && !energyConsumersMenu.contains(e.target) && !energyConsumersTrigger.contains(e.target)) {
                 energyConsumersMenu.classList.remove('show');
+            }
+        });
+    }
+}
+
+/**
+ * Инициализирует dropdown меню Wheels
+ */
+function initWheelsDropdown() {
+    if (wheelsTrigger && wheelsMenu) {
+        wheelsTrigger.addEventListener('click', (e) => {
+            // Не открываем меню при клике на чекбокс
+            if (e.target.id === 'check-wheels' || e.target.type === 'checkbox') {
+                return;
+            }
+            e.stopPropagation();
+            wheelsMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (wheelsMenu && !wheelsMenu.contains(e.target) && !wheelsTrigger.contains(e.target)) {
+                wheelsMenu.classList.remove('show');
             }
         });
     }

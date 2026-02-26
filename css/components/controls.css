@@ -547,3 +547,100 @@ input[type=range]::-moz-range-track {
 .energy-consumers-dropdown-container.disabled .energy-consumers-menu {
     pointer-events: none;
 }
+/* Wheels Dropdown Styles */
+.wheels-dropdown-container {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.wheels-trigger {
+    background-color: var(--panel-bg);
+    border: 1px solid #1e293b;
+    border-radius: var(--border-radius);
+    padding: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    min-height: 40px;
+}
+
+.wheels-trigger:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.wheels-trigger .fa-circle-notch {
+    margin-right: 10px;
+}
+
+.wheels-dropdown-container:has(.wheels-menu.show) .wheels-trigger {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.wheels-dropdown-container:has(.wheels-menu.show) #wheels-arrow {
+    transform: rotate(180deg);
+}
+
+.wheels-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background-color: var(--panel-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.wheels-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.wheel-item {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 10px 12px;
+    gap: 6px;
+    margin-bottom: 0;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.wheel-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.wheel-item .control-label {
+    margin-bottom: 8px;
+}
+
+/* Disabled state for wheels dropdown */
+.wheels-dropdown-container.disabled .wheels-trigger {
+    cursor: default;
+}
+
+.wheels-dropdown-container.disabled .wheels-trigger:hover {
+    border-color: #1e293b;
+    background-color: var(--panel-bg);
+}
+
+.wheels-dropdown-container.disabled .wheels-menu {
+    pointer-events: none;
+}

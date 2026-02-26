@@ -143,11 +143,11 @@
                 <div class="trend-icon" id="icon-mode-ext"><i class="fa-solid fa-arrow-trend-up"></i></div>
             </div>
 
-            <!-- Фактор размера колёс (Расширенный режим) -->
+            <!-- Фактор колёс и давления в шинах (Расширенный режим) -->
             <div class="factor-item" id="sidebar-block-wheels">
                 <div class="factor-info">
-                    <div class="factor-label"><i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheel Size</span></div>
-                    <div class="factor-value" id="summary-wheels">19"</div>
+                    <div class="factor-label"><i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheels</span></div>
+                    <div class="factor-value" id="summary-wheels">19" <span data-i18n="tireNorm">Norm</span></div>
                 </div>
                 <div class="trend-icon" id="icon-wheels"><i class="fa-solid fa-minus"></i></div>
             </div>
@@ -159,15 +159,6 @@
                     <div class="factor-value" id="summary-wind">0 m/s</div>
                 </div>
                 <div class="trend-icon" id="icon-wind"><i class="fa-solid fa-minus"></i></div>
-            </div>
-
-            <!-- Фактор давления в шинах (Расширенный режим) -->
-            <div class="factor-item" id="sidebar-block-tires">
-                <div class="factor-info">
-                    <div class="factor-label"><i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span></div>
-                    <div class="factor-value" id="summary-tires">Normal</div>
-                </div>
-                <div class="trend-icon" id="icon-tires"><i class="fa-solid fa-minus"></i></div>
             </div>
 
             <!-- Фактор деградации батареи (Расширенный режим) -->
@@ -446,18 +437,42 @@
                     </div>
                 </div>
 
-                <!-- Ползунок размера колёс с чекбоксом -->
-                <div class="control-group" id="group-wheels">
-                    <div class="control-label">
+                <!-- Wheels Dropdown -->
+                <div class="control-group wheels-dropdown-container" id="wheels-dropdown" style="grid-column: span 2;">
+                    <!-- Trigger Button -->
+                    <div class="control-label wheels-trigger" id="wheels-trigger" style="cursor: pointer;">
                         <div style="display:flex; align-items:center;">
                             <input type="checkbox" id="check-wheels" class="feature-checkbox" checked>
-                            <i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheel Size</span>
+                            <i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheels">Wheels</span>
                         </div>
-                        <span class="label-val" id="val-wheels">19"</span>
+                        <i class="fa-solid fa-chevron-down" id="wheels-arrow" style="margin-left: auto; font-size: 0.8rem;"></i>
                     </div>
-                    <input type="range" id="wheels-slider" min="18" max="22" step="1" value="19">
-                     <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
-                        <span>18"</span><span>20"</span><span>22"</span>
+                    
+                    <!-- Wheels Menu -->
+                    <div class="wheels-menu" id="wheels-menu">
+                        <!-- Wheels Item -->
+                        <div class="control-group wheel-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-circle-notch"></i> <span data-i18n="sidebarWheelSize">Wheel Size</span>
+                                <span class="label-val" id="val-wheels">19"</span>
+                            </div>
+                            <input type="range" id="wheels-slider" min="18" max="22" step="1" value="19">
+                             <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                                <span>18"</span><span>20"</span><span>22"</span>
+                            </div>
+                        </div>
+
+                        <!-- Tire Pressure Item -->
+                        <div class="control-group wheel-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span>
+                                <span class="label-val" id="val-tires">Normal</span>
+                            </div>
+                            <input type="range" id="tires-slider" min="0" max="2" step="1" value="1">
+                            <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                                <span data-i18n="tireLow">Low</span><span data-i18n="tireNorm">Norm</span><span data-i18n="tireHigh">High</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -483,21 +498,6 @@
                     <input type="range" id="wind-slider" min="-20" max="20" step="1" value="0">
                     <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
                         <span data-i18n="windTailwind">Tailwind</span><span data-i18n="windHeadwind">Headwind</span>
-                    </div>
-                </div>
-
-                <!-- Ползунок давления в шинах с чекбоксом -->
-                <div class="control-group" id="group-tires">
-                    <div class="control-label">
-                        <div style="display:flex; align-items:center;">
-                            <input type="checkbox" id="check-tires" class="feature-checkbox" checked>
-                            <i class="fa-solid fa-compress"></i> <span data-i18n="sidebarTires">Tire Pressure</span>
-                        </div>
-                        <span class="label-val" id="val-tires">Normal</span>
-                    </div>
-                    <input type="range" id="tires-slider" min="0" max="2" step="1" value="1">
-                    <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
-                        <span data-i18n="tireLow">Low</span><span data-i18n="tireNorm">Norm</span><span data-i18n="tireHigh">High</span>
                     </div>
                 </div>
 

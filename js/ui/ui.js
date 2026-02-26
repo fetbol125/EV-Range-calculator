@@ -25,16 +25,14 @@ function updateUI() {
     const blockRoad = document.getElementById('sidebar-block-road');
     const blockWheels = document.getElementById('sidebar-block-wheels');
     const blockWind = document.getElementById('sidebar-block-wind');
-    const blockTires = document.getElementById('sidebar-block-tires');
     const blockDeg = document.getElementById('sidebar-block-deg');
     const blockModeExt = document.getElementById('sidebar-block-mode-ext');
     const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
 
-    const extendedBlocks = [blockWheels, blockWind, blockTires, blockDeg, blockModeExt, blockEnergyConsumers];
+    const extendedBlocks = [blockWheels, blockWind, blockDeg, blockModeExt, blockEnergyConsumers];
 
     const sumWheels = document.getElementById('summary-wheels');
     const sumWind = document.getElementById('summary-wind');
-    const sumTires = document.getElementById('summary-tires');
     const sumDeg = document.getElementById('summary-deg');
     
     // Обновление текстов контролов Standard Mode
@@ -46,7 +44,7 @@ function updateUI() {
     if (state.rangeType === 'standard') {
         updateStandardModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, extendedBlocks);
     } else {
-        updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, extendedBlocks, sumWheels, sumWind, sumTires, sumDeg);
+        updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, extendedBlocks, sumWheels, sumWind, sumDeg);
     }
 
     updateImpactVisuals();
@@ -89,9 +87,9 @@ function updateExtendedModeTexts(t) {
     document.querySelector('#group-wind > .control-label + input + div span:first-child').textContent = t.windTailwind;
     document.querySelector('#group-wind > .control-label + input + div span:last-child').textContent = t.windHeadwind;
     
-    document.querySelector('#group-tires > .control-label + input + div span:nth-child(1)').textContent = t.tireLow;
-    document.querySelector('#group-tires > .control-label + input + div span:nth-child(2)').textContent = t.tireNorm;
-    document.querySelector('#group-tires > .control-label + input + div span:nth-child(3)').textContent = t.tireHigh;
+    document.querySelector('#tires-slider + div span:nth-child(1)').textContent = t.tireLow;
+    document.querySelector('#tires-slider + div span:nth-child(2)').textContent = t.tireNorm;
+    document.querySelector('#tires-slider + div span:nth-child(3)').textContent = t.tireHigh;
     
     document.querySelector('#group-deg > input + div').textContent = t.batteryHealthLoss;
     
@@ -129,7 +127,7 @@ function updateStandardModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
 /**
  * Обновляет UI в Extended режиме
  */
-function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, extendedBlocks, sumWheels, sumWind, sumTires, sumDeg) {
+function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, extendedBlocks, sumWheels, sumWind, sumDeg) {
     lblTextSeason.textContent = t.temperature;
     lblIconSeason.className = 'fa-solid fa-temperature-half';
     lblTextMode.textContent = t.speed;
@@ -148,7 +146,9 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
     sumClimate.innerText = clims[state.extClimateMode] || t.climateOff;
     sumWeight.innerText = state.extPayload + ' kg';
 
-    if(sumWheels) sumWheels.innerText = state.extWheels + '"';
+    const tireLabels = [t.tireLow, t.tireNorm, t.tireHigh];
+    const tireLabel = tireLabels[state.extTires] || t.tireNorm;
+    if(sumWheels) sumWheels.innerHTML = state.extWheels + '" <span>' + tireLabel + '</span>';
     
     const head = t.windHeadwind;
     const tail = t.windTailwind;
@@ -156,9 +156,6 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
     if(state.extWind > 0) windText = '+' + windText + ` (${head})`;
     if(state.extWind < 0) windText = windText + ` (${tail})`;
     if(sumWind) sumWind.innerText = windText;
-    
-    const tireLabels = [t.tireLow, t.tireNorm, t.tireHigh];
-    if(sumTires) sumTires.innerText = tireLabels[state.extTires] || t.tireNorm;
     
     if(sumDeg) sumDeg.innerText = state.extDeg + '%';
     if(sumModeExt) sumModeExt.innerText = capitalize(state.extMode); 
@@ -204,7 +201,6 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
 function updateExtendedDisabledStates() {
     const blockWheels = document.getElementById('sidebar-block-wheels');
     const blockWind = document.getElementById('sidebar-block-wind');
-    const blockTires = document.getElementById('sidebar-block-tires');
     const blockDeg = document.getElementById('sidebar-block-deg');
     const blockModeExt = document.getElementById('sidebar-block-mode-ext');
     const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
@@ -217,9 +213,6 @@ function updateExtendedDisabledStates() {
     
     if (!state.enableWind) blockWind.classList.add('disabled'); 
     else blockWind.classList.remove('disabled');
-    
-    if (!state.enableTires) blockTires.classList.add('disabled'); 
-    else blockTires.classList.remove('disabled');
     
     if (!state.enableDeg) { 
         if(blockDeg) blockDeg.classList.add('disabled');
@@ -278,8 +271,6 @@ function updateImpactVisuals() {
     const iconWheels = document.getElementById('icon-wheels');
     const sumWind = document.getElementById('summary-wind');
     const iconWind = document.getElementById('icon-wind');
-    const sumTires = document.getElementById('summary-tires');
-    const iconTires = document.getElementById('icon-tires');
     const sumDeg = document.getElementById('summary-deg');
     const iconDeg = document.getElementById('icon-deg');
     const sumModeExt = document.getElementById('summary-mode-ext');
@@ -290,7 +281,7 @@ function updateImpactVisuals() {
     if (state.rangeType === 'standard') {
         updateStandardModeVisuals(setVisual);
     } else {
-        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers);
+        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers);
     }
 }
 
@@ -321,7 +312,7 @@ function updateStandardModeVisuals(setVisual) {
 /**
  * Обновляет визуальные индикаторы для Extended режима
  */
-function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumTires, iconTires, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers) {
+function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWind, iconWind, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers) {
     // Temperature визуализация с учетом подогрева/охлаждения батареи
     if (state.extTemp >= 20 && state.extTemp <= 25) {
         setVisual(sumSeason, iconSeason, 'good'); 
@@ -353,26 +344,13 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
     }
     
     if (state.enableWheels) {
-        if (state.extWheels <= 19) setVisual(sumWheels, iconWheels, 'good');
-        else setVisual(sumWheels, iconWheels, 'warn');
+        if (state.extWheels <= 19 && state.extTires === 2) setVisual(sumWheels, iconWheels, 'good');
+        else if (state.extWheels <= 19 && state.extTires === 1) setVisual(sumWheels, iconWheels, 'warn');
+        else if (state.extWheels <= 19 && state.extTires === 0) setVisual(sumWheels, iconWheels, 'warn');
+        else if (state.extWheels > 19 && state.extTires === 2) setVisual(sumWheels, iconWheels, 'warn');
+        else setVisual(sumWheels, iconWheels, 'bad');
     } else {
         setNeutralVisual(sumWheels, iconWheels);
-    }
-    
-    if (state.enableWind) {
-        if (state.extWind <= 0) setVisual(sumWind, iconWind, 'good');
-        else if (state.extWind > 10) setVisual(sumWind, iconWind, 'bad');
-        else setVisual(sumWind, iconWind, 'warn');
-    } else {
-        setNeutralVisual(sumWind, iconWind);
-    }
-    
-    if (state.enableTires) {
-        if (state.extTires === 2) setVisual(sumTires, iconTires, 'good');
-        else if (state.extTires === 1) setVisual(sumTires, iconTires, 'warn');
-        else setVisual(sumTires, iconTires, 'bad');
-    } else {
-        setNeutralVisual(sumTires, iconTires);
     }
 
     if (state.enableDeg) {

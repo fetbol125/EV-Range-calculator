@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCarMenuHandlers();
     initCarSearch();
     initEnergyConsumersDropdown();
+    initWheelsDropdown();
     initModals();
     
     // Установка начального режима

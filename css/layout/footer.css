@@ -52,6 +52,11 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+}
+
+.dashboard {
+    flex: 1;
 }
 
 @media (max-width: 768px) {

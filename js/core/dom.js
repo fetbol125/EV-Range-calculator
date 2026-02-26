@@ -64,6 +64,11 @@ const energyConsumersTrigger = document.getElementById('energy-consumers-trigger
 const energyConsumersMenu = document.getElementById('energy-consumers-menu');
 const energyConsumersDropdown = document.getElementById('energy-consumers-dropdown');
 
+// Wheels Dropdown elements
+const wheelsTrigger = document.getElementById('wheels-trigger');
+const wheelsMenu = document.getElementById('wheels-menu');
+const wheelsDropdown = document.getElementById('wheels-dropdown');
+
 // Модальные окна
 const customModal = document.getElementById('custom-car-modal');
 const infoCarModal = document.getElementById('info-car-modal');
