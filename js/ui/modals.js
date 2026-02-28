@@ -155,26 +155,6 @@ function initModals() {
 // Контакты
 
 /**
- * Открывает модальное окно About
- */
-window.openAboutModal = function() {
-    const aboutModal = document.getElementById('about-modal');
-    if (aboutModal) {
-        aboutModal.style.display = 'flex';
-    }
-}
-
-/**
- * Закрывает модальное окно About
- */
-window.closeAboutModal = function() {
-    const aboutModal = document.getElementById('about-modal');
-    if (aboutModal) {
-        aboutModal.style.display = 'none';
-    }
-}
-
-/**
  * Открывает модальное окно Info
  */
 window.openInfoModal = function() {
@@ -216,15 +196,6 @@ window.closeContactsModal = function() {
 
 // Закрытие модали при клике на фон
 document.addEventListener('DOMContentLoaded', function() {
-    const aboutModal = document.getElementById('about-modal');
-    if (aboutModal) {
-        aboutModal.addEventListener('click', function(e) {
-            if (e.target === aboutModal) {
-                closeAboutModal();
-            }
-        });
-    }
-
     const infoModal = document.getElementById('info-modal');
     if (infoModal) {
         infoModal.addEventListener('click', function(e) {

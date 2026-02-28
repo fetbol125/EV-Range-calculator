@@ -114,22 +114,6 @@ const translations = {
         contactsBackButton: "Close",
         contactsLink: "Contact",
 
-        // ABOUT MODAL
-        aboutLink: "About",
-        aboutTitle: "About",
-        aboutText1: "This site was developed as part of a bachelor's degree qualification work and is a web application for calculating the estimated range of an electric vehicle.",
-        aboutText2: "The goal of the project is to provide the user with a convenient tool for assessing the possible distance of travel on an electric vehicle, taking into account key parameters such as:",
-        aboutParam1: "battery charge level,",
-        aboutParam2: "battery capacity,",
-        aboutParam3: "driving style and operating conditions,",
-        aboutParam4: "additional factors affecting energy consumption.",
-        aboutText3: "Within the project, the following were implemented:",
-        aboutImpl1: "intuitive and user-friendly interface,",
-        aboutImpl2: "range calculation algorithm,",
-        aboutImpl3: "adaptive design for various devices,",
-        aboutImpl4: "the ability to provide feedback to the developer.",
-        aboutText4: "The project has an educational and practical character and can be used as a demonstration example of a web application in the field of electric transport.",
-
         // INFO MODAL
         infoLink: "Info",
         infoTitle: "Info",
@@ -249,22 +233,6 @@ const translations = {
         contactsLinkedinLink: "Návšteva na LinkedIn",
         contactsBackButton: "Zatvoriť",
         contactsLink: "Kontakt",
-
-        // ABOUT MODAL
-        aboutLink: "O nás",
-        aboutTitle: "O Projekte",
-        aboutText1: "Táto stránka bola vytvorená ako časť bakalárskej kvalifikačnej práce a predstavuje webovú aplikáciu na výpočet odhadovaného dosahu elektrického vozidla.",
-        aboutText2: "Cieľom projektu je poskytnúť používateľovi vhodný nástroj na zhodnotenie možnej vzdialenosti jazdy na elektrickom vozidle s ohľadom na kľúčové parametre, ako sú:",
-        aboutParam1: "úroveň nabítia batérie,",
-        aboutParam2: "kapacita batérie,",
-        aboutParam3: "štýl jazdy a podmienky prevádzky,",
-        aboutParam4: "ďalšie faktory ovplyvňujúce spotrebu energie.",
-        aboutText3: "V rámci projektu bolo realizované:",
-        aboutImpl1: "intuitívne a používateľsky priateľské rozhranie,",
-        aboutImpl2: "algoritmus výpočtu dosahu,",
-        aboutImpl3: "adaptívny dizajn pre rôzne zariadenia,",
-        aboutImpl4: "možnosť poskytnúť spätný väzbu vývojárovi.",
-        aboutText4: "Projekt má vzdelávací a praktický charakter a môže byť použitý ako demonštračný príklad webovej aplikácie v oblasti elektrického dopravy.",
 
         // INFO MODAL
         infoLink: "Info",
@@ -388,22 +356,6 @@ const translations = {
         contactsBackButton: "Закрыть",
         contactsLink: "Контакты",
 
-        // ABOUT MODAL
-        aboutLink: "О проекте",
-        aboutTitle: "О Проекте",
-        aboutText1: "Данный сайт разработан в рамках бакалаврской выпускной квалификационной работы и представляет собой веб-приложение для расчёта запаса хода электромобиля.",
-        aboutText2: "Цель проекта — предоставить пользователю удобный инструмент для оценки возможной дистанции поездки на электромобиле с учётом ключевых параметров, таких как:",
-        aboutParam1: "уровень заряда аккумулятора,",
-        aboutParam2: "ёмкость батареи,",
-        aboutParam3: "стиль вождения и условия эксплуатации,",
-        aboutParam4: "дополнительные факторы, влияющие на расход энергии.",
-        aboutText3: "В рамках проекта были реализованы:",
-        aboutImpl1: "интуитивно понятный пользовательский интерфейс,",
-        aboutImpl2: "алгоритм расчёта запаса хода,",
-        aboutImpl3: "адаптивный дизайн для различных устройств,",
-        aboutImpl4: "возможность обратной связи с разработчиком.",
-        aboutText4: "Проект носит учебно-практический характер и может быть использован как демонстрационный пример веб-приложения в области электротранспорта.",
-
         // INFO MODAL
         infoLink: "Информация",
         infoTitle: "Информация",
@@ -525,22 +477,6 @@ const translations = {
         contactsLinkedinLink: "Відвідайте LinkedIn",
         contactsBackButton: "Закрити",
         contactsLink: "Контакти",
-
-        // ABOUT MODAL
-        aboutLink: "Про проект",
-        aboutTitle: "Про Проект",
-        aboutText1: "Даний сайт розроблений в рамках бакалаврської випускної кваліфікаційної роботи та являє собою веб-додаток для розрахунку запасу ходу електромобіля.",
-        aboutText2: "Мета проекту — надати користувачу зручний інструмент для оцінки можливої дистанції поїздки на електромобілі з урахуванням ключових параметрів, таких як:",
-        aboutParam1: "рівень заряду акумулятора,",
-        aboutParam2: "ємність батареї,",
-        aboutParam3: "стиль водіння та умови експлуатації,",
-        aboutParam4: "додаткові фактори, які впливають на споживання енергії.",
-        aboutText3: "В рамках проекту були реалізовані:",
-        aboutImpl1: "інтуїтивно зрозумілий користувацький інтерфейс,",
-        aboutImpl2: "алгоритм розрахунку запасу ходу,",
-        aboutImpl3: "адаптивний дизайн для різних пристроїв,",
-        aboutImpl4: "можливість зворотного зв'язку з розробником.",
-        aboutText4: "Проект має навчально-практичний характер та може бути використаний як демонстраційний приклад веб-додатка в галузі електротранспорту.",
 
         // INFO MODAL
         infoLink: "Інформація",

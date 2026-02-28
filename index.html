@@ -381,6 +381,22 @@
                     <input type="range" id="speed-slider" min="30" max="180" value="50">
                 </div>
 
+                <!-- Селектор режима вождения для расширенного режима -->
+                <div class="control-group" id="group-mode-ext" style="grid-column: span 2;">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-mode-ext" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Driving Mode</span>
+                        </div>
+                        <span class="label-val" id="val-mode-ext">Eco</span>
+                    </div>
+                    <div class="pill-group" id="mode-group-ext">
+                        <button class="pill-btn active" data-value="eco" data-i18n="modeEco">eco</button>
+                        <button class="pill-btn" data-value="normal" data-i18n="modeNormal">normal</button>
+                        <button class="pill-btn" data-value="sport" data-i18n="modeSport">sport</button>
+                    </div>
+                </div>
+
                 <!-- Ползунок полезной нагрузки (вес) -->
                 <div class="control-group">
                     <div class="control-label">
@@ -410,7 +426,7 @@
                         <!-- Seat/Wheel Heating Toggle -->
                         <div class="control-group energy-item">
                             <div class="control-label">
-                                <i class="fa-solid fa-chair"></i> <span data-i18n="seatHeating">Seat/Wheel Heating</span>
+                                <img src="img/icons/heated-seat.svg" alt="Heated seat" class="icon-inline"> <span data-i18n="seatHeating">Seat/Wheel Heating</span>
                                 <span class="label-val" id="val-seat-heating">Off</span>
                             </div>
                             <div class="climate-toggle">
@@ -504,7 +520,7 @@
                     <div class="control-label wheels-trigger" id="wheels-trigger" style="cursor: pointer;">
                         <div style="display:flex; align-items:center;">
                             <input type="checkbox" id="check-wheels" class="feature-checkbox" checked>
-                            <i class="fa-solid fa-compact-disc"></i> <span data-i18n="sidebarWheels">Wheels</span>
+                            <img src="img/icons/tire.svg" alt="Heated seat" class="icon-inline"></i> <span data-i18n="sidebarWheels">Wheels</span>
                         </div>
                         <i class="fa-solid fa-chevron-down" id="wheels-arrow" style="margin-left: auto; font-size: 0.8rem;"></i>
                     </div>
@@ -565,22 +581,6 @@
                     </div>
                     <input type="range" id="deg-slider" min="0" max="30" step="1" value="0">
                     <div style="font-size:0.6rem; color:var(--text-muted); margin-top:-5px;" data-i18n="batteryHealthLoss">Battery Health Loss</div>
-                </div>
-                
-                <!-- Селектор режима вождения для расширенного режима -->
-                <div class="control-group" id="group-mode-ext" style="grid-column: span 2;">
-                    <div class="control-label">
-                        <div style="display:flex; align-items:center;">
-                            <input type="checkbox" id="check-mode-ext" class="feature-checkbox" checked>
-                            <i class="fa-solid fa-bolt"></i> <span data-i18n="sidebarMode">Driving Mode</span>
-                        </div>
-                        <span class="label-val" id="val-mode-ext">Eco</span>
-                    </div>
-                    <div class="pill-group" id="mode-group-ext">
-                        <button class="pill-btn active" data-value="eco" data-i18n="modeEco">eco</button>
-                        <button class="pill-btn" data-value="normal" data-i18n="modeNormal">normal</button>
-                        <button class="pill-btn" data-value="sport" data-i18n="modeSport">sport</button>
-                    </div>
                 </div>
 
             </div>
@@ -771,48 +771,6 @@
     <!-- Инициализация приложения -->
     <script src="js/core/main.js"></script>
 
-    <!-- Модальное окно: О проекте -->
-    <div id="about-modal" class="modal-overlay">
-        <div class="modal-content about-content">
-            <h3><i class="fa-solid fa-circle-info"></i> <span data-i18n="aboutTitle">About</span></h3>
-            
-            <!-- Введение в проект -->
-            <div class="about-section">
-                <p data-i18n="aboutText1">This site was developed as part of a bachelor's degree qualification work and is a web application for calculating the estimated range of an electric vehicle.</p>
-            </div>
-
-            <!-- Цели проекта -->
-            <div class="about-section">
-                <p data-i18n="aboutText2">The goal of the project is to provide the user with a convenient tool for assessing the possible distance of travel on an electric vehicle, taking into account key parameters such as:</p>
-                <ul>
-                    <li data-i18n="aboutParam1">battery charge level,</li>
-                    <li data-i18n="aboutParam2">battery capacity,</li>
-                    <li data-i18n="aboutParam3">driving style and operating conditions,</li>
-                    <li data-i18n="aboutParam4">additional factors affecting energy consumption.</li>
-                </ul>
-            </div>
-
-            <!-- Особенности проекта -->
-            <div class="about-section">
-                <p data-i18n="aboutText3">Within the project, the following were implemented:</p>
-                <ul>
-                    <li data-i18n="aboutImpl1">intuitive and user-friendly interface,</li>
-                    <li data-i18n="aboutImpl2">range calculation algorithm,</li>
-                    <li data-i18n="aboutImpl3">adaptive design for various devices,</li>
-                    <li data-i18n="aboutImpl4">the ability to provide feedback to the developer.</li>
-                </ul>
-            </div>
-
-            <!-- Назначение проекта -->
-            <div class="about-section">
-                <p data-i18n="aboutText4">The project has an educational and practical character and can be used as a demonstration example of a web application in the field of electric transport.</p>
-            </div>
-
-            <!-- Кнопка возврата -->
-            <button class="modal-btn close-btn" onclick="closeAboutModal()" data-i18n="contactsBackButton">Back to Calculator</button>
-        </div>
-    </div>
-
     <!-- Модальное окно: Информация -->
     <div id="info-modal" class="modal-overlay">
         <div class="modal-content about-content">
@@ -885,9 +843,6 @@
     <div class="footer-content">
         <!-- Уведомление об авторских правах -->
         <p>&copy; 2026 EV Range Calculator. All rights reserved.</p>
-        
-        <!-- Ссылка О проекте -->
-        <a href="#info" class="footer-link" onclick="openAboutModal(); return false;" data-i18n="aboutLink">About</a>
         
         <!-- Ссылка Информация -->
         <a href="#info" class="footer-link" onclick="openInfoModal(); return false;" data-i18n="infoLink">Info</a>
