@@ -29,12 +29,14 @@ function updateUI() {
     const blockDeg = document.getElementById('sidebar-block-deg');
     const blockModeExt = document.getElementById('sidebar-block-mode-ext');
     const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
+    const blockRelief = document.getElementById('sidebar-block-relief');
 
-    const extendedBlocks = [blockWheels, blockWeather, blockDeg, blockModeExt, blockEnergyConsumers];
+    const extendedBlocks = [blockWheels, blockWeather, blockDeg, blockModeExt, blockEnergyConsumers, blockRelief];
 
     const sumWheels = document.getElementById('summary-wheels');
     const sumWeather = document.getElementById('summary-weather');
     const sumDeg = document.getElementById('summary-deg');
+    const sumRelief = document.getElementById('summary-relief');
     
     // Обновление текстов контролов Standard Mode
     updateStandardModeTexts(t);
@@ -45,7 +47,7 @@ function updateUI() {
     if (state.rangeType === 'standard') {
         updateStandardModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, blockSeason, extendedBlocks);
     } else {
-        updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, blockSeason, extendedBlocks, sumWheels, sumWeather, sumDeg);
+        updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, blockSeason, extendedBlocks, sumWheels, sumWeather, sumDeg, sumRelief);
     }
 
     updateImpactVisuals();
@@ -129,7 +131,7 @@ function updateStandardModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
 /**
  * Обновляет UI в Extended режиме
  */
-function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, blockSeason, extendedBlocks, sumWheels, sumWeather, sumDeg) {
+function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblIconMode, blockRoad, blockSeason, extendedBlocks, sumWheels, sumWeather, sumDeg, sumRelief) {
     lblTextSeason.textContent = t.sidebarSeason;
     lblIconSeason.className = 'fa-regular fa-snowflake';
     lblTextMode.textContent = t.speed;
@@ -163,6 +165,10 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
     };
     const precipText = precipLabels[state.extPrecip] || t.precipNone;
     if(sumWeather) sumWeather.innerText = `${temp}, ${wind}, ${precipText}`;
+    
+    // Update Relief summary
+    const reliefLabels = {flat: t.reliefFlat, hilly: t.reliefHilly, mountains: t.reliefMountains};
+    if(sumRelief) sumRelief.innerText = capitalize(reliefLabels[state.extRelief] || t.reliefFlat);
     
     if(sumDeg) sumDeg.innerText = state.extDeg + '%';
     
@@ -215,10 +221,12 @@ function updateExtendedDisabledStates() {
     const blockDeg = document.getElementById('sidebar-block-deg');
     const blockModeExt = document.getElementById('sidebar-block-mode-ext');
     const blockEnergyConsumers = document.getElementById('sidebar-block-energy-consumers');
+    const blockRelief = document.getElementById('sidebar-block-relief');
     const groupDeg = document.getElementById('group-deg');
     const groupModeExt = document.getElementById('group-mode-ext');
     const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
     const groupWeather = document.getElementById('weather-dropdown');
+    const groupRelief = document.getElementById('group-relief');
 
     if (!state.enableWheels) blockWheels.classList.add('disabled'); 
     else blockWheels.classList.remove('disabled');
@@ -247,12 +255,20 @@ function updateExtendedDisabledStates() {
         if(groupModeExt) groupModeExt.classList.remove('disabled');
     }
     
-    if (!state.enableEnergyConsumers) { 
+    if (!state.enableEnergyConsumers) {
         if(blockEnergyConsumers) blockEnergyConsumers.classList.add('disabled');
         if(groupEnergyConsumers) groupEnergyConsumers.classList.add('disabled');
     } else {
         if(blockEnergyConsumers) blockEnergyConsumers.classList.remove('disabled');
         if(groupEnergyConsumers) groupEnergyConsumers.classList.remove('disabled');
+    }
+
+    if (!state.enableRelief) {
+        if(blockRelief) blockRelief.classList.add('disabled');
+        if(groupRelief) groupRelief.classList.add('disabled');
+    } else {
+        if(blockRelief) blockRelief.classList.remove('disabled');
+        if(groupRelief) groupRelief.classList.remove('disabled');
     }
 }
 
@@ -291,7 +307,7 @@ function updateImpactVisuals() {
         return `${rounded > 0 ? '+' : ''}${rounded}%`;
     };
 
-    const setImpactText = (el, value) => {
+    const setImpactText = (el, value, status = null) => {
         if (!el) return;
         el.className = 'impact-percent';
 
@@ -301,12 +317,23 @@ function updateImpactVisuals() {
         }
 
         const rounded = Math.round(value);
-        if (rounded >= 2) {
-            el.classList.add('text-success');
-        } else if (rounded <= -8) {
-            el.classList.add('text-danger');
-        } else if (rounded <= -2) {
+        
+        // Если передан явный статус, используем его
+        if (status === 'good') {
+            // При зеленой стрелке не окрашиваем проценты
+        } else if (status === 'warn') {
             el.classList.add('text-warning');
+        } else if (status === 'bad') {
+            el.classList.add('text-danger');
+        } else {
+            // Автоматическое определение цвета по значению
+            if (rounded >= 2) {
+                // Положительное влияние - не окрашиваем
+            } else if (rounded <= -8) {
+                el.classList.add('text-danger');
+            } else if (rounded <= -2) {
+                el.classList.add('text-warning');
+            }
         }
 
         el.textContent = formatImpactPercent(rounded);
@@ -382,6 +409,13 @@ function updateImpactVisuals() {
         return factors.mode[state.extMode] || 1;
     };
 
+    const getReliefMultiplier = () => {
+        if (!state.enableRelief) return 1;
+        if (state.extRelief === 'hilly') return 0.88;
+        if (state.extRelief === 'mountains') return 0.75;
+        return 1.0;
+    };
+
     const getSpeedMultiplier = () => {
         if (state.rangeType !== 'extended') return null;
         const refSpeed = 50;
@@ -428,6 +462,8 @@ function updateImpactVisuals() {
     const iconModeExt = document.getElementById('icon-mode-ext');
     const sumEnergyConsumers = document.getElementById('summary-energy-consumers');
     const iconEnergyConsumers = document.getElementById('icon-energy-consumers');
+    const sumRelief = document.getElementById('summary-relief');
+    const iconRelief = document.getElementById('icon-relief');
 
     const impactWeather = document.getElementById('impact-weather');
     const impactWheels = document.getElementById('impact-wheels');
@@ -437,6 +473,7 @@ function updateImpactVisuals() {
     const impactWeight = document.getElementById('impact-weight');
     const impactClimate = document.getElementById('impact-climate');
     const impactSpeed = document.getElementById('impact-speed');
+    const impactRelief = document.getElementById('impact-relief');
     
     if (state.rangeType === 'standard') {
         updateStandardModeVisuals(setVisual);
@@ -448,8 +485,9 @@ function updateImpactVisuals() {
         setImpactText(impactSpeed, null);
         setImpactText(impactWeight, null);
         setImpactText(impactClimate, null);
+        setImpactText(impactRelief, null);
     } else {
-        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWeather, iconWeather, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers);
+        updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWeather, iconWeather, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers, sumRelief, iconRelief);
 
         const weatherImpact = state.enableWeather ? (getWeatherMultiplier() - 1) * 100 : null;
         const wheelsImpact = state.enableWheels ? (getWheelsMultiplier() - 1) * 100 : null;
@@ -459,6 +497,15 @@ function updateImpactVisuals() {
         const speedImpact = (getSpeedMultiplier() - 1) * 100;
         const weightImpact = (getWeightMultiplier() - 1) * 100;
         const climateImpact = (getClimateMultiplier() - 1) * 100;
+        const reliefImpact = state.enableRelief ? (getReliefMultiplier() - 1) * 100 : null;
+
+        // Определяем статус для relief на основе выбранного рельефа
+        let reliefStatus = null;
+        if (state.enableRelief) {
+            if (state.extRelief === 'flat') reliefStatus = 'good';
+            else if (state.extRelief === 'hilly') reliefStatus = 'warn';
+            else if (state.extRelief === 'mountains') reliefStatus = 'bad';
+        }
 
         setImpactText(impactWeather, weatherImpact);
         setImpactText(impactWheels, wheelsImpact);
@@ -468,6 +515,7 @@ function updateImpactVisuals() {
         setImpactText(impactSpeed, speedImpact);
         setImpactText(impactWeight, weightImpact);
         setImpactText(impactClimate, climateImpact);
+        setImpactText(impactRelief, reliefImpact, reliefStatus);
     }
 }
 
@@ -498,7 +546,7 @@ function updateStandardModeVisuals(setVisual) {
 /**
  * Обновляет визуальные индикаторы для Extended режима
  */
-function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWeather, iconWeather, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers) {
+function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconWheels, sumWeather, iconWeather, sumDeg, iconDeg, sumModeExt, iconModeExt, sumEnergyConsumers, iconEnergyConsumers, sumRelief, iconRelief) {
     // Weather визуализация с учетом подогрева/охлаждения батареи и ветра
     if (state.enableWeather) {
         let weatherImpact = 'good';
@@ -598,6 +646,15 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
     } else {
         setNeutralVisual(sumEnergyConsumers, iconEnergyConsumers);
     }
+
+    // Relief visualization
+    if (state.enableRelief) {
+        if (state.extRelief === 'flat') setVisual(sumRelief, iconRelief, 'good');
+        else if (state.extRelief === 'hilly') setVisual(sumRelief, iconRelief, 'warn');
+        else setVisual(sumRelief, iconRelief, 'bad'); // mountains
+    } else {
+        setNeutralVisual(sumRelief, iconRelief);
+    }
 }
 
 /**
@@ -657,6 +714,8 @@ function toggleControlMode(mode) {
         setTimeout(() => {
             const climateGroup = document.getElementById('ext-climate-group');
             const modeGroupExt = document.getElementById('mode-group-ext');
+            const reliefGroup = document.getElementById('relief-group');
+            const precipGroup = document.getElementById('precip-group');
             
             if (climateGroup) {
                 const activeClimateBtn = climateGroup.querySelector('.pill-btn.active');
@@ -666,6 +725,16 @@ function toggleControlMode(mode) {
             if (modeGroupExt) {
                 const activeModeBtn = modeGroupExt.querySelector('.pill-btn.active');
                 if (activeModeBtn) updatePillSlider(modeGroupExt, activeModeBtn);
+            }
+            
+            if (reliefGroup) {
+                const activeReliefBtn = reliefGroup.querySelector('.pill-btn.active');
+                if (activeReliefBtn) updatePillSlider(reliefGroup, activeReliefBtn);
+            }
+            
+            if (precipGroup) {
+                const activePrecipBtn = precipGroup.querySelector('.pill-btn.active');
+                if (activePrecipBtn) updatePillSlider(precipGroup, activePrecipBtn);
             }
         }, 50);
     } else {

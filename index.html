@@ -186,6 +186,16 @@
                 <div class="trend-icon" id="icon-weather"><i class="fa-solid fa-minus"></i></div>
                 <div class="impact-percent" id="impact-weather">0%</div>
             </div>
+
+            <!-- Фактор рельефа дороги (Расширенный режим) -->
+            <div class="factor-item" id="sidebar-block-relief">
+                <div class="factor-info">
+                    <div class="factor-label"><i class="fa-solid fa-mountain"></i> <span data-i18n="roadRelief">Road Relief</span></div>
+                    <div class="factor-value" id="summary-relief">Flat</div>
+                </div>
+                <div class="trend-icon" id="icon-relief"><i class="fa-solid fa-minus"></i></div>
+                <div class="impact-percent" id="impact-relief">0%</div>
+            </div>
             
         </aside>
 
@@ -376,9 +386,9 @@
                 <div class="control-group">
                     <div class="control-label">
                         <i class="fa-solid fa-gauge-high"></i> <span data-i18n="speed">Speed</span>
-                        <span class="label-val" id="val-speed">50 km/h</span>
+                        <span class="label-val" id="val-speed">90 km/h</span>
                     </div>
-                    <input type="range" id="speed-slider" min="30" max="180" value="50">
+                    <input type="range" id="speed-slider" min="30" max="180" value="90">
                 </div>
 
                 <!-- Селектор режима вождения для расширенного режима -->
@@ -406,6 +416,22 @@
                     <input type="range" id="ext-weight-slider" min="50" max="500" step="5" value="75">
                     <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
                         <span>50 kg</span><span>500 kg</span>
+                    </div>
+                </div>
+
+                <!-- Road Relief Selector -->
+                <div class="control-group" id="group-relief" style="grid-column: span 2;">
+                    <div class="control-label">
+                        <div style="display:flex; align-items:center;">
+                            <input type="checkbox" id="check-relief" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-mountain"></i> <span data-i18n="roadRelief">Road Relief</span>
+                        </div>
+                        <span class="label-val" id="val-relief">Flat</span>
+                    </div>
+                    <div class="pill-group" id="relief-group">
+                        <button class="pill-btn active" data-value="flat" data-i18n="reliefFlat">flat</button>
+                        <button class="pill-btn" data-value="hilly" data-i18n="reliefHilly">hilly</button>
+                        <button class="pill-btn" data-value="mountains" data-i18n="reliefMountains">mountains</button>
                     </div>
                 </div>
 

@@ -52,6 +52,7 @@ const state = {
     extPrecip: 'none',
     extClimateMode: 'off',
     extMode: 'eco',
+    extRelief: 'flat',
     
     // Energy Consumers
     seatHeating: false,
@@ -65,5 +66,6 @@ const state = {
     enableDeg: true,
     enableExtMode: true,
     enableEnergyConsumers: true,
-    enableWeather: true
+    enableWeather: true,
+    enableRelief: true
 };

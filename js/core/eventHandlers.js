@@ -20,6 +20,7 @@ function initExtendedListeners() {
     const checkModeExt = document.getElementById('check-mode-ext');
     const checkEnergyConsumers = document.getElementById('check-energy-consumers');
     const checkWeather = document.getElementById('check-weather');
+    const checkRelief = document.getElementById('check-relief');
     
     // Группы контролов
     const groupWind = document.getElementById('group-wind');
@@ -27,6 +28,7 @@ function initExtendedListeners() {
     const groupModeExt = document.getElementById('group-mode-ext');
     const groupEnergyConsumers = document.getElementById('energy-consumers-dropdown');
     const groupWeather = document.getElementById('weather-dropdown');
+    const groupRelief = document.getElementById('group-relief');
 
     if(speedS) {
         speedS.addEventListener('input', (e) => {
@@ -94,9 +96,10 @@ function initExtendedListeners() {
 
     if(checkWheels) checkWheels.addEventListener('change', (e) => toggleState(e.target, wheelsDropdown, 'enableWheels'));
     if(checkWind) checkWind.addEventListener('change', (e) => toggleState(e.target, groupWind, 'enableWind'));
-    if(checkDeg) checkDeg.addEventListener('change', (e) => toggleState(e.target, groupDeg, 'enableDeg')); 
+    if(checkDeg) checkDeg.addEventListener('change', (e) => toggleState(e.target, groupDeg, 'enableDeg'));
     if(checkModeExt) checkModeExt.addEventListener('change', (e) => toggleState(e.target, groupModeExt, 'enableExtMode'));
     if(checkEnergyConsumers) checkEnergyConsumers.addEventListener('change', (e) => toggleState(e.target, groupEnergyConsumers, 'enableEnergyConsumers'));
+    if(checkRelief) checkRelief.addEventListener('change', (e) => toggleState(e.target, groupRelief, 'enableRelief'));
     if(checkWeather) checkWeather.addEventListener('change', (e) => toggleState(e.target, groupWeather, 'enableWeather'));
 
     // Climate кнопки
@@ -125,6 +128,7 @@ function initExtendedListeners() {
     }
     
     setupPillGroup('mode-group-ext', 'extMode');
+    setupPillGroup('relief-group', 'extRelief');
     setupPillGroup('precip-group', 'extPrecip');
 }
 
@@ -152,6 +156,12 @@ function setupPillGroup(groupId, stateKey) {
             updateUI();
             if (stateKey === 'extPrecip') {
                 updateWeatherValue();
+            }
+            if (stateKey === 'extRelief') {
+                const t = translations[state.lang];
+                const reliefLabels = {flat: t.reliefFlat, hilly: t.reliefHilly, mountains: t.reliefMountains};
+                const valRelief = document.getElementById('val-relief');
+                if (valRelief) valRelief.innerText = capitalize(reliefLabels[state.extRelief] || t.reliefFlat);
             }
         });
     });
@@ -365,6 +375,17 @@ function initWeatherDropdown() {
             }
             e.stopPropagation();
             weatherMenu.classList.toggle('show');
+            
+            // Обновляем pill slider для precipitation при открытии dropdown
+            if (weatherMenu.classList.contains('show')) {
+                setTimeout(() => {
+                    const precipGroup = document.getElementById('precip-group');
+                    if (precipGroup) {
+                        const activeBtn = precipGroup.querySelector('.pill-btn.active');
+                        if (activeBtn) updatePillSlider(precipGroup, activeBtn);
+                    }
+                }, 50);
+            }
         });
 
         document.addEventListener('click', (e) => {

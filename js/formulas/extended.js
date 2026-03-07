@@ -97,6 +97,17 @@ function calculateExtendedRange(baseRange, s, factors, carWeight, weightsDict, c
         }
     }
 
+    // === ФАКТОР: РЕЛЬЕФ ДОРОГИ (Road Relief) - ПОДКЛЮЧАЕМЫЙ ===
+    if (s.enableRelief) {
+        let reliefFactor = 1.0;
+        if (s.extRelief === 'hilly') {
+            reliefFactor = 0.88; // холмистая местность снижает дальность на 12%
+        } else if (s.extRelief === 'mountains') {
+            reliefFactor = 0.75; // горная местность снижает дальность на 25%
+        }
+        currentRange *= reliefFactor;
+    }
+
     // === ФАКТОР: КЛИМАТ PRO (Climate) - Всегда активен (есть кнопка Off) ===
     let climateProFactor = 1.0;
     if (s.extClimateMode === 'ac') {

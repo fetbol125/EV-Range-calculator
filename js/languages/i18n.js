@@ -80,6 +80,10 @@ const translations = {
         climateAC: "A/C",
         climateHeater: "Heater",
         batteryHealthLoss: "Battery Health Loss",
+        roadRelief: "Road Relief",
+        reliefFlat: "flat",
+        reliefHilly: "hilly",
+        reliefMountains: "mountains",
 
         // CAR MODAL
         modalTitle: "Enter custom car data",
@@ -199,8 +203,10 @@ const translations = {
         climatePro: "Klimatizácia Pro",
         climateAC: "Klimatizácia",
         climateHeater: "Vykurovanie",
-        batteryHealthLoss: "Strata Zdravia Batérie",
-
+        batteryHealthLoss: "Strata Zdravia Batérie",        roadRelief: "Reliéf Cesty",
+        reliefFlat: "rovný",
+        reliefHilly: "kopcovitý",
+        reliefMountains: "hornatý",
         // CAR MODAL
         modalTitle: "Zadajte údaje o aute",
         modalRangeLabel: "Maximálny dosah na jednu nabíjačku?",
@@ -322,6 +328,10 @@ const translations = {
         climateAC: "Кондиционер",
         climateHeater: "Обогрев",
         batteryHealthLoss: "Потеря Здоровья Батареи",
+        roadRelief: "Рельеф Дороги",
+        reliefFlat: "ровный",
+        reliefHilly: "холмистый",
+        reliefMountains: "горный",
 
         // CAR MODAL
         modalTitle: "Ввод данных своего авто",
@@ -444,6 +454,10 @@ const translations = {
         climateAC: "Кондиціонер",
         climateHeater: "Обігрівання",
         batteryHealthLoss: "Втрата Здоров'я Батареї",
+        roadRelief: "Рельєф Дороги",
+        reliefFlat: "рівний",
+        reliefHilly: "горбистий",
+        reliefMountains: "гористий",
 
         // CAR MODAL
         modalTitle: "Введіть дані про автомобіль",
