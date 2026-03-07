@@ -110,7 +110,7 @@ const translations = {
         contactsGithub: "GITHUB",
         contactsGithubLink: "fetbol125",
         contactsLinkedin: "LINKEDIN",
-        contactsLinkedinLink: "Visit on LinkedIn",
+        contactsLinkedinLink: "Dmytro Haliapa",
         contactsBackButton: "Close",
         contactsLink: "Contact",
 
