@@ -8,7 +8,7 @@ function updateCalculation() {
     try {
         if (state.rangeType === 'extended') {
             finalRange = calculateExtendedRange(
-                currentMaxRange, state, factors, currentCarWeight, ADDED_WEIGHT_KG, CLIMATE_IMPACT
+                currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType, ADDED_WEIGHT_KG, CLIMATE_IMPACT
             );
         } else {
             finalRange = calculateStandardRange(
@@ -123,7 +123,7 @@ function updateConsumptionDisplay() {
     
     // Рассчитываем пробег БЕЗ влияния батареи и деградации (только остальные факторы)
     const rangeForConsumption = calculateExtendedRangeForConsumption(
-        currentMaxRange, state, factors, currentCarWeight, ADDED_WEIGHT_KG, CLIMATE_IMPACT
+        currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType, ADDED_WEIGHT_KG, CLIMATE_IMPACT
     );
     
     // Рассчитываем потребление на основе полной батареи и расчетного пробега

@@ -78,7 +78,16 @@ function selectCar(id) {
     currentCarRange.innerText = car.range; 
     currentCarBattery.innerText = car.battery;
     currentMaxRange = car.range; 
-    currentCarWeight = car.weightKg || 2000; 
+    currentCarWeight = car.weightKg || 2000;
+    
+    // Извлекаем мощность в kW из строки вида "150 kW (204 HP)"
+    const powerMatch = car.power.match(/(\d+)\s*kW/);
+    currentCarPower = powerMatch ? parseInt(powerMatch[1]) : 150;
+    
+    // Извлекаем данные об аэродинамике и типе привода
+    currentCarDrag = car.dragCoefficient || 0.28;
+    currentCarDriveType = car.driveType || 'RWD';
+    currentCarBatteryCapacity = car.battery || 77;
     
     if(footerMaxRange) footerMaxRange.innerText = car.range;
     

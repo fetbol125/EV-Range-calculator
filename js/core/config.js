@@ -2,7 +2,11 @@
 
 // Глобальные переменные состояния
 let currentMaxRange = 573; 
-let currentCarWeight = 2069; 
+let currentCarWeight = 2069;
+let currentCarPower = 150; // мощность в kW
+let currentCarDrag = 0.24; // коэффициент аэродинамического сопротивления
+let currentCarDriveType = 'RWD'; // тип привода (RWD/FWD/AWD)
+let currentCarBatteryCapacity = 77; // емкость батареи в kWh
 let currentSelectedCarId = null;
 
 // Структуры данных для автомобилей
