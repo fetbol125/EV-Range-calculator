@@ -407,6 +407,59 @@
                     </div>
                 </div>
 
+                <!-- Weather Dropdown -->
+                <div class="control-group weather-dropdown-container" id="weather-dropdown" style="grid-column: span 2;">
+                    <!-- Trigger Button -->
+                    <div class="control-label weather-trigger" id="weather-trigger" style="cursor: pointer;">
+                        <div style="display:flex; align-items:center;">
+                            <i class="fa-solid fa-cloud-sun"></i> <span data-i18n="weather">Weather</span>
+                        </div>
+                        <span class="label-val" id="val-weather">20°C, 0 m/s</span>
+                        <i class="fa-solid fa-chevron-down" id="weather-arrow" style="margin-left: auto; font-size: 0.8rem;"></i>
+                    </div>
+                    
+                    <!-- Weather Menu -->
+                    <div class="weather-menu" id="weather-menu">
+                        <!-- Temperature Item -->
+                        <div class="control-group weather-item">
+                            <div class="control-label">
+                                <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature">Temperature</span>
+                                <span id="battery-thermal-status" class="battery-thermal-warning" style="display: none;"></span>
+                                <span class="label-val" id="val-temp">20°C</span>
+                            </div>
+                            <input type="range" id="temp-slider" min="-20" max="40" value="20">
+                        </div>
+
+                        <!-- Wind Item -->
+                        <div class="control-group weather-item" id="group-wind">
+                            <div class="control-label">
+                                <div style="display:flex; align-items:center;">
+                                    <i class="fa-solid fa-wind"></i> <span data-i18n="sidebarWind">Wind</span>
+                                </div>
+                                <span class="label-val" id="val-wind">0 m/s</span>
+                            </div>
+                            <input type="range" id="wind-slider" min="-20" max="20" step="1" value="0">
+                            <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
+                                <span data-i18n="windTailwind">Tailwind</span><span data-i18n="windHeadwind">Headwind</span>
+                            </div>
+                        </div>
+
+                        <!-- Precipitation Item -->
+                        <div class="control-group weather-item" id="group-precip">
+                            <div class="control-label">
+                                <div style="display:flex; align-items:center;">
+                                    <i class="fa-solid fa-cloud-rain"></i> <span data-i18n="precipitation">Precipitation</span>
+                                </div>
+                            </div>
+                            <div class="pill-group" id="precip-group">
+                                <button class="pill-btn active" data-value="none" data-i18n="precipNone">none</button>
+                                <button class="pill-btn" data-value="rain" data-i18n="precipRain">rain</button>
+                                <button class="pill-btn" data-value="snow" data-i18n="precipSnow">snow</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Ползунок полезной нагрузки (вес) -->
                 <div class="control-group">
                     <div class="control-label">
@@ -487,59 +540,36 @@
                     </div>
                 </div>
 
-                <!-- Weather Dropdown -->
-                <div class="control-group weather-dropdown-container" id="weather-dropdown" style="grid-column: span 2;">
-                    <!-- Trigger Button -->
-                    <div class="control-label weather-trigger" id="weather-trigger" style="cursor: pointer;">
+                <!-- Ползунок деградации батареи с чекбоксом -->
+                <div class="control-group" id="group-deg" style="grid-column: span 2;">
+                    <div class="control-label">
                         <div style="display:flex; align-items:center;">
-                            <i class="fa-solid fa-cloud-sun"></i> <span data-i18n="weather">Weather</span>
+                            <input type="checkbox" id="check-deg" class="feature-checkbox" checked>
+                            <i class="fa-solid fa-battery-quarter"></i> <span data-i18n="sidebarDegradation">Degradation</span>
                         </div>
-                        <span class="label-val" id="val-weather">20°C, 0 m/s</span>
-                        <i class="fa-solid fa-chevron-down" id="weather-arrow" style="margin-left: auto; font-size: 0.8rem;"></i>
+                        <span class="label-val" id="val-deg">0%</span>
                     </div>
-                    
-                    <!-- Weather Menu -->
-                    <div class="weather-menu" id="weather-menu">
-                        <!-- Temperature Item -->
-                        <div class="control-group weather-item">
-                            <div class="control-label">
-                                <i class="fa-solid fa-temperature-half"></i> <span data-i18n="temperature">Temperature</span>
-                                <span id="battery-thermal-status" class="battery-thermal-warning" style="display: none;"></span>
-                                <span class="label-val" id="val-temp">20°C</span>
-                            </div>
-                            <input type="range" id="temp-slider" min="-20" max="40" value="20">
-                        </div>
-
-                        <!-- Wind Item -->
-                        <div class="control-group weather-item" id="group-wind">
-                            <div class="control-label">
-                                <div style="display:flex; align-items:center;">
-                                    <i class="fa-solid fa-wind"></i> <span data-i18n="sidebarWind">Wind</span>
-                                </div>
-                                <span class="label-val" id="val-wind">0 m/s</span>
-                            </div>
-                            <input type="range" id="wind-slider" min="-20" max="20" step="1" value="0">
-                            <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:var(--text-muted); margin-top:-5px; padding: 0 5px;">
-                                <span data-i18n="windTailwind">Tailwind</span><span data-i18n="windHeadwind">Headwind</span>
-                            </div>
-                        </div>
-
-                        <!-- Precipitation Item -->
-                        <div class="control-group weather-item" id="group-precip">
-                            <div class="control-label">
-                                <div style="display:flex; align-items:center;">
-                                    <i class="fa-solid fa-cloud-rain"></i> <span data-i18n="precipitation">Precipitation</span>
-                                </div>
-                            </div>
-                            <div class="pill-group" id="precip-group">
-                                <button class="pill-btn active" data-value="none" data-i18n="precipNone">none</button>
-                                <button class="pill-btn" data-value="rain" data-i18n="precipRain">rain</button>
-                                <button class="pill-btn" data-value="snow" data-i18n="precipSnow">snow</button>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="range" id="deg-slider" min="0" max="30" step="1" value="0">
+                    <div style="font-size:0.6rem; color:var(--text-muted); margin-top:-5px;" data-i18n="batteryHealthLoss">Battery Health Loss</div>
                 </div>
 
+                <!-- Продвинутый селектор климат-контроля -->
+                <div class="control-group" id="climate-control-group">
+                    <div class="control-label">
+                        <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Pro</span>
+                        <span class="label-val" id="val-ext-climate">Off</span>
+                    </div>
+                    <div class="pill-group" id="ext-climate-group">
+                        <button class="pill-btn active" data-value="off" data-i18n="climateOff">Off</button>
+                        <button class="pill-btn" data-value="ac" data-i18n="climateAC">A/C</button>
+                        <button class="pill-btn" data-value="heater" data-i18n="climateHeater">Heater</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- СПЕЦИФИЧНЫЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ РАСШИРЕННОГО РЕЖИМА (показывается при выборе вкладки Расширенный) -->
+            <div id="mode-ext-controls" class="contents-wrapper" style="display: none;">
+                
                 <!-- Wheels Dropdown -->
                 <div class="control-group wheels-dropdown-container" id="wheels-dropdown" style="grid-column: span 2;">
                     <!-- Trigger Button -->
@@ -577,36 +607,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Продвинутый селектор климат-контроля -->
-                <div class="control-group" id="climate-control-group">
-                    <div class="control-label">
-                        <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Pro</span>
-                        <span class="label-val" id="val-ext-climate">Off</span>
-                    </div>
-                    <div class="pill-group" id="ext-climate-group">
-                        <button class="pill-btn active" data-value="off" data-i18n="climateOff">Off</button>
-                        <button class="pill-btn" data-value="ac" data-i18n="climateAC">A/C</button>
-                        <button class="pill-btn" data-value="heater" data-i18n="climateHeater">Heater</button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- СПЕЦИФИЧНЫЕ ЭЛЕМЕНТЫ УПРАВЛЕНИЯ РАСШИРЕННОГО РЕЖИМА (показывается при выборе вкладки Расширенный) -->
-            <div id="mode-ext-controls" class="contents-wrapper" style="display: none;">
-                
-                <!-- Ползунок деградации батареи с чекбоксом -->
-                <div class="control-group" id="group-deg" style="grid-column: span 2;">
-                    <div class="control-label">
-                        <div style="display:flex; align-items:center;">
-                            <input type="checkbox" id="check-deg" class="feature-checkbox" checked>
-                            <i class="fa-solid fa-battery-quarter"></i> <span data-i18n="sidebarDegradation">Degradation</span>
-                        </div>
-                        <span class="label-val" id="val-deg">0%</span>
-                    </div>
-                    <input type="range" id="deg-slider" min="0" max="30" step="1" value="0">
-                    <div style="font-size:0.6rem; color:var(--text-muted); margin-top:-5px;" data-i18n="batteryHealthLoss">Battery Health Loss</div>
                 </div>
 
             </div>

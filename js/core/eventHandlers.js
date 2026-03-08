@@ -342,6 +342,18 @@ function initPillGroups() {
 }
 
 /**
+ * Закрывает все dropdown меню Extended Mode, кроме активного
+ */
+function closeOtherExtendedDropdowns(activeMenu) {
+    const menus = [energyConsumersMenu, weatherMenu, wheelsMenu];
+    menus.forEach(menu => {
+        if (menu && menu !== activeMenu) {
+            menu.classList.remove('show');
+        }
+    });
+}
+
+/**
  * Инициализирует dropdown меню Energy Consumers
  */
 function initEnergyConsumersDropdown() {
@@ -352,6 +364,7 @@ function initEnergyConsumersDropdown() {
                 return;
             }
             e.stopPropagation();
+            closeOtherExtendedDropdowns(energyConsumersMenu);
             energyConsumersMenu.classList.toggle('show');
         });
 
@@ -374,6 +387,7 @@ function initWeatherDropdown() {
                 return;
             }
             e.stopPropagation();
+            closeOtherExtendedDropdowns(weatherMenu);
             weatherMenu.classList.toggle('show');
             
             // Обновляем pill slider для precipitation при открытии dropdown
@@ -407,6 +421,7 @@ function initWheelsDropdown() {
                 return;
             }
             e.stopPropagation();
+            closeOtherExtendedDropdowns(wheelsMenu);
             wheelsMenu.classList.toggle('show');
         });
 
