@@ -108,6 +108,144 @@ window.closeInfoCarModal = function() {
 }
 
 /**
+ * Открывает модальное окно How It Works
+ */
+window.openHowItWorksModal = function() {
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+    if (!howItWorksModal) return;
+
+    howItWorksModal.style.display = 'flex';
+    resetHowItWorksSelection(howItWorksModal);
+    closeHowItemInfoModal();
+}
+
+/**
+ * Закрывает модальное окно How It Works
+ */
+window.closeHowItWorksModal = function() {
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+    if (!howItWorksModal) return;
+    howItWorksModal.style.display = 'none';
+    resetHowItWorksSelection(howItWorksModal);
+    closeHowItemInfoModal();
+}
+
+/**
+ * Сбрасывает активные элементы в модальном окне How It Works
+ */
+function resetHowItWorksSelection(howItWorksModal) {
+    howItWorksModal.querySelectorAll('.how-item.active').forEach(item => {
+        item.classList.remove('active');
+    });
+}
+
+/**
+ * Открывает модальное окно детальной карточки выбранного элемента
+ */
+window.openHowItemInfoModal = function(title, description, iconClass) {
+    const itemInfoModal = document.getElementById('how-item-info-modal');
+    const itemInfoIcon = document.getElementById('how-item-info-icon');
+    const itemInfoTitle = document.getElementById('how-item-info-title');
+    const itemInfoDescription = document.getElementById('how-item-info-description');
+
+    if (!itemInfoModal || !itemInfoIcon || !itemInfoTitle || !itemInfoDescription) return;
+
+    itemInfoTitle.textContent = title || 'Details';
+    itemInfoDescription.textContent = description || '';
+    itemInfoIcon.className = iconClass || 'fa-solid fa-circle-info';
+
+    itemInfoModal.style.display = 'flex';
+}
+
+/**
+ * Закрывает модальное окно детальной карточки How It Works
+ */
+window.closeHowItemInfoModal = function() {
+    const itemInfoModal = document.getElementById('how-item-info-modal');
+    if (!itemInfoModal) return;
+    itemInfoModal.style.display = 'none';
+}
+
+/**
+ * Инициализирует переключатель режимов в модальном окне How It Works
+ */
+function initHowFactorsModeToggle(howItWorksModal) {
+    const modeButtons = howItWorksModal.querySelectorAll('.how-mode-btn');
+    const factorsContainers = howItWorksModal.querySelectorAll('.how-factors-container');
+
+    modeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetMode = btn.getAttribute('data-mode');
+
+            // Обновляем активные кнопки
+            modeButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Показываем/скрываем соответствующие контейнеры факторов
+            factorsContainers.forEach(container => {
+                const containerMode = container.getAttribute('data-mode');
+                if (containerMode === targetMode) {
+                    container.style.display = 'flex';
+                } else {
+                    container.style.display = 'none';
+                }
+            });
+
+            // Сбрасываем активные элементы и закрываем детальную карточку
+            resetHowItWorksSelection(howItWorksModal);
+            closeHowItemInfoModal();
+        });
+    });
+}
+
+/**
+ * Инициализирует карточки в модальном окне How It Works
+ */
+function initHowItWorksCards(howItWorksModal) {
+    const toggles = howItWorksModal.querySelectorAll('.how-item-toggle');
+
+    const itemInfoModal = document.getElementById('how-item-info-modal');
+    const closeItemInfoBtn = itemInfoModal ? itemInfoModal.querySelector('.how-item-info-close') : null;
+
+    if (itemInfoModal) {
+        itemInfoModal.addEventListener('click', (e) => {
+            if (e.target === itemInfoModal) {
+                closeHowItemInfoModal();
+                resetHowItWorksSelection(howItWorksModal);
+            }
+        });
+    }
+
+    if (closeItemInfoBtn) {
+        closeItemInfoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeHowItemInfoModal();
+            resetHowItWorksSelection(howItWorksModal);
+        });
+    }
+
+    toggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const item = toggle.closest('.how-item');
+            if (!item) return;
+
+            const sourceIcon = item.querySelector('.how-item-toggle span i');
+            const sourceTitle = item.querySelector('.how-item-toggle span');
+            const sourceText = item.querySelector('.how-item-content');
+
+            const title = sourceTitle ? sourceTitle.textContent.trim() : 'Details';
+            const description = sourceText ? sourceText.textContent.trim() : '';
+            const iconClass = sourceIcon ? sourceIcon.className : 'fa-solid fa-circle-info';
+
+            resetHowItWorksSelection(howItWorksModal);
+            item.classList.add('active');
+
+            openHowItemInfoModal(title, description, iconClass);
+        });
+    });
+}
+
+/**
  * Инициализирует обработчики для модальных окон
  */
 function initModals() {
@@ -150,6 +288,33 @@ function initModals() {
                 closeInfoCarModal();
             });
         }
+    }
+
+    const howItWorksBtn = document.getElementById('how-it-works-btn');
+    const howItWorksModal = document.getElementById('how-it-works-modal');
+
+    if (howItWorksBtn && howItWorksModal) {
+        howItWorksBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openHowItWorksModal();
+        });
+
+        howItWorksModal.addEventListener('click', (e) => {
+            if (e.target === howItWorksModal) {
+                closeHowItWorksModal();
+            }
+        });
+
+        const closeHowItWorksBtn = howItWorksModal.querySelector('.how-it-works-close');
+        if (closeHowItWorksBtn) {
+            closeHowItWorksBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeHowItWorksModal();
+            });
+        }
+
+        initHowFactorsModeToggle(howItWorksModal);
+        initHowItWorksCards(howItWorksModal);
     }
 }
 // Контакты

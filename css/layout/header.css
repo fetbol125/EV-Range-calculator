@@ -34,6 +34,29 @@
     color: var(--text-muted); 
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.how-it-works-btn {
+    font-size: 0.95rem;
+    color: var(--text-main);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.how-it-works-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(6, 182, 212, 0.08);
+}
+
 /* Language Dropdown */
 .language-dropdown-container {
     position: relative;

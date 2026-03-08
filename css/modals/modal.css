@@ -249,3 +249,237 @@
     color: var(--accent);
     font-weight: bold;
 }
+
+/* How It Works Modal */
+.how-it-works-content {
+    width: min(920px, 95vw);
+    max-height: 86vh;
+    overflow-y: auto;
+    padding: 24px 26px;
+    gap: 18px;
+}
+
+.how-it-works-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.how-it-works-header h3 {
+    margin: 0;
+    text-align: left;
+    color: #f8fafc;
+    font-size: 1.45rem;
+    line-height: 1.35;
+}
+
+.how-it-works-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.how-it-works-section h4 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.how-factors-mode-toggle {
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 12px;
+    border: 1px solid #334155;
+    width: fit-content;
+    margin: 0;
+}
+
+.how-mode-btn {
+    border: none;
+    background: transparent;
+    color: #cbd5e1;
+    cursor: pointer;
+    padding: 8px 18px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    border-radius: 9px;
+    transition: background 0.25s ease, color 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.how-mode-btn i {
+    font-size: 0.85rem;
+}
+
+.how-mode-btn:hover:not(.active) {
+    background: rgba(148, 163, 184, 0.12);
+    color: #e2e8f0;
+}
+
+.how-mode-btn.active {
+    background: rgba(6, 182, 212, 0.18);
+    color: var(--accent);
+}
+
+.how-factors-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.how-factors-container[data-mode]:not([data-mode=""]) {
+    display: flex;
+}
+
+.how-factors-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.how-factors-group + .how-factors-group {
+    margin-top: 6px;
+}
+
+.how-factors-group-title {
+    text-align: center;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #cbd5e1;
+}
+
+.how-factors-group-line {
+    height: 1px;
+    width: 100%;
+    background: rgba(148, 163, 184, 0.35);
+}
+
+.how-items-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.how-item {
+    border: 1px solid #334155;
+    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.7);
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.how-item:hover {
+    border-color: rgba(6, 182, 212, 0.45);
+    transform: translateY(-1px);
+}
+
+.how-item.active {
+    border-color: rgba(6, 182, 212, 0.7);
+    background: rgba(12, 26, 52, 0.95);
+}
+
+.how-item-toggle {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #e2e8f0;
+    cursor: pointer;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: left;
+}
+
+.how-item-toggle span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.how-item-toggle span i {
+    color: var(--accent);
+    width: 16px;
+    text-align: center;
+}
+
+.how-item-toggle > i {
+    display: none;
+    color: #94a3b8;
+    transform: rotate(-90deg);
+    transition: color 0.25s ease;
+}
+
+.how-item.active .how-item-toggle > i {
+    color: var(--accent);
+}
+
+.how-item-content {
+    display: none;
+}
+
+.car-info-modal.how-item-info-modal {
+    width: 640px;
+    max-width: 92%;
+    padding: 0;
+    overflow: hidden;
+}
+
+.how-item-info-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(6, 182, 212, 0.12);
+    border: 1px solid rgba(6, 182, 212, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.how-item-info-icon-wrap i {
+    color: var(--accent);
+    font-size: 1.2rem;
+}
+
+.how-item-info-body {
+    padding: 26px 30px 30px;
+}
+
+.how-item-info-body p {
+    margin: 0;
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.72;
+}
+
+@media (max-width: 900px) {
+    .how-it-works-content {
+        width: 95vw;
+        max-height: 88vh;
+        padding: 20px;
+    }
+
+    .how-it-works-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .how-items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .car-info-modal.how-item-info-modal {
+        width: 95%;
+    }
+
+    .how-item-info-body {
+        padding: 20px;
+    }
+}
