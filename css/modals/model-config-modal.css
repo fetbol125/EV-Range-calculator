@@ -25,6 +25,11 @@
     background: rgba(2, 6, 23, 0.55);
     overflow: hidden;
     padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+    position: relative;
 }
 
 .model-config-image {
@@ -33,6 +38,46 @@
     object-fit: contain;
     object-position: center;
     display: block;
+}
+
+.model-config-image-wrap::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.model-config-image-wrap.no-image::before {
+    opacity: 1;
+}
+
+.model-config-image-placeholder {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.model-config-image-placeholder.show {
+    opacity: 1;
+}
+
+.model-config-image-placeholder i {
+    font-size: 80px;
+    color: rgba(6, 182, 212, 0.4);
+}
+
+.model-config-image-wrap.no-image .model-config-image {
+    display: none;
 }
 
 .model-config-name-block {

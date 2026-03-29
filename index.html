@@ -218,7 +218,7 @@
                     <!-- Отображение информации о текущем автомобиле -->
                     <div class="car-info">
                         <div class="car-thumb">
-                            <img id="current-car-img" src="" alt="Car">
+                            <img id="current-car-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" aria-hidden="true" style="display:none;">
                         </div>
                         <div>
                                 <div style="font-size: 0.8rem; color: var(--text-muted);" id="current-car-brand">Brand</div>
@@ -790,7 +790,12 @@
             </div>
 
             <div class="model-details-selected-car">
-                <img id="model-details-brand-logo" src="" alt="Brand logo" class="model-details-brand-logo">
+                <div class="model-details-logo-wrap">
+                    <img id="model-details-brand-logo" src="" alt="Brand logo" class="model-details-brand-logo">
+                    <div class="model-details-logo-placeholder" id="model-details-logo-placeholder">
+                        <i class="fa-solid fa-car"></i>
+                    </div>
+                </div>
                 <div>
                     <div id="model-details-brand-name" class="model-details-brand-name">Brand</div>
                     <div id="model-details-model-name" class="model-details-model-name">Model</div>
@@ -813,6 +818,9 @@
 
             <div class="model-config-image-wrap">
                 <img id="model-config-image" src="" alt="Vehicle image" class="model-config-image">
+                <div class="model-config-image-placeholder" id="model-config-image-placeholder">
+                    <i class="fa-solid fa-car"></i>
+                </div>
             </div>
 
             <div class="model-config-name-block">

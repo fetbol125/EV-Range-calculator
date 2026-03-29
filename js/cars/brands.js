@@ -16,11 +16,6 @@ const brandsData = [
         logo: 'https://www.logo.wine/a/logo/Audi/Audi-Logo.wine.svg'
     },
     {
-        id: 'zeekr',
-        name: 'Zeekr',
-        logo: 'https://cdn.brandfetch.io/id9IzRfttX/w/1332/h/1332/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
-    },
-    {
         id: 'bmw',
         name: 'BMW',
         logo: 'https://cdn.brandfetch.io/idX0fsMOpE/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
@@ -51,8 +46,23 @@ const brandsData = [
         logo: 'https://cdn.brandfetch.io/idWpwxSA3p/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
     },
     {
-        id: 'weltmeister',
-        name: 'Weltmeister',
-        logo: 'https://1000logos.net/wp-content/uploads/2023/12/Weltmeister-Emblem-768x432.png'
+        id: 'zeekr',
+        name: 'Zeekr',
+        logo: 'https://cdn.brandfetch.io/idV6c4bL0n/w/200/h/200/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
+    },
+    {
+        id: 'lexus',
+        name: 'Lexus',
+        logo: 'https://cdn.brandfetch.io/idKxfDnw2E/theme/light/id9TkIDfCL.svg?c=1dxbfHSJFAPEGdCLU4o5B'
+    },
+    {
+        id: 'honda',
+        name: 'Honda',
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg'
+    },
+    {
+        id: 'cadillac',
+        name: 'Cadillac',
+        logo: 'https://cdn.brandfetch.io/idjcY_09lV/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
     }
 ];

@@ -19,7 +19,7 @@ function setCarThumbIcon() {
 function restoreCarThumbImage() {
     const carThumb = document.querySelector('.car-thumb');
     if (carThumb) {
-        carThumb.innerHTML = '<img id="current-car-img" src="" alt="Car">';
+        carThumb.innerHTML = '<img id="current-car-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" aria-hidden="true" style="display:none;">';
     }
 }
 
@@ -66,7 +66,28 @@ function selectCar(id) {
     // Получаем img элемент по id (может быть новый если только что восстановили)
     const currentImg = document.getElementById('current-car-img');
     if (currentImg) {
-        currentImg.src = car.img;
+        // Скрываем превью до полной загрузки, чтобы не было "кривого" кадра при первом рендере
+        currentImg.style.display = 'none';
+
+        const onImageLoaded = () => {
+            currentImg.style.display = 'block';
+        };
+
+        const onImageError = () => {
+            setCarThumbIcon();
+        };
+
+        currentImg.addEventListener('load', onImageLoaded, { once: true });
+        currentImg.addEventListener('error', onImageError, { once: true });
+
+        if (car.img && car.img.trim()) {
+            currentImg.src = car.img;
+            if (currentImg.complete && currentImg.naturalWidth > 0) {
+                currentImg.style.display = 'block';
+            }
+        } else {
+            setCarThumbIcon();
+        }
     }
     
     currentCarRange.innerText = car.range; 
@@ -125,7 +146,7 @@ function renderCarList(dataToRender) {
                 <img src="${brandGroup.logo}" alt="${brandGroup.name} Logo" class="brand-logo">
                 <div class="brand-meta">
                     <span class="brand-name">${brandGroup.name}</span>
-                    <span class="brand-count">${uniqueModels.length}</span>
+                    <span class="brand-count">models: ${uniqueModels.length}</span>
                 </div>
             </div>
             <i class="fa-solid fa-chevron-down brand-chevron" aria-hidden="true"></i>

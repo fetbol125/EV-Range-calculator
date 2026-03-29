@@ -254,8 +254,37 @@ window.openModelDetailsModal = function(carId) {
     const modelName = document.getElementById('model-details-model-name');
 
     if (brandLogo) {
-        brandLogo.src = selectedCar.logo || '';
-        brandLogo.alt = `${selectedCar.brand} Logo`;
+        const logoWrap = document.querySelector('.model-details-logo-wrap');
+        const logoPlaceholder = document.getElementById('model-details-logo-placeholder');
+        
+        // Сначала проверяем, есть ли логотип
+        if (!selectedCar.logo || !selectedCar.logo.trim()) {
+            // Нету логотипа - показываем иконку
+            if (logoPlaceholder) logoPlaceholder.classList.add('show');
+            brandLogo.style.display = 'none';
+            brandLogo.src = '';
+        } else {
+            // Есть логотип - пытаемся загрузить
+            brandLogo.src = selectedCar.logo;
+            brandLogo.alt = `${selectedCar.brand} Logo`;
+            
+            // Если логотип загружается успешно
+            brandLogo.onload = function() {
+                if (logoPlaceholder) logoPlaceholder.classList.remove('show');
+                brandLogo.style.display = 'block';
+            };
+            
+            // Если логотип не загружается
+            brandLogo.onerror = function() {
+                if (logoPlaceholder) logoPlaceholder.classList.add('show');
+                brandLogo.style.display = 'none';
+            };
+            
+            // Проверяем кеш браузера - если изображение уже загружено
+            if (brandLogo.complete) {
+                brandLogo.onload();
+            }
+        }
     }
 
     if (brandName) {
@@ -308,8 +337,40 @@ window.openModelConfigModal = function(carId) {
     const configSeats = document.getElementById('model-config-seats');
 
     if (configImage) {
-        configImage.src = car.img || '';
-        configImage.alt = `${car.brand} ${car.name}`;
+        const imageWrap = document.querySelector('.model-config-image-wrap');
+        const placeholder = document.getElementById('model-config-image-placeholder');
+        
+        // Сначала проверяем, есть ли изображение
+        if (!car.img || !car.img.trim()) {
+            // Нету изображения - показываем иконку
+            if (imageWrap) imageWrap.classList.add('no-image');
+            if (placeholder) placeholder.classList.add('show');
+            configImage.style.display = 'none';
+            configImage.src = '';
+        } else {
+            // Есть изображение - пытаемся загрузить
+            configImage.src = car.img;
+            configImage.alt = `${car.brand} ${car.name}`;
+            
+            // Если изображение загружается успешно
+            configImage.onload = function() {
+                if (imageWrap) imageWrap.classList.remove('no-image');
+                if (placeholder) placeholder.classList.remove('show');
+                configImage.style.display = 'block';
+            };
+            
+            // Если изображение не загружается
+            configImage.onerror = function() {
+                if (imageWrap) imageWrap.classList.add('no-image');
+                if (placeholder) placeholder.classList.add('show');
+                configImage.style.display = 'none';
+            };
+            
+            // Проверяем кеш браузера - если изображение уже загружено
+            if (configImage.complete) {
+                configImage.onload();
+            }
+        }
     }
 
     if (configLogo) {
