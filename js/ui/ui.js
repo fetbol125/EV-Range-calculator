@@ -200,10 +200,6 @@ function updateExtendedModeUI(t, lblTextSeason, lblIconSeason, lblTextMode, lblI
     if(sumEnergyConsumers) {
         if (activeCount === 0) {
             sumEnergyConsumers.innerText = t.climateOff;
-        } else if (activeCount === 1) {
-            if (state.seatHeating) sumEnergyConsumers.innerText = t.seatHeating;
-            else if (state.windowHeating) sumEnergyConsumers.innerText = t.windowHeating;
-            else sumEnergyConsumers.innerText = t.multimedia;
         } else {
             sumEnergyConsumers.innerText = activeCount + ' ' + t.energyActive;
         }
@@ -499,6 +495,64 @@ function updateImpactVisuals() {
         const climateImpact = (getClimateMultiplier() - 1) * 100;
         const reliefImpact = state.enableRelief ? (getReliefMultiplier() - 1) * 100 : null;
 
+        let degStatus = null;
+        if (state.enableDeg) {
+            if (state.extDeg <= 2) degStatus = 'good';
+            else if (state.extDeg <= 5) degStatus = 'warn';
+            else degStatus = 'bad';
+        }
+
+        let energyStatus = null;
+        if (state.enableEnergyConsumers) {
+            let totalImpact = 0;
+            if (state.seatHeating) totalImpact += SEAT_HEATING_IMPACT;
+            if (state.windowHeating) totalImpact += WINDOW_HEATING_IMPACT;
+            if (state.multimedia) totalImpact += MULTIMEDIA_IMPACT;
+
+            if (totalImpact === 0) {
+                energyStatus = null;
+            } else if (totalImpact <= 0.05) {
+                energyStatus = 'warn';
+            } else {
+                energyStatus = 'bad';
+            }
+        }
+
+        let climateStatus = 'bad';
+        if (state.extClimateMode === 'off') climateStatus = 'good';
+        else if (state.extClimateMode === 'ac') climateStatus = 'warn';
+
+        let weatherStatus = null;
+        if (state.enableWeather) {
+            weatherStatus = 'good';
+
+            if (state.extTemp >= 20 && state.extTemp <= 25) {
+                // ideal temperature
+            } else if (state.extTemp <= BATTERY_HEATING_THRESHOLD || state.extTemp >= BATTERY_COOLING_THRESHOLD) {
+                weatherStatus = 'bad';
+            } else if (state.extTemp < 15 || state.extTemp > 30) {
+                weatherStatus = 'warn';
+            }
+
+            if (state.enableWind) {
+                const absWind = Math.abs(state.extWind);
+                if (absWind > 10) {
+                    weatherStatus = 'bad';
+                } else if (absWind > 5) {
+                    if (weatherStatus === 'good') weatherStatus = 'warn';
+                }
+                if (state.extWind > 0 && absWind > 5) {
+                    weatherStatus = 'bad';
+                }
+            }
+
+            if (state.extPrecip === 'snow') {
+                weatherStatus = 'bad';
+            } else if (state.extPrecip === 'rain' && weatherStatus === 'good') {
+                weatherStatus = 'warn';
+            }
+        }
+
         // Определяем статус для relief на основе выбранного рельефа
         let reliefStatus = null;
         if (state.enableRelief) {
@@ -507,14 +561,32 @@ function updateImpactVisuals() {
             else if (state.extRelief === 'mountains') reliefStatus = 'bad';
         }
 
-        setImpactText(impactWeather, weatherImpact);
-        setImpactText(impactWheels, wheelsImpact);
-        setImpactText(impactDeg, degImpact);
+        let wheelsStatus = null;
+        if (state.enableWheels) {
+            if (state.extWheels <= 19 && state.extTires === 2) wheelsStatus = 'good';
+            else if (state.extWheels <= 19 && state.extTires === 1) wheelsStatus = 'good';
+            else if (state.extWheels <= 19 && state.extTires === 0) wheelsStatus = 'warn';
+            else if (state.extWheels > 19 && state.extTires === 2) wheelsStatus = 'warn';
+            else wheelsStatus = 'bad';
+        }
+
+        let speedStatus = 'warn';
+        if (state.extSpeed <= 60) speedStatus = 'good';
+        else if (state.extSpeed > 110) speedStatus = 'bad';
+
+        // Keep weight percent color in sync with weight indicator arrow/value thresholds.
+        let weightStatus = 'good';
+        if (state.extPayload > 300) weightStatus = 'bad';
+        else if (state.extPayload > 200) weightStatus = 'warn';
+
+        setImpactText(impactWeather, weatherImpact, weatherStatus);
+        setImpactText(impactWheels, wheelsImpact, wheelsStatus);
+        setImpactText(impactDeg, degImpact, degStatus);
         setImpactText(impactModeExt, modeImpact);
-        setImpactText(impactEnergy, energyImpact);
-        setImpactText(impactSpeed, speedImpact);
-        setImpactText(impactWeight, weightImpact);
-        setImpactText(impactClimate, climateImpact);
+        setImpactText(impactEnergy, energyImpact, energyStatus);
+        setImpactText(impactSpeed, speedImpact, speedStatus);
+        setImpactText(impactWeight, weightImpact, weightStatus);
+        setImpactText(impactClimate, climateImpact, climateStatus);
         setImpactText(impactRelief, reliefImpact, reliefStatus);
     }
 }
@@ -609,7 +681,7 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
     
     if (state.enableWheels) {
         if (state.extWheels <= 19 && state.extTires === 2) setVisual(sumWheels, iconWheels, 'good');
-        else if (state.extWheels <= 19 && state.extTires === 1) setVisual(sumWheels, iconWheels, 'warn');
+        else if (state.extWheels <= 19 && state.extTires === 1) setVisual(sumWheels, iconWheels, 'good');
         else if (state.extWheels <= 19 && state.extTires === 0) setVisual(sumWheels, iconWheels, 'warn');
         else if (state.extWheels > 19 && state.extTires === 2) setVisual(sumWheels, iconWheels, 'warn');
         else setVisual(sumWheels, iconWheels, 'bad');
@@ -618,7 +690,8 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
     }
 
     if (state.enableDeg) {
-        if (state.extDeg <= 5) setVisual(sumDeg, iconDeg, 'good');
+        if (state.extDeg <= 2) setVisual(sumDeg, iconDeg, 'good');
+        else if (state.extDeg <= 5) setVisual(sumDeg, iconDeg, 'warn');
         else setVisual(sumDeg, iconDeg, 'bad');
     } else {
         setNeutralVisual(sumDeg, iconDeg);
@@ -633,11 +706,8 @@ function updateExtendedModeVisuals(setVisual, setNeutralVisual, sumWheels, iconW
 
         if (totalImpact === 0) {
             setNeutralVisual(sumEnergyConsumers, iconEnergyConsumers);
-        } else if (totalImpact <= 0.02) {
-            // Only multimedia (2%) - green
-            setVisual(sumEnergyConsumers, iconEnergyConsumers, 'good');
         } else if (totalImpact <= 0.05) {
-            // Multimedia + one heating OR one heating only (3-5%) - yellow
+            // Single consumer or light combination (<=5%) - yellow
             setVisual(sumEnergyConsumers, iconEnergyConsumers, 'warn');
         } else {
             // Multiple items (>5%) - red

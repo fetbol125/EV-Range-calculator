@@ -111,9 +111,14 @@ function updateBatteryGauge() {
     // Удаляем все классы батареи и добавляем нужный
     batteryIcon.className = `fa-solid ${iconClass}`;
     
-    // Применяем цвет к иконке и тексту
+    // Применяем цвет к иконке и тексту Current Battery
     batteryIcon.style.color = color;
     footerBattery.style.color = color;
+
+    // Синхронизируем цвет значения Battery Level в карточке справа
+    if (sumBattery) {
+        sumBattery.style.color = color;
+    }
 }
 /**
  * Обновляет отображение потребления энергии в кВт⋅ч/100км
