@@ -1,5 +1,7 @@
 // Кастомный автомобиль
 
+let pendingModelConfigCarId = null;
+
 /**
  * Открывает модальное окно для ввода кастомного автомобиля
  */
@@ -106,6 +108,292 @@ function openInfoCarModal() {
 window.closeInfoCarModal = function() {
     infoCarModal.style.display = 'none';
 }
+
+/**
+ * Нормализует имя модели для поиска похожих конфигураций
+ * @param {string} modelName - Имя модели
+ * @returns {string}
+ */
+function normalizeModelName(modelName) {
+    return (modelName || '')
+        .toLowerCase()
+        .replace(/\b(quattro|performance|long range|standard range|plaid|ultimate|premium|sport|pro|awd|rwd)\b/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+}
+
+/**
+ * Находит варианты одной модели в рамках бренда
+ * @param {Object} baseCar - Базовый автомобиль
+ * @returns {Array}
+ */
+function getModelVariants(baseCar) {
+    if (!baseCar) {
+        return [];
+    }
+
+    const exactMatches = allCars.filter(car => {
+        return car.brandId === baseCar.brandId && car.name.toLowerCase() === baseCar.name.toLowerCase();
+    });
+
+    if (exactMatches.length > 0) {
+        return exactMatches;
+    }
+
+    const normalizedBaseName = normalizeModelName(baseCar.name);
+    const relatedMatches = allCars.filter(car => {
+        return car.brandId === baseCar.brandId && normalizeModelName(car.name) === normalizedBaseName;
+    });
+
+    return relatedMatches.length > 0 ? relatedMatches : [baseCar];
+}
+
+/**
+ * Возвращает числовой вес года для сортировки
+ * @param {string} yearLabel - Текст года (например 2025+ или 2021-2024)
+ * @returns {number}
+ */
+function getYearSortValue(yearLabel) {
+    if (!yearLabel) {
+        return 0;
+    }
+
+    const years = String(yearLabel).match(/\d{4}/g);
+    if (!years || years.length === 0) {
+        return 0;
+    }
+
+    return parseInt(years[years.length - 1], 10) || 0;
+}
+
+/**
+ * Рендерит список вариантов модели, сгруппированный по годам
+ * @param {Array} variants - Доступные варианты модели
+ */
+function renderModelVariants(variants) {
+    if (!modelDetailsVariants) {
+        return;
+    }
+
+    modelDetailsVariants.innerHTML = '';
+
+    const yearGroups = new Map();
+    variants.forEach(variant => {
+        const yearLabel = variant.year || 'N/A';
+        if (!yearGroups.has(yearLabel)) {
+            yearGroups.set(yearLabel, []);
+        }
+        yearGroups.get(yearLabel).push(variant);
+    });
+
+    const sortedYears = Array.from(yearGroups.keys()).sort((a, b) => getYearSortValue(b) - getYearSortValue(a));
+
+    sortedYears.forEach(yearLabel => {
+        const yearTitle = document.createElement('div');
+        yearTitle.className = 'model-variants-year';
+        yearTitle.textContent = yearLabel;
+        modelDetailsVariants.appendChild(yearTitle);
+
+        yearGroups.get(yearLabel).forEach(variant => {
+            const item = document.createElement('div');
+            item.className = 'model-variant-item';
+
+            const batteryText = typeof variant.battery === 'number' ? `${variant.battery} kWh` : 'N/A';
+            const specText = `${variant.driveType || 'N/A'} • ${batteryText}`;
+            const variantTitle = variant.trim || variant.name;
+
+            item.innerHTML = `
+                <div class="model-variant-main">
+                    <div class="model-variant-name">${variantTitle}</div>
+                    <div class="model-variant-spec">${specText}</div>
+                </div>
+                <div class="model-variant-actions">
+                    <button type="button" class="model-variant-select" aria-label="Select ${variant.name}">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            `;
+
+            const selectBtn = item.querySelector('.model-variant-select');
+            if (selectBtn) {
+                selectBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    window.openModelConfigModal(variant.id);
+                });
+            }
+
+            item.addEventListener('click', () => {
+                window.openModelConfigModal(variant.id);
+            });
+
+            modelDetailsVariants.appendChild(item);
+        });
+    });
+}
+
+/**
+ * Открывает модальное окно с детальным выбором модели
+ * @param {string} carId - ID автомобиля
+ */
+window.openModelDetailsModal = function(carId) {
+    const selectedCar = allCars.find(car => car.id === carId);
+    if (!selectedCar || !modelDetailsModal) {
+        return;
+    }
+
+    if (carDropdown && carDropdown.classList.contains('show')) {
+        toggleCarMenu();
+    }
+
+    const variants = getModelVariants(selectedCar).sort((a, b) => {
+        return getYearSortValue(b.year) - getYearSortValue(a.year);
+    });
+
+    const brandLogo = document.getElementById('model-details-brand-logo');
+    const brandName = document.getElementById('model-details-brand-name');
+    const modelName = document.getElementById('model-details-model-name');
+
+    if (brandLogo) {
+        brandLogo.src = selectedCar.logo || '';
+        brandLogo.alt = `${selectedCar.brand} Logo`;
+    }
+
+    if (brandName) {
+        brandName.textContent = selectedCar.brand;
+    }
+
+    if (modelName) {
+        modelName.textContent = selectedCar.name;
+    }
+
+    renderModelVariants(variants);
+    modelDetailsModal.style.display = 'flex';
+}
+
+/**
+ * Закрывает модальное окно детального выбора модели
+ */
+window.closeModelDetailsModal = function() {
+    if (!modelDetailsModal) {
+        return;
+    }
+    modelDetailsModal.style.display = 'none';
+};
+
+/**
+ * Открывает карточку выбранной модификации авто
+ * @param {string} carId - ID автомобиля
+ */
+window.openModelConfigModal = function(carId) {
+    const car = allCars.find(item => item.id === carId);
+    if (!car || !modelConfigModal) {
+        return;
+    }
+
+    pendingModelConfigCarId = car.id;
+
+    const configImage = document.getElementById('model-config-image');
+    const configLogo = document.getElementById('model-config-logo');
+    const configBrand = document.getElementById('model-config-brand');
+    const configModel = document.getElementById('model-config-model');
+    const configYear = document.getElementById('model-config-year');
+    const configBattery = document.getElementById('model-config-battery');
+    const configPower = document.getElementById('model-config-power');
+    const configWeight = document.getElementById('model-config-weight');
+    const configDrive = document.getElementById('model-config-drive');
+    const configAcceleration = document.getElementById('model-config-acceleration');
+    const configTopSpeed = document.getElementById('model-config-topspeed');
+    const configRange = document.getElementById('model-config-range');
+    const configCharging = document.getElementById('model-config-charging');
+    const configSeats = document.getElementById('model-config-seats');
+
+    if (configImage) {
+        configImage.src = car.img || '';
+        configImage.alt = `${car.brand} ${car.name}`;
+    }
+
+    if (configLogo) {
+        configLogo.src = car.logo || '';
+        configLogo.alt = `${car.brand} Logo`;
+    }
+
+    if (configBrand) {
+        configBrand.textContent = car.brand || 'Brand';
+    }
+
+    if (configModel) {
+        configModel.textContent = `${car.name}${car.trim ? ' ' + car.trim : ''}`;
+    }
+
+    if (configYear) {
+        configYear.textContent = car.year || 'N/A';
+    }
+
+    if (configBattery) {
+        configBattery.textContent = `${car.battery || 'N/A'} kWh`;
+    }
+
+    if (configPower) {
+        configPower.textContent = car.power || 'N/A';
+    }
+
+    if (configWeight) {
+        configWeight.textContent = car.weightKg ? `${car.weightKg} kg` : 'N/A';
+    }
+
+    if (configDrive) {
+        configDrive.textContent = car.driveType || 'N/A';
+    }
+
+    if (configAcceleration) {
+        configAcceleration.textContent = car.acceleration || 'N/A';
+    }
+
+    if (configTopSpeed) {
+        configTopSpeed.textContent = car.topSpeed || 'N/A';
+    }
+
+    if (configRange) {
+        configRange.textContent = `${car.range || 'N/A'} km`;
+    }
+
+    if (configCharging) {
+        configCharging.textContent = car.charging || 'N/A';
+    }
+
+    if (configSeats) {
+        configSeats.textContent = car.seats || 'N/A';
+    }
+
+    modelConfigModal.style.display = 'flex';
+};
+
+/**
+ * Закрывает карточку выбранной модификации
+ */
+window.closeModelConfigModal = function() {
+    if (!modelConfigModal) {
+        return;
+    }
+    modelConfigModal.style.display = 'none';
+};
+
+/**
+ * Подтверждает выбор модификации и применяет авто
+ */
+window.applyModelConfigSelection = function() {
+    if (!pendingModelConfigCarId) {
+        return;
+    }
+
+    if (typeof selectCar === 'function') {
+        selectCar(pendingModelConfigCarId);
+    }
+
+    pendingModelConfigCarId = null;
+    closeModelConfigModal();
+    closeModelDetailsModal();
+};
 
 /**
  * Открывает модальное окно How It Works
@@ -288,6 +576,43 @@ function initModals() {
                 closeInfoCarModal();
             });
         }
+    }
+
+    if (modelDetailsModal) {
+        modelDetailsModal.addEventListener('click', (e) => {
+            if (e.target === modelDetailsModal) {
+                closeModelDetailsModal();
+            }
+        });
+    }
+
+    if (modelDetailsCloseBtn) {
+        modelDetailsCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModelDetailsModal();
+        });
+    }
+
+    if (modelConfigModal) {
+        modelConfigModal.addEventListener('click', (e) => {
+            if (e.target === modelConfigModal) {
+                closeModelConfigModal();
+            }
+        });
+    }
+
+    if (modelConfigCloseBtn) {
+        modelConfigCloseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeModelConfigModal();
+        });
+    }
+
+    if (modelConfigChooseBtn) {
+        modelConfigChooseBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            applyModelConfigSelection();
+        });
     }
 
     const howItWorksBtn = document.getElementById('how-it-works-btn');

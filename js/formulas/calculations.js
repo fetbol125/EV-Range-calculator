@@ -5,11 +5,14 @@
  */
 function updateCalculation() {
     let finalRange = 0;
+    let extendedConsumption = null;
     try {
         if (state.rangeType === 'extended') {
-            finalRange = calculateExtendedRange(
-                currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType, ADDED_WEIGHT_KG, CLIMATE_IMPACT
+            const metrics = calculateExtendedMetrics(
+                currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType
             );
+            finalRange = metrics.range;
+            extendedConsumption = metrics.consumption;
         } else {
             finalRange = calculateStandardRange(
                 currentMaxRange, state, factors, currentCarWeight, ADDED_WEIGHT_KG, CLIMATE_IMPACT
@@ -28,7 +31,7 @@ function updateCalculation() {
 
     // Обновляем потребление если включен extended режим
     if (state.rangeType === 'extended') {
-        updateConsumptionDisplay();
+        updateConsumptionDisplay(extendedConsumption);
     }
 }
 
@@ -115,19 +118,14 @@ function updateBatteryGauge() {
 /**
  * Обновляет отображение потребления энергии в кВт⋅ч/100км
  */
-function updateConsumptionDisplay() {
+function updateConsumptionDisplay(precomputedConsumption) {
     if (!consumptionDisplay || !currentCarBattery || !consumptionStatus) return;
-    
-    // Получаем емкость батареи автомобиля
-    const batteryCapacity = parseFloat(currentCarBattery.innerText);
-    
-    // Рассчитываем пробег БЕЗ влияния батареи и деградации (только остальные факторы)
-    const rangeForConsumption = calculateExtendedRangeForConsumption(
-        currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType, ADDED_WEIGHT_KG, CLIMATE_IMPACT
-    );
-    
-    // Рассчитываем потребление на основе полной батареи и расчетного пробега
-    const consumption = calculateConsumption(batteryCapacity, rangeForConsumption);
+
+    const consumption = (typeof precomputedConsumption === 'number')
+        ? precomputedConsumption
+        : calculateConsumptionExtended(
+            currentMaxRange, currentCarBatteryCapacity, state, factors, currentCarWeight, currentCarPower, currentCarDrag, currentCarDriveType
+        );
     
     // Обновляем отображение потребления
     consumptionDisplay.innerText = consumption.toFixed(1);

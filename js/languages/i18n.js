@@ -107,6 +107,12 @@ const translations = {
         infoDriveType: "Drive Type",
         infoSeats: "Seats",
         infoYear: "Year",
+        modelDetailsTitle: "Select model configuration",
+        modelDetailsYear: "Year",
+        modelDetailsAllYears: "All years",
+        modelDetailsEstimate: "Estimate",
+        modelConfigTitle: "Add vehicle",
+        modelConfigChoose: "Choose vehicle",
 
         // CONTACTS MODAL
         contactsTitle: "Contact Us",
@@ -229,6 +235,12 @@ const translations = {
         infoDriveType: "Pohon",
         infoSeats: "Miesta",
         infoYear: "Rok",
+        modelDetailsTitle: "Vyberte konfiguráciu modelu",
+        modelDetailsYear: "Rok",
+        modelDetailsAllYears: "Všetky roky",
+        modelDetailsEstimate: "Výpočet",
+        modelConfigTitle: "Pridať vozidlo",
+        modelConfigChoose: "Vybrať vozidlo",
 
         // CONTACTS MODAL
         contactsTitle: "Kontaktujte nás",
@@ -355,6 +367,12 @@ const translations = {
         infoDriveType: "Привод",
         infoSeats: "Мест",
         infoYear: "Год",
+        modelDetailsTitle: "Выберите конфигурацию модели",
+        modelDetailsYear: "Год",
+        modelDetailsAllYears: "Все годы",
+        modelDetailsEstimate: "Estimate",
+        modelConfigTitle: "Добавить автомобиль",
+        modelConfigChoose: "Выбрать автомобиль",
 
         // CONTACTS MODAL
         contactsTitle: "Свяжитесь с нами",
@@ -481,6 +499,12 @@ const translations = {
         infoDriveType: "Привід",
         infoSeats: "Місць",
         infoYear: "Рік",
+        modelDetailsTitle: "Виберіть конфігурацію моделі",
+        modelDetailsYear: "Рік",
+        modelDetailsAllYears: "Усі роки",
+        modelDetailsEstimate: "Estimate",
+        modelConfigTitle: "Додати автомобіль",
+        modelConfigChoose: "Вибрати автомобіль",
 
         // CONTACTS MODAL
         contactsTitle: "Зв'яжіться з нами",

@@ -77,6 +77,12 @@ const wheelsDropdown = document.getElementById('wheels-dropdown');
 // Модальные окна
 const customModal = document.getElementById('custom-car-modal');
 const infoCarModal = document.getElementById('info-car-modal');
+const modelDetailsModal = document.getElementById('model-details-modal');
+const modelDetailsCloseBtn = document.getElementById('model-details-close-btn');
+const modelDetailsVariants = document.getElementById('model-details-variants');
+const modelConfigModal = document.getElementById('model-config-modal');
+const modelConfigCloseBtn = document.getElementById('model-config-close-btn');
+const modelConfigChooseBtn = document.getElementById('model-config-choose-btn');
 const otherCarBtn = document.querySelector('.other-car-btn');
 const infoCarBtn = document.getElementById('info-car-btn');
 

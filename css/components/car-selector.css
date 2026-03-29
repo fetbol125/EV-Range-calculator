@@ -27,15 +27,17 @@
 .car-thumb { 
     width: 60px;
     height: 60px;
-    background: #334155; 
+    background: #1e293b; 
     border-radius: 14px;
     overflow: hidden; 
+    padding: 4px;
 }
 
 .car-thumb img { 
     width: 100%; 
     height: 100%; 
-    object-fit: cover; 
+    object-fit: contain;
+    object-position: center;
 }
 
 .car-specs { 
@@ -160,11 +162,64 @@
     height: 28px; 
 }
 
+.brand-section {
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.car-brand-toggle {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.car-brand-toggle:hover {
+    background: rgba(6, 182, 212, 0.08);
+}
+
+.brand-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.brand-count {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+.brand-chevron {
+    color: #94a3b8;
+    transition: transform 0.2s ease;
+}
+
+.car-brand-toggle.expanded .brand-chevron {
+    transform: rotate(180deg);
+}
+
+.brand-models {
+    display: none;
+    padding: 0 0 8px 0;
+}
+
+.brand-models.expanded {
+    display: block;
+}
+
 .car-list-item { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
     padding: 12px; 
+    margin-left: 8px;
     border-radius: 12px; 
     transition: background 0.2s; 
     cursor: pointer; 
@@ -179,7 +234,7 @@
 .car-item-left { 
     display: flex; 
     align-items: center; 
-    gap: 15px; 
+    gap: 8px; 
 }
 
 .car-item-thumb { 

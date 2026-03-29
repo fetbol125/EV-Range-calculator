@@ -1,8 +1,7 @@
 // Логика выбора автомобиля
 
-let selectedBrandFilter = null; // Переменная для хранения выбранного бренда
-let selectedBrandName = null; // Название выбранного бренда
-let isShowingBrandsList = false; // Флаг для отслеживания видимости списка брендов
+let expandedBrandIds = new Set(); // Набор раскрытых брендов в списке
+let currentCarSearchTerm = ''; // Текущее значение поиска по марке/модели
 
 /**
  * Устанавливает иконку знака вопроса в thumb машины вместо изображения
@@ -32,14 +31,9 @@ window.toggleCarMenu = function() {
         carDropdown.classList.remove('show'); 
         carArrow.style.transform = 'rotate(0deg)'; 
         carSearchInput.value = ''; 
-        selectedBrandFilter = null;
-        selectedBrandName = null;
-        isShowingBrandsList = false;
-        const allBrandsBtn = document.getElementById('all-brands-btn');
-        if (allBrandsBtn) {
-            const t = translations[state.lang];
-            allBrandsBtn.innerHTML = `<i class="fa-solid fa-list"></i> ${t.allBrands}`;
-        }
+        currentCarSearchTerm = '';
+        expandedBrandIds.clear();
+        updateAllBrandsButton();
         renderCarList(allCars); 
     } else { 
         carDropdown.classList.add('show'); 
@@ -103,140 +97,171 @@ function selectCar(id) {
  */
 function renderCarList(dataToRender) {
     carListContainer.innerHTML = '';
-    const t = translations[state.lang];
+    const filteredCars = getFilteredCarsBySearch(dataToRender, currentCarSearchTerm);
+    const groupedCars = getGroupedCars(filteredCars);
 
-    if(dataToRender.length === 0) { 
+    if (groupedCars.length === 0) {
+        const t = translations[state.lang];
         carListContainer.innerHTML = `<div style="padding:10px; color: #64748b; text-align:center;">${t.carSearchPlaceholder}</div>`; 
         return; 
     }
-    
-    const groupedFilteredData = new Map();
-    dataToRender.forEach(car => {
-        if (!groupedFilteredData.has(car.brandId)) {
-            groupedFilteredData.set(car.brandId, {
+
+    const isSearchActive = currentCarSearchTerm.trim().length > 0;
+    if (isSearchActive) {
+        groupedCars.forEach(brandGroup => expandedBrandIds.add(brandGroup.id));
+    }
+
+    groupedCars.forEach(brandGroup => {
+        const uniqueModels = getUniqueModelsByName(brandGroup.models);
+        const isExpanded = expandedBrandIds.has(brandGroup.id);
+        const brandSection = document.createElement('div');
+        brandSection.className = 'brand-section';
+
+        const brandToggle = document.createElement('button');
+        brandToggle.type = 'button';
+        brandToggle.className = `car-brand-toggle${isExpanded ? ' expanded' : ''}`;
+        brandToggle.innerHTML = `
+            <div class="brand-info">
+                <img src="${brandGroup.logo}" alt="${brandGroup.name} Logo" class="brand-logo">
+                <div class="brand-meta">
+                    <span class="brand-name">${brandGroup.name}</span>
+                    <span class="brand-count">${uniqueModels.length}</span>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-down brand-chevron" aria-hidden="true"></i>
+        `;
+        brandToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleBrandSection(brandGroup.id, dataToRender);
+        });
+
+        const modelList = document.createElement('div');
+        modelList.className = `brand-models${isExpanded ? ' expanded' : ''}`;
+
+        if (isExpanded) {
+            uniqueModels.forEach(car => {
+                modelList.appendChild(createModelListItem(car));
+            });
+        }
+
+        brandSection.appendChild(brandToggle);
+        brandSection.appendChild(modelList);
+        carListContainer.appendChild(brandSection);
+    });
+}
+
+/**
+ * Удаляет дубликаты моделей внутри бренда по имени
+ * @param {Array} models - Массив моделей бренда
+ * @returns {Array}
+ */
+function getUniqueModelsByName(models) {
+    const uniqueMap = new Map();
+
+    models.forEach(model => {
+        const key = (model.name || '').trim().toLowerCase();
+        if (!uniqueMap.has(key)) {
+            uniqueMap.set(key, model);
+        }
+    });
+
+    return Array.from(uniqueMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Переключает раскрытие бренда в аккордеоне
+ * @param {string} brandId - ID бренда
+ * @param {Array} sourceCars - Исходный список машин для рендера
+ */
+function toggleBrandSection(brandId, sourceCars) {
+    if (expandedBrandIds.has(brandId)) {
+        expandedBrandIds.delete(brandId);
+    } else {
+        expandedBrandIds.add(brandId);
+    }
+    renderCarList(sourceCars);
+}
+
+/**
+ * Создаёт элемент модели внутри раскрытого бренда
+ * @param {Object} car - Объект автомобиля
+ * @returns {HTMLDivElement}
+ */
+function createModelListItem(car) {
+    const div = document.createElement('div');
+    div.className = 'car-list-item';
+    div.onclick = (e) => {
+        e.stopPropagation();
+        if (typeof window.openModelDetailsModal === 'function') {
+            window.openModelDetailsModal(car.id);
+        } else {
+            selectCar(car.id);
+        }
+    };
+
+    div.innerHTML = `
+        <div class="car-item-left">
+            <div style="font-weight: bold;">${car.name}</div>
+        </div>
+        <i class="fa-solid fa-chevron-right" aria-hidden="true" style="color: #94a3b8;"></i>
+    `;
+
+    return div;
+}
+
+/**
+ * Группирует машины по бренду и сортирует марки/модели
+ * @param {Array} sourceCars - Список автомобилей
+ * @returns {Array}
+ */
+function getGroupedCars(sourceCars) {
+    const groupedData = new Map();
+
+    sourceCars.forEach(car => {
+        if (!groupedData.has(car.brandId)) {
+            groupedData.set(car.brandId, {
+                id: car.brandId,
                 name: car.brand,
                 logo: car.logo,
                 models: []
             });
         }
-        if(groupedFilteredData.has(car.brandId)) {
-            groupedFilteredData.get(car.brandId).models.push(car);
-        }
-    });
-    
-    const sortedBrandGroups = Array.from(groupedFilteredData.values()).sort((a, b) => {
-        return a.name.localeCompare(b.name);
+        groupedData.get(car.brandId).models.push(car);
     });
 
-    sortedBrandGroups.forEach(brandGroup => {
-        const brandHeader = document.createElement('div');
-        brandHeader.className = 'car-brand-header';
-        brandHeader.innerHTML = `
-            <div class="brand-info">
-                <img src="${brandGroup.logo}" alt="${brandGroup.name} Logo" class="brand-logo">
-                <span class="brand-name">${brandGroup.name}</span>
-            </div>
-        `;
-        carListContainer.appendChild(brandHeader);
-        
-        brandGroup.models.sort((a, b) => a.name.localeCompare(b.name));
-        
-        brandGroup.models.forEach(car => {
-            const div = document.createElement('div'); 
-            div.className = 'car-list-item';
-            div.onclick = (e) => { e.stopPropagation(); selectCar(car.id); };
-            
-            div.innerHTML = `<div class="car-item-left">
-                                <div class="car-item-thumb"><img src="${car.img}" alt="${car.name}"></div>
-                                <div style="font-weight: bold;">${car.name}</div>
-                            </div>
-                            <div class="car-item-specs">
-                                <div><div style="font-size: 0.7rem; color: #64748b;">${t.maxRange}</div><div style="font-weight: bold;">${car.range}km</div></div>
-                                <div><div style="font-size: 0.7rem; color: #64748b;">${t.currentBattery}</div><div style="font-weight: bold;">${car.battery}kWh</div></div>
-                            </div>`;
-            carListContainer.appendChild(div);
-        });
-    });
+    const sortedGroups = Array.from(groupedData.values()).sort((a, b) => a.name.localeCompare(b.name));
+    sortedGroups.forEach(group => group.models.sort((a, b) => a.name.localeCompare(b.name)));
+
+    return sortedGroups;
 }
 
 /**
- * Рендерит список доступных брендов
+ * Возвращает машины, отфильтрованные по строке поиска
+ * @param {Array} sourceCars - Исходный список автомобилей
+ * @param {string} searchTerm - Текущая строка поиска
+ * @returns {Array}
  */
-function renderBrandsList() {
-    carListContainer.innerHTML = '';
-    const t = translations[state.lang];
-    isShowingBrandsList = true;
-
-    // Добавляем кнопку "All Brands" в начало
-    const allBrandsItem = document.createElement('div');
-    allBrandsItem.className = 'car-brand-item';
-    allBrandsItem.style.cssText = 'padding: 12px 15px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background-color 0.2s; background-color: rgba(6, 182, 212, 0.1);';
-    allBrandsItem.onclick = (e) => { 
-        e.stopPropagation(); 
-        selectedBrandFilter = null;
-        selectedBrandName = null;
-        isShowingBrandsList = false;
-        const allBrandsBtn = document.getElementById('all-brands-btn');
-        if (allBrandsBtn) {
-            allBrandsBtn.innerHTML = `<i class="fa-solid fa-list"></i> ${t.allBrands}`;
-        }
-        renderCarList(allCars);
-    };
-    
-    allBrandsItem.innerHTML = `
-        <i class="fa-solid fa-th-list" style="font-size: 1.1rem; color: var(--accent);"></i>
-        <span style="flex-grow: 1; font-weight: 600;">${t.allBrands}</span>
-    `;
-    
-    carListContainer.appendChild(allBrandsItem);
-
-    // Получаем уникальные бренды
-    const uniqueBrands = [...new Map(allCars.map(car => [car.brandId, { 
-        id: car.brandId,
-        name: car.brand, 
-        logo: car.logo,
-        count: allCars.filter(c => c.brandId === car.brandId).length
-    }])).values()].sort((a, b) => a.name.localeCompare(b.name));
-
-    uniqueBrands.forEach(brand => {
-        const brandItem = document.createElement('div');
-        brandItem.className = 'car-brand-item';
-        brandItem.style.cssText = 'padding: 12px 15px; display: flex; align-items: center; gap: 12px; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); transition: background-color 0.2s;';
-        brandItem.onclick = (e) => { 
-            e.stopPropagation(); 
-            filterByBrand(brand.id, brand.name);
-        };
-        brandItem.onmouseover = () => { brandItem.style.backgroundColor = 'rgba(6, 182, 212, 0.1)'; };
-        brandItem.onmouseout = () => { brandItem.style.backgroundColor = 'transparent'; };
-        
-        brandItem.innerHTML = `
-            <img src="${brand.logo}" alt="${brand.name}" style="width: 32px; height: 32px; object-fit: contain;">
-            <span style="flex-grow: 1;">${brand.name}</span>
-            <span style="color: #64748b; font-size: 0.85rem;">${brand.count}</span>
-        `;
-        
-        carListContainer.appendChild(brandItem);
-    });
-}
-
-/**
- * Фильтрует машины по бренду
- * @param {string} brandId - ID бренда
- * @param {string} brandName - Имя бренда
- */
-function filterByBrand(brandId, brandName) {
-    selectedBrandFilter = brandId;
-    selectedBrandName = brandName;
-    
-    // Обновляем текст кнопки All Brands на название бренда
-    const allBrandsBtn = document.getElementById('all-brands-btn');
-    if (allBrandsBtn) {
-        allBrandsBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${brandName}`;
+function getFilteredCarsBySearch(sourceCars, searchTerm) {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
+    if (!normalizedSearch) {
+        return sourceCars;
     }
-    
-    const filteredCars = allCars.filter(car => car.brandId === brandId);
-    renderCarList(filteredCars);
-    carSearchInput.value = '';
+
+    return sourceCars.filter(car => {
+        return car.name.toLowerCase().includes(normalizedSearch) || car.brand.toLowerCase().includes(normalizedSearch);
+    });
+}
+
+/**
+ * Обновляет текст кнопки "All Brands"
+ */
+function updateAllBrandsButton() {
+    const btn = document.getElementById('all-brands-btn');
+    if (!btn) {
+        return;
+    }
+    const t = translations[state.lang];
+    btn.innerHTML = `<i class="fa-solid fa-list"></i> ${t.allBrands}`;
 }
 
 /**
@@ -246,46 +271,25 @@ function initCarSearch() {
     const allBrandsBtn = document.getElementById('all-brands-btn');
     
     carSearchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        
-        if (selectedBrandFilter) {
-            // Если выбран бренд, ищем только в его машинах
-            const brandCars = allCars.filter(car => car.brandId === selectedBrandFilter);
-            const filteredCars = brandCars.filter(car => 
-                car.name.toLowerCase().includes(searchTerm)
-            );
-            renderCarList(filteredCars);
-        } else {
-            // Ищем во всех машинах
-            const filteredCars = allCars.filter(car => 
-                car.name.toLowerCase().includes(searchTerm) || 
-                car.brand.toLowerCase().includes(searchTerm)
-            );
-            renderCarList(filteredCars);
-        }
+        currentCarSearchTerm = e.target.value;
+        renderCarList(allCars);
     });
 
     carSearchInput.addEventListener('click', (e) => { 
         e.stopPropagation(); 
     });
 
-    // Обработчик для кнопки "All Brands" с функцией переключения
+    updateAllBrandsButton();
+
+    // Сбрасывает состояние списка: очищает поиск и сворачивает все бренды
     if (allBrandsBtn) {
         allBrandsBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (isShowingBrandsList) {
-                // Если список брендов уже показан, скрываем его и показываем все машины
-                selectedBrandFilter = null;
-                selectedBrandName = null;
-                isShowingBrandsList = false;
-                allBrandsBtn.innerHTML = `<i class="fa-solid fa-list"></i> ${translations[state.lang].allBrands}`;
-                renderCarList(allCars);
-                carSearchInput.value = '';
-            } else {
-                // Иначе показываем список брендов
-                renderBrandsList();
-                carSearchInput.value = '';
-            }
+            currentCarSearchTerm = '';
+            carSearchInput.value = '';
+            expandedBrandIds.clear();
+            updateAllBrandsButton();
+            renderCarList(allCars);
         });
     }
 }
