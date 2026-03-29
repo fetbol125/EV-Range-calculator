@@ -1,0 +1,84 @@
+/* Contacts Modal */
+.contacts-content {
+    width: 400px;
+    max-width: 90%;
+}
+
+.contacts-content h3 {
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    padding: 15px;
+    background: rgba(51, 65, 85, 0.3);
+    border-radius: 12px;
+    border: 1px solid #334155;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    background: rgba(51, 65, 85, 0.5);
+    border-color: var(--accent);
+}
+
+.contact-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--accent);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.contact-label {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.contact-value {
+    font-size: 0.95rem;
+    color: #fff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    word-break: break-word;
+}
+
+.contact-value:hover {
+    color: var(--accent);
+}
+
+.close-btn {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #cbd5e1;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.close-btn:hover {
+    background: #334155;
+    color: #fff;
+}

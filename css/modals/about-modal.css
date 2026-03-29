@@ -1,0 +1,49 @@
+/* About Modal Styles */
+.about-content {
+    width: 500px;
+    max-width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.about-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.about-section h4 {
+    font-size: 1rem;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.about-section p {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.about-section ul {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.about-section li {
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    padding-left: 20px;
+    position: relative;
+}
+
+.about-section li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+}
