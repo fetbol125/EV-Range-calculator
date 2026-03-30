@@ -3,7 +3,7 @@ const brandsData = [
     {
         id: 'tesla',
         name: 'Tesla',
-        logo: 'https://www.logo.wine/a/logo/Tesla%2C_Inc./Tesla%2C_Inc.-Logomark-Black-Logo.wine.svg'
+        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/640px-Tesla_Motors.svg.png'
     },
     {
         id: 'porsche',

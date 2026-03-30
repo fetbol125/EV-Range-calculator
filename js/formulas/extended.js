@@ -5,8 +5,12 @@ function calculateExtendedMetrics(baseRange, batteryCapacity, s, factors, carWei
         return { range: 0, consumption: 0 };
     }
 
+    // For very heavy EVs with huge packs, datasets often store gross battery values.
+    const usableBatteryFactor = (batteryCapacity >= 160 && carWeight >= 2500 && baseRange >= 650) ? 0.80 : 1.0;
+    const usableBatteryCapacity = batteryCapacity * usableBatteryFactor;
+
     // Одна базовая формула расхода, из которой затем вычисляется дальность.
-    let consumption = (batteryCapacity / baseRange) * 100;
+    let consumption = (usableBatteryCapacity / baseRange) * 100;
 
     // === СКОРОСТЬ ===
     const refSpeed = 50;
@@ -32,18 +36,19 @@ function calculateExtendedMetrics(baseRange, batteryCapacity, s, factors, carWei
     // === ТЕМПЕРАТУРА ===
     let tempFactor = 1.0;
     const t = s.extTemp;
+    let auxPowerKw = 0;
 
-    if (t < 20) tempFactor = 1.0 - (20 - t) * 0.015;
-    else if (t > 25) tempFactor = 1.0 - (t - 25) * 0.008;
+    if (t < 20) tempFactor = 1.0 - (20 - t) * 0.009;
+    else if (t > 25) tempFactor = 1.0 - (t - 25) * 0.006;
 
     if (tempFactor < 0.4) tempFactor = 0.4;
     consumption /= tempFactor;
 
     // === ПОДОГРЕВ / ОХЛАЖДЕНИЕ ===
     if (t <= BATTERY_HEATING_THRESHOLD) {
-        consumption *= (1 + BATTERY_HEATING_IMPACT);
+        auxPowerKw += 0.8;
     } else if (t >= BATTERY_COOLING_THRESHOLD) {
-        consumption *= (1 + BATTERY_COOLING_IMPACT);
+        auxPowerKw += 0.5;
     }
 
     // === ШИНЫ ===
@@ -96,14 +101,14 @@ function calculateExtendedMetrics(baseRange, batteryCapacity, s, factors, carWei
     }
 
     // === КЛИМАТ ===
-    if (s.extClimateMode === 'ac') consumption *= 1.12;
-    if (s.extClimateMode === 'heater') consumption *= 1.22;
+    if (s.extClimateMode === 'ac') auxPowerKw += 1.3;
+    if (s.extClimateMode === 'heater') auxPowerKw += 2.0;
 
     // === ДОП ПОТРЕБИТЕЛИ ===
     if (s.enableEnergyConsumers) {
-        if (s.seatHeating) consumption *= (1 + SEAT_HEATING_IMPACT);
-        if (s.windowHeating) consumption *= (1 + WINDOW_HEATING_IMPACT);
-        if (s.multimedia) consumption *= (1 + MULTIMEDIA_IMPACT);
+        if (s.seatHeating) auxPowerKw += 0.3;
+        if (s.windowHeating) auxPowerKw += 0.6;
+        if (s.multimedia) auxPowerKw += 0.2;
     }
 
     // === РЕЖИМ ===
@@ -111,12 +116,15 @@ function calculateExtendedMetrics(baseRange, batteryCapacity, s, factors, carWei
         consumption /= factors.mode[s.extMode];
     }
 
+    const effectiveSpeed = Math.max(s.extSpeed, 30);
+    consumption += (auxPowerKw * 100) / effectiveSpeed;
+
     const healthFactor = s.enableDeg ? (1.0 - (s.extDeg / 100)) : 1.0;
     const batteryFactor = s.battery / 100;
 
     let range = 0;
     if (consumption > 0) {
-        range = (batteryCapacity * batteryFactor) / (consumption / 100);
+        range = (usableBatteryCapacity * batteryFactor) / (consumption / 100);
         range *= healthFactor;
     }
 
