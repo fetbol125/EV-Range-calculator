@@ -13,7 +13,7 @@ const brandsData = [
     {
         id: 'audi',
         name: 'Audi',
-        logo: 'https://www.logo.wine/a/logo/Audi/Audi-Logo.wine.svg'
+        logo: 'https://cdn.brandfetch.io/idNhDEJS3q/w/333/h/333/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
     },
     {
         id: 'bmw',
@@ -53,16 +53,26 @@ const brandsData = [
     {
         id: 'lexus',
         name: 'Lexus',
-        logo: 'https://cdn.brandfetch.io/idKxfDnw2E/theme/light/id9TkIDfCL.svg?c=1dxbfHSJFAPEGdCLU4o5B'
+        logo: 'https://cdn.brandfetch.io/idPWtJpPcA/w/400/h/400/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
     },
     {
         id: 'honda',
         name: 'Honda',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7b/Honda_Logo.svg'
+        logo: 'https://cdn.brandfetch.io/id9e9dg7ak/theme/light/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B'
     },
     {
         id: 'cadillac',
         name: 'Cadillac',
         logo: 'https://cdn.brandfetch.io/idjcY_09lV/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
+    },
+    {
+        id: 'rolls-royce',
+        name: 'Rolls Royce',
+        logo: 'https://cdn.brandfetch.io/id8xE5OHKB/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
+    },
+    {
+        id: 'voyah',
+        name: 'Voyah',
+        logo: 'https://cdn.brandfetch.io/idfCt8vD24/w/234/h/234/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
     }
 ];
