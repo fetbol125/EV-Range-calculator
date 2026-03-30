@@ -33,7 +33,6 @@ window.toggleCarMenu = function() {
         carSearchInput.value = ''; 
         currentCarSearchTerm = '';
         expandedBrandIds.clear();
-        updateAllBrandsButton();
         renderCarList(allCars); 
     } else { 
         carDropdown.classList.add('show'); 
@@ -274,23 +273,9 @@ function getFilteredCarsBySearch(sourceCars, searchTerm) {
 }
 
 /**
- * Обновляет текст кнопки "All Brands"
- */
-function updateAllBrandsButton() {
-    const btn = document.getElementById('all-brands-btn');
-    if (!btn) {
-        return;
-    }
-    const t = translations[state.lang];
-    btn.innerHTML = `<i class="fa-solid fa-list"></i> ${t.allBrands}`;
-}
-
-/**
  * Инициализирует обработчики для поиска автомобилей
  */
 function initCarSearch() {
-    const allBrandsBtn = document.getElementById('all-brands-btn');
-    
     carSearchInput.addEventListener('input', (e) => {
         currentCarSearchTerm = e.target.value;
         renderCarList(allCars);
@@ -299,18 +284,4 @@ function initCarSearch() {
     carSearchInput.addEventListener('click', (e) => { 
         e.stopPropagation(); 
     });
-
-    updateAllBrandsButton();
-
-    // Сбрасывает состояние списка: очищает поиск и сворачивает все бренды
-    if (allBrandsBtn) {
-        allBrandsBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentCarSearchTerm = '';
-            carSearchInput.value = '';
-            expandedBrandIds.clear();
-            updateAllBrandsButton();
-            renderCarList(allCars);
-        });
-    }
 }
