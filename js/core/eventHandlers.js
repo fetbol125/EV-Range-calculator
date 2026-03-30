@@ -293,8 +293,18 @@ function initCarMenuHandlers() {
     document.addEventListener('click', (e) => {
         const isClickInsideCustomModal = customModal && customModal.contains(e.target);
         const isClickInsideInfoCarModal = infoCarModal && infoCarModal.contains(e.target);
+        const isClickInsideModelDetailsModal = modelDetailsModal && modelDetailsModal.contains(e.target);
+        const isClickInsideModelConfigModal = modelConfigModal && modelConfigModal.contains(e.target);
 
-        if (carDropdown && carDropdown.classList.contains('show') && !carBlock.contains(e.target) && !isClickInsideCustomModal && !isClickInsideInfoCarModal) {
+        if (
+            carDropdown &&
+            carDropdown.classList.contains('show') &&
+            !carBlock.contains(e.target) &&
+            !isClickInsideCustomModal &&
+            !isClickInsideInfoCarModal &&
+            !isClickInsideModelDetailsModal &&
+            !isClickInsideModelConfigModal
+        ) {
             window.toggleCarMenu();
         }
     });

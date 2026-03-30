@@ -241,10 +241,6 @@ window.openModelDetailsModal = function(carId) {
         return;
     }
 
-    if (carDropdown && carDropdown.classList.contains('show')) {
-        toggleCarMenu();
-    }
-
     const variants = getModelVariants(selectedCar).sort((a, b) => {
         return getYearSortValue(b.year) - getYearSortValue(a.year);
     });
