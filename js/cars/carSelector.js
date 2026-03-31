@@ -103,6 +103,25 @@ function selectCar(id) {
     currentCarDriveType = car.driveType || 'RWD';
     currentCarBatteryCapacity = car.battery || 77;
     
+    // Извлекаем макс скорость из строки вида "250 km/h" и обновляем слайдер
+    if (car.topSpeed) {
+        const speedMatch = car.topSpeed.match(/(\d+)/);
+        if (speedMatch) {
+            currentMaxSpeed = parseInt(speedMatch[1]);
+            const speedSlider = document.getElementById('speed-slider');
+            if (speedSlider) {
+                speedSlider.max = currentMaxSpeed;
+                // Если текущая скорость больше новой максимальной, устанавливаем новую максимальную
+                if (parseInt(speedSlider.value) > currentMaxSpeed) {
+                    speedSlider.value = currentMaxSpeed;
+                    state.extSpeed = currentMaxSpeed;
+                    document.getElementById('val-speed').innerText = currentMaxSpeed + ' km/h';
+                }
+                updateRangeBackground(speedSlider);
+            }
+        }
+    }
+    
     if(footerMaxRange) footerMaxRange.innerText = car.range;
     
     if (carDropdown.classList.contains('show')) { 

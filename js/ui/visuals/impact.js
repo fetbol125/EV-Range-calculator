@@ -145,15 +145,29 @@ function updateImpactVisuals() {
     const getSpeedMultiplier = () => {
         if (state.rangeType !== 'extended') return null;
         const refSpeed = 50;
-        let speedFactor = 1.0;
-        if (state.extSpeed > refSpeed) {
-            const diff = state.extSpeed - refSpeed;
-            speedFactor = 1.0 - (Math.pow(diff, 1.65) * 0.0002);
+        let speedMultiplier = 1.0;
+        const dragRatio = 0.24 / 0.23; // примерный dragRatio
+
+        if (state.extSpeed < 20) {
+            speedMultiplier = 0.95;
+        } else if (state.extSpeed >= 20 && state.extSpeed <= refSpeed) {
+            speedMultiplier = 0.95 + (state.extSpeed - 20) / (refSpeed - 20) * 0.05;
+        } else if (state.extSpeed > refSpeed && state.extSpeed <= 100) {
+            const tSpeed = (state.extSpeed - refSpeed) / (100 - refSpeed);
+            const mildAeroGain = (0.02 + (dragRatio - 1) * 0.06) * tSpeed;
+            speedMultiplier = 1.0 + mildAeroGain;
         } else {
-            if (state.extSpeed < 20) speedFactor = 0.95;
+            const baseAt100 = 1.0 + (0.02 + (dragRatio - 1) * 0.06);
+            const highSpeedLoad = Math.pow((state.extSpeed - 100) / 20, 1.35) * 0.26 * dragRatio;
+            speedMultiplier = baseAt100 + highSpeedLoad;
+
+            const softCapStart = 2.5;
+            if (speedMultiplier > softCapStart) {
+                speedMultiplier = softCapStart + Math.log1p(speedMultiplier - softCapStart) * 0.45;
+            }
         }
-        if (speedFactor < 0.3) speedFactor = 0.3;
-        return speedFactor;
+
+        return speedMultiplier;
     };
 
     const getWeightMultiplier = () => {

@@ -7,6 +7,7 @@ let currentCarPower = 150; // мощность в kW
 let currentCarDrag = 0.24; // коэффициент аэродинамического сопротивления
 let currentCarDriveType = 'RWD'; // тип привода (RWD/FWD/AWD)
 let currentCarBatteryCapacity = 77; // емкость батареи в kWh
+let currentMaxSpeed = 180; // макс скорость автомобиля в км/ч
 let currentSelectedCarId = null;
 
 // Структуры данных для автомобилей
