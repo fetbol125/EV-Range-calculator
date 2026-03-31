@@ -62,6 +62,12 @@
     font-weight: 600; 
 }
 
+#val-mode-ext,
+#val-relief,
+#val-ext-climate {
+    display: none;
+}
+
 /* Sliders */
 input[type=range] { 
     width: 100%; 
@@ -195,8 +201,24 @@ input[type=range]::-moz-range-track {
     color: var(--success); 
 }
 
+.pill-btn[data-value="normal"].active {
+    color: var(--warning);
+}
+
 .pill-btn[data-value="sport"].active { 
     color: var(--danger); 
+}
+
+#relief-group .pill-btn[data-value="flat"].active {
+    color: var(--success);
+}
+
+#relief-group .pill-btn[data-value="hilly"].active {
+    color: var(--warning);
+}
+
+#relief-group .pill-btn[data-value="mountains"].active {
+    color: var(--danger);
 }
 
 /* Climate Buttons */

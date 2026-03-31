@@ -3,9 +3,16 @@
     width: min(640px, 95vw);
     max-height: 92vh;
     overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     padding: 22px;
     gap: 16px;
     box-sizing: border-box;
+}
+
+.model-config-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .model-config-header {

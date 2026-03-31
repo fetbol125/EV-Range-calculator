@@ -45,7 +45,7 @@
         </div>
         
         <div class="header-actions">
-            <button type="button" class="how-it-works-btn" id="how-it-works-btn">How does it work?</button>
+            <button type="button" class="how-it-works-btn" id="how-it-works-btn" data-i18n="howItWorksBtn">How does it work?</button>
 
             <!-- Переключатель языка в виде выпадающего списка -->
             <div class="language-dropdown-container">
@@ -471,7 +471,7 @@
                 <!-- Ползунок полезной нагрузки (вес) -->
                 <div class="control-group">
                     <div class="control-label">
-                        <i class="fa-solid fa-weight-hanging"></i> <span data-i18n="payload">Payload</span>
+                        <i class="fa-solid fa-weight-hanging"></i> <span data-i18n="payload">Weight load</span>
                         <span class="label-val" id="val-ext-weight">75 kg</span>
                     </div>
                     <input type="range" id="ext-weight-slider" min="50" max="500" step="5" value="75">
@@ -564,7 +564,7 @@
                 <!-- Продвинутый селектор климат-контроля -->
                 <div class="control-group" id="climate-control-group">
                     <div class="control-label">
-                        <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Pro</span>
+                        <i class="fa-solid fa-fan"></i> <span data-i18n="climatePro">Climate Control</span>
                         <span class="label-val" id="val-ext-climate">Off</span>
                     </div>
                     <div class="pill-group" id="ext-climate-group">
@@ -849,203 +849,158 @@
     <div id="how-it-works-modal" class="modal-overlay">
         <div class="modal-content how-it-works-content">
             <div class="how-it-works-header">
-                <h3>How is the range of an electric vehicle calculated?</h3>
+                <h3 data-i18n="howItWorksTitle">How is the range of an electric vehicle calculated?</h3>
                 <button class="modal-close-btn how-it-works-close" type="button" aria-label="Close how it works modal">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
             <div class="how-it-works-section">
-                <h4>Calculation modes</h4>
+                <h4 data-i18n="howCalcModes">Calculation modes</h4>
                 <div class="how-items-grid how-modes-grid">
                     <div class="how-item">
                         <button type="button" class="how-item-toggle">
-                            <span><i class="fa-solid fa-sliders"></i> Standard mode</span>
+                            <span data-i18n="howStandardMode" data-i18n-keep-html><i class="fa-solid fa-sliders"></i> Standard mode</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </button>
-                        <div class="how-item-content">
-                            <p><strong>Quick estimation mode</strong> using simplified factors for everyday use. This mode is primarily <strong>informational</strong> and provides approximate results that may differ from real-world conditions.</p>
-                            
-                            <p><strong>Calculation formula:</strong></p>
-                            <div style="background: rgba(6, 182, 212, 0.08); border-left: 3px solid var(--accent); padding: 18px 20px; margin: 16px 0; border-radius: 8px;">
-                                <div style="font-size: 1.1em; line-height: 1.8; text-align: center; font-family: 'Segoe UI', system-ui, sans-serif;">
-                                    <span style="color: var(--accent); font-weight: 600;">Range</span> = 
-                                    <span style="color: #cbd5e1;">BaseRange</span> × 
-                                    <span style="display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 4px;">
-                                        <span style="border-bottom: 1px solid #64748b; padding: 0 6px; font-size: 0.9em;">Battery</span>
-                                        <span style="padding: 2px 6px; font-size: 0.9em;">100</span>
-                                    </span> × 
-                                    <span style="color: #cbd5e1;">Season</span> × 
-                                    <span style="color: #cbd5e1;">Road</span> × 
-                                    <span style="color: #cbd5e1;">Mode</span> × 
-                                    <span style="color: #cbd5e1;">Weight</span> × 
-                                    <span style="color: #cbd5e1;">Climate</span>
-                                </div>
-                            </div>
-                            
-                            <p><strong>Factors applied:</strong></p>
-                            <ul style="margin: 8px 0; padding-left: 24px;">
-                                <li><strong>Battery Level</strong> — percentage of available energy</li>
-                                <li><strong>Season</strong> — efficiency coefficient (summer/autumn/winter/spring)</li>
-                                <li><strong>Road Conditions</strong> — route type (city/highway/mixed)</li>
-                                <li><strong>Driving Mode</strong> — power profile (eco/normal/sport)</li>
-                                <li><strong>Weight Load</strong> — mass impact on energy consumption</li>
-                                <li><strong>Climate Control</strong> — HVAC system usage penalty</li>
-                            </ul>
-                            
-                            <p style="margin-top: 12px; font-size: 0.9em; color: #94a3b8;"><em>Note: This mode provides a general estimate and is best suited for quick planning rather than precise range prediction.</em></p>
-                        </div>
+                        <div class="how-item-content" data-i18n="howStandardDesc">Quick estimation mode using simplified factors for everyday use. This mode is primarily informational and provides approximate results that may differ from real-world conditions.</div>
                     </div>
 
                     <div class="how-item">
                         <button type="button" class="how-item-toggle">
-                            <span><i class="fa-solid fa-chart-line"></i> Extended mode</span>
+                            <span data-i18n="howExtendedMode" data-i18n-keep-html><i class="fa-solid fa-chart-line"></i> Extended mode</span>
                             <i class="fa-solid fa-chevron-down"></i>
                         </button>
-                        <div class="how-item-content">
-                            <p><strong>Advanced calculation mode</strong> with detailed environmental and vehicle parameters for more accurate range prediction that better reflects real-world driving conditions.</p>
-                            
-                            <p><strong>Additional factors beyond Standard mode:</strong></p>
-                            <ul style="margin: 8px 0; padding-left: 24px;">
-                                <li><strong>Speed</strong> — aerodynamic drag increases exponentially with velocity</li>
-                                <li><strong>Weather</strong> — temperature, wind direction/speed, and precipitation</li>
-                                <li><strong>Road Relief</strong> — elevation changes and terrain profile</li>
-                                <li><strong>Wheels & Tires</strong> — size, pressure, and rolling resistance</li>
-                                <li><strong>Battery Degradation</strong> — reduced capacity from aging</li>
-                                <li><strong>Energy Cons.</strong> — seat/wheel heating, defrost, multimedia</li>
-                            </ul>
-                            
-                            <p style="margin-top: 12px;"><em>Extended mode combines multiple physics-based models to simulate energy consumption more accurately across various driving scenarios.</em></p>
-                        </div>
+                        <div class="how-item-content" data-i18n="howExtendedDesc">Advanced calculation mode with detailed environmental and vehicle parameters for more accurate range prediction that better reflects real-world driving conditions.</div>
                     </div>
                 </div>
             </div>
 
             <div class="how-it-works-section">
-                <h4>Factors affecting mileage</h4>
+                <h4 data-i18n="howFactorsAffectingMileage">Factors affecting mileage</h4>
 
                 <!-- Extended Mode Factors -->
                 <div class="how-factors-container" data-mode="extended">
                 <div class="how-factors-group">
-                    <div class="how-factors-group-title">Main factors</div>
+                    <div class="how-factors-group-title" data-i18n="howMainFactors">Main factors</div>
                     <div class="how-factors-group-line"></div>
                     <div class="how-items-grid how-factors-grid">
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-battery-half"></i> Battery Level</span>
+                                <span data-i18n="howBatteryLevel" data-i18n-keep-html><i class="fa-solid fa-battery-half"></i> Battery Level</span>
                             </button>
-                            <div class="how-item-content">The available energy in the battery is the base of the final range. Lower charge means fewer available kilometers.</div>
+                            <div class="how-item-content" data-i18n="howBatteryLevelDesc">The available energy in the battery is the base of the final range. Lower charge means fewer available kilometers.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-bolt"></i> Driving Mode</span>
+                                <span data-i18n="howDrivingMode" data-i18n-keep-html><i class="fa-solid fa-bolt"></i> Driving Mode</span>
                             </button>
-                            <div class="how-item-content">Eco, Normal and Sport change power demand and response, which directly affects energy consumption.</div>
+                            <div class="how-item-content" data-i18n="howDrivingModeDesc">Eco, Normal and Sport change power demand and response, which directly affects energy consumption.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-weight-hanging"></i> Weight Load</span>
+                                <span data-i18n="howWeightLoad" data-i18n-keep-html><i class="fa-solid fa-weight-hanging"></i> Weight Load</span>
                             </button>
-                            <div class="how-item-content">More vehicle mass requires more energy for acceleration and climbs, reducing range.</div>
+                            <div class="how-item-content" data-i18n="howWeightLoadDesc">More vehicle mass requires more energy for acceleration and climbs, reducing range.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-gauge-high"></i> Speed</span>
+                                <span data-i18n="howSpeed" data-i18n-keep-html><i class="fa-solid fa-gauge-high"></i> Speed</span>
                             </button>
-                            <div class="how-item-content">Higher speed increases aerodynamic drag, so energy use rises quickly at fast cruising speeds.</div>
+                            <div class="how-item-content" data-i18n="howSpeedDesc">Higher speed increases aerodynamic drag, so energy use rises quickly at fast cruising speeds.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-cloud-sun"></i> Weather</span>
+                                <span data-i18n="howWeather" data-i18n-keep-html><i class="fa-solid fa-cloud-sun"></i> Weather</span>
                             </button>
-                            <div class="how-item-content">Weather combines temperature, wind and precipitation effects into a major real-world efficiency factor.</div>
+                            <div class="how-item-content" data-i18n="howWeatherDesc">Weather combines temperature, wind and precipitation effects into a major real-world efficiency factor.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-mountain"></i> Road Relief</span>
+                                <span data-i18n="howRoadRelief" data-i18n-keep-html><i class="fa-solid fa-mountain"></i> Road Relief</span>
                             </button>
-                            <div class="how-item-content">Hilly and mountain routes require more energy for climbing, which lowers average range.</div>
+                            <div class="how-item-content" data-i18n="howRoadReliefDesc">Hilly and mountain routes require more energy for climbing, which lowers average range.</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="how-factors-group">
-                    <div class="how-factors-group-title">Secondary factors</div>
+                    <div class="how-factors-group-title" data-i18n="howSecondaryFactors">Secondary factors</div>
                     <div class="how-factors-group-line"></div>
                     <div class="how-items-grid how-factors-grid">
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-temperature-half"></i> Temperature</span>
+                                <span data-i18n="howTemperature" data-i18n-keep-html><i class="fa-solid fa-temperature-half"></i> Temperature</span>
                             </button>
-                            <div class="how-item-content">Cold and heat influence battery performance and thermal management load, changing consumption.</div>
+                            <div class="how-item-content" data-i18n="howTemperatureDesc">Cold and heat influence battery performance and thermal management load, changing consumption.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-wind"></i> Wind</span>
+                                <span data-i18n="howWind" data-i18n-keep-html><i class="fa-solid fa-wind"></i> Wind</span>
                             </button>
-                            <div class="how-item-content">Headwind increases drag and consumption; tailwind can improve efficiency.</div>
+                            <div class="how-item-content" data-i18n="howWindDesc">Headwind increases drag and consumption; tailwind can improve efficiency.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-cloud-rain"></i> Precipitation</span>
+                                <span data-i18n="howPrecipitation" data-i18n-keep-html><i class="fa-solid fa-cloud-rain"></i> Precipitation</span>
                             </button>
-                            <div class="how-item-content">Rain and snow raise rolling resistance and often require additional climate/defrost usage.</div>
+                            <div class="how-item-content" data-i18n="howPrecipitationDesc">Rain and snow raise rolling resistance and often require additional climate/defrost usage.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-compact-disc"></i> Wheels</span>
+                                <span data-i18n="howWheels" data-i18n-keep-html><i class="fa-solid fa-compact-disc"></i> Wheels</span>
                             </button>
-                            <div class="how-item-content">Wheel size changes rotational losses and aerodynamic behavior, affecting total efficiency.</div>
+                            <div class="how-item-content" data-i18n="howWheelsDesc">Wheel size changes rotational losses and aerodynamic behavior, affecting total efficiency.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-compress"></i> Tire Pressure</span>
+                                <span data-i18n="howTirePressure" data-i18n-keep-html><i class="fa-solid fa-compress"></i> Tire Pressure</span>
                             </button>
-                            <div class="how-item-content">Incorrect tire pressure increases rolling resistance and can reduce range.</div>
+                            <div class="how-item-content" data-i18n="howTirePressureDesc">Incorrect tire pressure increases rolling resistance and can reduce range.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-battery-quarter"></i> Degradation</span>
+                                <span data-i18n="howDegradation" data-i18n-keep-html><i class="fa-solid fa-battery-quarter"></i> Degradation</span>
                             </button>
-                            <div class="how-item-content">Battery degradation reduces usable energy capacity, shrinking achievable range.</div>
+                            <div class="how-item-content" data-i18n="howDegradationDesc">Battery degradation reduces usable energy capacity, shrinking achievable range.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-plug"></i> Energy Cons.</span>
+                                <span data-i18n="howEnergyCons" data-i18n-keep-html><i class="fa-solid fa-plug"></i> Energy Cons.</span>
                             </button>
-                            <div class="how-item-content">Additional onboard consumers draw power from the traction battery and reduce driving distance.</div>
+                            <div class="how-item-content" data-i18n="howEnergyConsDesc">Additional onboard consumers draw power from the traction battery and reduce driving distance.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-chair"></i> Seat/Wheel Heating</span>
+                                <span data-i18n="howSeatWheelHeating" data-i18n-keep-html><i class="fa-solid fa-chair"></i> Seat/Wheel Heating</span>
                             </button>
-                            <div class="how-item-content">Cabin comfort heating uses extra energy and is counted as an additional load.</div>
+                            <div class="how-item-content" data-i18n="howSeatWheelHeatingDesc">Cabin comfort heating uses extra energy and is counted as an additional load.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-snowflake"></i> Window Heating</span>
+                                <span data-i18n="howWindowHeating" data-i18n-keep-html><i class="fa-solid fa-snowflake"></i> Window Heating</span>
                             </button>
-                            <div class="how-item-content">Defrost and window heating improve visibility but consume additional battery power.</div>
+                            <div class="how-item-content" data-i18n="howWindowHeatingDesc">Defrost and window heating improve visibility but consume additional battery power.</div>
                         </div>
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-music"></i> Multimedia</span>
+                                <span data-i18n="howMultimedia" data-i18n-keep-html><i class="fa-solid fa-music"></i> Multimedia</span>
                             </button>
-                            <div class="how-item-content">Audio and infotainment systems create a smaller but measurable constant energy draw.</div>
+                            <div class="how-item-content" data-i18n="howMultimediaDesc">Audio and infotainment systems create a smaller but measurable constant energy draw.</div>
                         </div>
                     </div>
                 </div>
@@ -1064,7 +1019,7 @@
                     </div>
                     <div>
                         <h3 id="how-item-info-title">Factor</h3>
-                        <p class="info-car-brand-text">How it affects range</p>
+                        <p class="info-car-brand-text" data-i18n="howItAffectsRange">How it affects range</p>
                     </div>
                 </div>
                 <button class="modal-close-btn how-item-info-close" type="button" aria-label="Close how item info modal">
@@ -1073,7 +1028,7 @@
             </div>
 
             <div class="how-item-info-body">
-                <p id="how-item-info-description">Description</p>
+                <p id="how-item-info-description" data-i18n="howDescription">Description</p>
             </div>
         </div>
     </div>
