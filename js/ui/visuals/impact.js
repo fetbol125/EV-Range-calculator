@@ -65,6 +65,15 @@ function updateImpactVisuals() {
         el.textContent = formatImpactPercent(rounded);
     };
 
+    const updateSpeedShakeState = (el) => {
+        if (!el) return;
+        if (state.rangeType === 'extended' && state.extSpeed > 160) {
+            el.classList.add('speed-shake');
+            return;
+        }
+        el.classList.remove('speed-shake');
+    };
+
     const getWeatherMultiplier = () => {
         if (!state.enableWeather) return 1;
         let tempFactor = 1.0;
@@ -346,6 +355,8 @@ function updateImpactVisuals() {
         setImpactText(impactClimate, climateImpact, climateStatus);
         setImpactText(impactRelief, reliefImpact, reliefStatus);
     }
+
+    updateSpeedShakeState(sumMode);
 }
 
 /**

@@ -5,8 +5,17 @@ function calculateExtendedMetrics(baseRange, batteryCapacity, s, factors, carWei
         return { range: 0, consumption: 0 };
     }
 
-    // Глобальная калибровка под реальные дорожные тесты (снижает излишне оптимистичный пробег)
-    const realWorldConsumptionFactor = 1.12;
+    // Калибровка под реальные тесты: мягче в городе и строже на крейсерских скоростях.
+    const lowSpeedRealWorldFactor = 1.03;
+    const cruiseRealWorldFactor = 1.12;
+    let realWorldConsumptionFactor = cruiseRealWorldFactor;
+
+    if (s.extSpeed <= 40) {
+        realWorldConsumptionFactor = lowSpeedRealWorldFactor;
+    } else if (s.extSpeed < 90) {
+        const tSpeed = (s.extSpeed - 40) / 50;
+        realWorldConsumptionFactor = lowSpeedRealWorldFactor + (cruiseRealWorldFactor - lowSpeedRealWorldFactor) * tSpeed;
+    }
 
     // For very heavy EVs with huge packs, datasets often store gross battery values.
     const usableBatteryFactor = (batteryCapacity >= 160 && carWeight >= 2500 && baseRange >= 650) ? 0.80 : 1.0;
