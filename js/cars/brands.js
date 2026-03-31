@@ -74,5 +74,10 @@ const brandsData = [
         id: 'voyah',
         name: 'Voyah',
         logo: 'https://cdn.brandfetch.io/idfCt8vD24/w/234/h/234/theme/dark/icon.jpeg?c=1dxbfHSJFAPEGdCLU4o5B'
+    },
+    {
+        id: 'renault',
+        name: 'Renault',
+        logo: 'https://cdn.brandfetch.io/idMMDd4Rig/theme/light/logo.svg?c=1dxbfHSJFAPEGdCLU4o5B'
     }
 ];
