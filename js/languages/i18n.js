@@ -43,7 +43,7 @@ const translations = {
         precipSnow: "snow",
         
         // ENERGY CONSUMERS
-        energyConsumers: "Energy Consumers",
+        energyConsumers: "Energy Cons.",
         seatHeating: "Seat/Wheel Heating",
         windowHeating: "Window Heating",
         multimedia: "Multimedia",

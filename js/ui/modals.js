@@ -83,6 +83,38 @@ function openInfoCarModal() {
     }
     
     currentSelectedCarId = car.id;
+
+    const infoImage = document.getElementById('info-car-image');
+    const imageWrap = document.querySelector('.car-info-image-wrap');
+    const placeholder = document.getElementById('info-car-image-placeholder');
+
+    if (infoImage) {
+        if (!car.img || !car.img.trim()) {
+            if (imageWrap) imageWrap.classList.add('no-image');
+            if (placeholder) placeholder.classList.add('show');
+            infoImage.style.display = 'none';
+            infoImage.src = '';
+        } else {
+            infoImage.src = car.img;
+            infoImage.alt = `${car.brand} ${car.name}`;
+
+            infoImage.onload = function() {
+                if (imageWrap) imageWrap.classList.remove('no-image');
+                if (placeholder) placeholder.classList.remove('show');
+                infoImage.style.display = 'block';
+            };
+
+            infoImage.onerror = function() {
+                if (imageWrap) imageWrap.classList.add('no-image');
+                if (placeholder) placeholder.classList.add('show');
+                infoImage.style.display = 'none';
+            };
+
+            if (infoImage.complete) {
+                infoImage.onload();
+            }
+        }
+    }
     
     document.getElementById('info-car-logo').src = car.logo || '';
     document.getElementById('info-car-name').innerText = car.name;
@@ -493,11 +525,13 @@ window.openHowItemInfoModal = function(title, description, iconClass) {
     const itemInfoTitle = document.getElementById('how-item-info-title');
     const itemInfoDescription = document.getElementById('how-item-info-description');
 
-    if (!itemInfoModal || !itemInfoIcon || !itemInfoTitle || !itemInfoDescription) return;
+    if (!itemInfoModal || !itemInfoTitle || !itemInfoDescription) return;
 
     itemInfoTitle.textContent = title || 'Details';
     itemInfoDescription.textContent = description || '';
-    itemInfoIcon.className = iconClass || 'fa-solid fa-circle-info';
+    if (itemInfoIcon) {
+        itemInfoIcon.className = iconClass || 'fa-solid fa-circle-info';
+    }
 
     itemInfoModal.style.display = 'flex';
 }

@@ -668,110 +668,77 @@
     <!-- Модальное окно: Отображение информации об автомобиле -->
     <div id="info-car-modal" class="modal-overlay">
         <div class="modal-content car-info-modal">
-            <!-- Заголовок информации об автомобиле с логотипом и кнопкой закрытия -->
             <div class="car-info-header">
                 <div class="car-info-title">
-                    <img id="info-car-logo" src="" alt="Brand Logo" class="info-car-logo">
+                    <div class="info-car-logo-wrap">
+                        <img id="info-car-logo" src="" alt="Brand Logo" class="info-car-logo">
+                    </div>
                     <div>
-                        <h3 id="info-car-name">Car Name</h3>
                         <p id="info-car-brand" class="info-car-brand-text">Brand</p>
+                        <h3 id="info-car-name">Car Name</h3>
                     </div>
                 </div>
-                <button class="modal-close-btn" onclick="closeInfoCarModal()">
+                <button class="modal-close-btn" type="button" aria-label="Close info car modal" onclick="closeInfoCarModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <!-- Сетка спецификаций автомобиля -->
+            <div class="car-info-image-wrap">
+                <img id="info-car-image" src="" alt="Vehicle image" class="car-info-image">
+                <div class="car-info-image-placeholder" id="info-car-image-placeholder">
+                    <i class="fa-solid fa-car"></i>
+                </div>
+            </div>
+
             <div class="car-specs-grid">
-                <!-- Спецификация максимального диапазона -->
                 <div class="spec-item">
-                    <i class="fa-solid fa-road"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="maxRange">Max Range</div>
-                        <div class="spec-value" id="info-car-range">520 km</div>
-                    </div>
+                    <div class="spec-label" data-i18n="maxRange">Max Range</div>
+                    <div class="spec-value" id="info-car-range">520 km</div>
                 </div>
-                
-                <!-- Спецификация ёмкости батареи -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-battery-full"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="currentBattery">Battery</div>
-                        <div class="spec-value" id="info-car-battery">77 kWh</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoYear">Year</div>
+                    <div class="spec-value" id="info-car-year">2021-2024</div>
                 </div>
-                
-                <!-- Спецификация веса автомобиля -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-weight-hanging"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoWeight">Weight</div>
-                        <div class="spec-value" id="info-car-weight">2050 kg</div>
-                    </div>
+                    <div class="spec-label" data-i18n="currentBattery">Battery</div>
+                    <div class="spec-value" id="info-car-battery">77 kWh</div>
                 </div>
-                
-                <!-- Спецификация мощности двигателя -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-bolt"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoPower">Power</div>
-                        <div class="spec-value" id="info-car-power">150 kW</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoPower">Power</div>
+                    <div class="spec-value" id="info-car-power">150 kW</div>
                 </div>
-                
-                <!-- Спецификация ускорения 0-100 -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-stopwatch"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoAcceleration">0-100 km/h</div>
-                        <div class="spec-value" id="info-car-acceleration">8.5 s</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoWeight">Weight</div>
+                    <div class="spec-value" id="info-car-weight">2050 kg</div>
                 </div>
-                
-                <!-- Спецификация максимальной скорости -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-tachometer-alt"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoTopSpeed">Top Speed</div>
-                        <div class="spec-value" id="info-car-topspeed">160 km/h</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoDriveType">Drive Type</div>
+                    <div class="spec-value" id="info-car-drivetype">RWD</div>
                 </div>
-                
-                <!-- Спецификация зарядки DC -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-charging-station"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoCharging">DC Charging</div>
-                        <div class="spec-value" id="info-car-charging">125 kW</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoAcceleration">0-100 km/h</div>
+                    <div class="spec-value" id="info-car-acceleration">8.5 s</div>
                 </div>
-                
-                <!-- Спецификация типа привода -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-cogs"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoDriveType">Drive Type</div>
-                        <div class="spec-value" id="info-car-drivetype">RWD</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoTopSpeed">Top Speed</div>
+                    <div class="spec-value" id="info-car-topspeed">160 km/h</div>
                 </div>
-                
-                <!-- Спецификация количества мест -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-users"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoSeats">Seats</div>
-                        <div class="spec-value" id="info-car-seats">5</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoCharging">DC Charging</div>
+                    <div class="spec-value" id="info-car-charging">125 kW</div>
                 </div>
-                
-                <!-- Спецификация года выпуска -->
+
                 <div class="spec-item">
-                    <i class="fa-solid fa-calendar"></i>
-                    <div>
-                        <div class="spec-label" data-i18n="infoYear">Year</div>
-                        <div class="spec-value" id="info-car-year">2021-2024</div>
-                    </div>
+                    <div class="spec-label" data-i18n="infoSeats">Seats</div>
+                    <div class="spec-value" id="info-car-seats">5</div>
                 </div>
             </div>
         </div>
@@ -945,7 +912,7 @@
                                 <li><strong>Road Relief</strong> — elevation changes and terrain profile</li>
                                 <li><strong>Wheels & Tires</strong> — size, pressure, and rolling resistance</li>
                                 <li><strong>Battery Degradation</strong> — reduced capacity from aging</li>
-                                <li><strong>Energy Consumers</strong> — seat/wheel heating, defrost, multimedia</li>
+                                <li><strong>Energy Cons.</strong> — seat/wheel heating, defrost, multimedia</li>
                             </ul>
                             
                             <p style="margin-top: 12px;"><em>Extended mode combines multiple physics-based models to simulate energy consumption more accurately across various driving scenarios.</em></p>
@@ -956,68 +923,9 @@
 
             <div class="how-it-works-section">
                 <h4>Factors affecting mileage</h4>
-                
-                <!-- Mode Toggle -->
-                <div class="how-factors-mode-toggle">
-                    <button type="button" class="how-mode-btn active" data-mode="standard">
-                        <i class="fa-solid fa-sliders"></i> Standard
-                    </button>
-                    <button type="button" class="how-mode-btn" data-mode="extended">
-                        <i class="fa-solid fa-chart-line"></i> Extended
-                    </button>
-                </div>
-
-                <!-- Standard Mode Factors -->
-                <div class="how-factors-container" data-mode="standard">
-                <div class="how-factors-group">
-                    <div class="how-items-grid how-factors-grid">
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-battery-half"></i> Battery Level</span>
-                            </button>
-                            <div class="how-item-content">The available energy in the battery is the base of the final range. Lower charge means fewer available kilometers.</div>
-                        </div>
-
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-regular fa-snowflake"></i> Season</span>
-                            </button>
-                            <div class="how-item-content">Season changes average efficiency because of ambient temperature and typical driving conditions.</div>
-                        </div>
-
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-road"></i> Driving Conditions</span>
-                            </button>
-                            <div class="how-item-content">City, highway and mixed routes have different efficiency profiles due to speed patterns and aerodynamic losses.</div>
-                        </div>
-
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-bolt"></i> Driving Mode</span>
-                            </button>
-                            <div class="how-item-content">Eco, Normal and Sport change power demand and response, which directly affects energy consumption.</div>
-                        </div>
-
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-weight-hanging"></i> Weight Load</span>
-                            </button>
-                            <div class="how-item-content">More vehicle mass requires more energy for acceleration and climbs, reducing range.</div>
-                        </div>
-
-                        <div class="how-item">
-                            <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-fan"></i> Climate Control</span>
-                            </button>
-                            <div class="how-item-content">Cabin heating and cooling consume extra power and can noticeably lower range, especially in extreme weather.</div>
-                        </div>
-                    </div>
-                </div>
-                </div>
 
                 <!-- Extended Mode Factors -->
-                <div class="how-factors-container" data-mode="extended" style="display: none;">
+                <div class="how-factors-container" data-mode="extended">
                 <div class="how-factors-group">
                     <div class="how-factors-group-title">Main factors</div>
                     <div class="how-factors-group-line"></div>
@@ -1114,7 +1022,7 @@
 
                         <div class="how-item">
                             <button type="button" class="how-item-toggle">
-                                <span><i class="fa-solid fa-plug"></i> Energy Consumers</span>
+                                <span><i class="fa-solid fa-plug"></i> Energy Cons.</span>
                             </button>
                             <div class="how-item-content">Additional onboard consumers draw power from the traction battery and reduce driving distance.</div>
                         </div>

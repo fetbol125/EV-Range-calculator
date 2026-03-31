@@ -43,6 +43,10 @@
     opacity: 0.8; 
 }
 
+.control-label > div {
+    gap: 6px;
+}
+
 .control-label .icon-inline {
     width: 16px;
     height: 16px;
