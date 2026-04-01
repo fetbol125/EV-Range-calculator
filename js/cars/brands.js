@@ -3,7 +3,7 @@ const brandsData = [
     {
         id: 'tesla',
         name: 'Tesla',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/640px-Tesla_Motors.svg.png'
+        logo: 'https://cdn.brandfetch.io/id2S-kXbuK/theme/dark/symbol.svg?c=1dxbfHSJFAPEGdCLU4o5B'
     },
     {
         id: 'porsche',
