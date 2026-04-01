@@ -122,25 +122,31 @@ function selectCar(id) {
     if (currentImg) {
         // Скрываем превью до полной загрузки, чтобы не было "кривого" кадра при первом рендере
         currentImg.style.display = 'none';
+        currentImg.dataset.usingFallback = 'false';
 
         const onImageLoaded = () => {
             currentImg.style.display = 'block';
         };
 
         const onImageError = () => {
+            if (currentImg.dataset.usingFallback !== 'true') {
+                currentImg.dataset.usingFallback = 'true';
+                currentImg.src = EMPTY_CAR_IMAGE;
+                return;
+            }
+
             setCarThumbIcon();
         };
 
         currentImg.addEventListener('load', onImageLoaded, { once: true });
         currentImg.addEventListener('error', onImageError, { once: true });
 
-        if (car.img && car.img.trim()) {
-            currentImg.src = car.img;
-            if (currentImg.complete && currentImg.naturalWidth > 0) {
-                currentImg.style.display = 'block';
-            }
-        } else {
-            setCarThumbIcon();
+        const imageSrc = getCarImageSrc(car);
+        currentImg.dataset.usingFallback = imageSrc === EMPTY_CAR_IMAGE ? 'true' : 'false';
+        currentImg.src = imageSrc;
+
+        if (currentImg.complete && currentImg.naturalWidth > 0) {
+            currentImg.style.display = 'block';
         }
     }
     

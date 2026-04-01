@@ -99,30 +99,32 @@ function openInfoCarModal() {
     const placeholder = document.getElementById('info-car-image-placeholder');
 
     if (infoImage) {
-        if (!car.img || !car.img.trim()) {
+        const imageSrc = getCarImageSrc(car);
+
+        infoImage.dataset.usingFallback = imageSrc === EMPTY_CAR_IMAGE ? 'true' : 'false';
+        infoImage.src = imageSrc;
+        infoImage.alt = `${car.brand} ${car.name}`;
+
+        infoImage.onload = function() {
+            if (imageWrap) imageWrap.classList.remove('no-image');
+            if (placeholder) placeholder.classList.remove('show');
+            infoImage.style.display = 'block';
+        };
+
+        infoImage.onerror = function() {
+            if (infoImage.dataset.usingFallback !== 'true') {
+                infoImage.dataset.usingFallback = 'true';
+                infoImage.src = EMPTY_CAR_IMAGE;
+                return;
+            }
+
             if (imageWrap) imageWrap.classList.add('no-image');
             if (placeholder) placeholder.classList.add('show');
             infoImage.style.display = 'none';
-            infoImage.src = '';
-        } else {
-            infoImage.src = car.img;
-            infoImage.alt = `${car.brand} ${car.name}`;
+        };
 
-            infoImage.onload = function() {
-                if (imageWrap) imageWrap.classList.remove('no-image');
-                if (placeholder) placeholder.classList.remove('show');
-                infoImage.style.display = 'block';
-            };
-
-            infoImage.onerror = function() {
-                if (imageWrap) imageWrap.classList.add('no-image');
-                if (placeholder) placeholder.classList.add('show');
-                infoImage.style.display = 'none';
-            };
-
-            if (infoImage.complete) {
-                infoImage.onload();
-            }
+        if (infoImage.complete && infoImage.naturalWidth > 0) {
+            infoImage.onload();
         }
     }
     
@@ -377,37 +379,33 @@ window.openModelConfigModal = function(carId) {
     if (configImage) {
         const imageWrap = document.querySelector('.model-config-image-wrap');
         const placeholder = document.getElementById('model-config-image-placeholder');
-        
-        // Сначала проверяем, есть ли изображение
-        if (!car.img || !car.img.trim()) {
-            // Нету изображения - показываем иконку
+
+        const imageSrc = getCarImageSrc(car);
+
+        configImage.dataset.usingFallback = imageSrc === EMPTY_CAR_IMAGE ? 'true' : 'false';
+        configImage.src = imageSrc;
+        configImage.alt = `${car.brand} ${car.name}`;
+
+        configImage.onload = function() {
+            if (imageWrap) imageWrap.classList.remove('no-image');
+            if (placeholder) placeholder.classList.remove('show');
+            configImage.style.display = 'block';
+        };
+
+        configImage.onerror = function() {
+            if (configImage.dataset.usingFallback !== 'true') {
+                configImage.dataset.usingFallback = 'true';
+                configImage.src = EMPTY_CAR_IMAGE;
+                return;
+            }
+
             if (imageWrap) imageWrap.classList.add('no-image');
             if (placeholder) placeholder.classList.add('show');
             configImage.style.display = 'none';
-            configImage.src = '';
-        } else {
-            // Есть изображение - пытаемся загрузить
-            configImage.src = car.img;
-            configImage.alt = `${car.brand} ${car.name}`;
-            
-            // Если изображение загружается успешно
-            configImage.onload = function() {
-                if (imageWrap) imageWrap.classList.remove('no-image');
-                if (placeholder) placeholder.classList.remove('show');
-                configImage.style.display = 'block';
-            };
-            
-            // Если изображение не загружается
-            configImage.onerror = function() {
-                if (imageWrap) imageWrap.classList.add('no-image');
-                if (placeholder) placeholder.classList.add('show');
-                configImage.style.display = 'none';
-            };
-            
-            // Проверяем кеш браузера - если изображение уже загружено
-            if (configImage.complete) {
-                configImage.onload();
-            }
+        };
+
+        if (configImage.complete && configImage.naturalWidth > 0) {
+            configImage.onload();
         }
     }
 

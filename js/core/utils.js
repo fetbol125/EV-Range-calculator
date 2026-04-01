@@ -1,5 +1,7 @@
 // Вспомогательные функции
 
+const EMPTY_CAR_IMAGE = 'img/cars/empty_car.png';
+
 /**
  * Анимирует изменение числового значения
  * @param {HTMLElement} obj - Элемент для анимации
@@ -28,6 +30,19 @@ function animateValue(obj, start, end, duration) {
  */
 function capitalize(s) {
     return s && s[0].toUpperCase() + s.slice(1);
+}
+
+/**
+ * Возвращает изображение автомобиля или заглушку, если своей картинки нет
+ * @param {Object} car - Данные автомобиля
+ * @returns {string} Путь к изображению
+ */
+function getCarImageSrc(car) {
+    if (car && typeof car.img === 'string' && car.img.trim()) {
+        return car.img.trim();
+    }
+
+    return EMPTY_CAR_IMAGE;
 }
 
 /**
