@@ -18,6 +18,35 @@
     background-color: #131c33; 
 }
 
+.car-block.no-car-selected {
+    background-image: linear-gradient(rgba(9, 16, 35, 0.78), rgba(9, 16, 35, 0.78)), url('../../img/cars/empty_car.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.car-block.no-car-selected:hover {
+    background-image: linear-gradient(rgba(8, 14, 30, 0.72), rgba(8, 14, 30, 0.72)), url('../../img/cars/empty_car.png');
+}
+
+.car-block.no-car-selected .car-thumb {
+    display: none;
+}
+
+.car-block.no-car-selected .car-info {
+    gap: 0;
+}
+
+.car-block.no-car-selected #current-car-brand {
+    display: none;
+}
+
+.car-block.no-car-selected #current-car-name {
+    font-size: 1.15rem;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
 .car-info { 
     display: flex; 
     align-items: center; 
@@ -289,6 +318,12 @@
 .car-menu-btn i { 
     font-size: 0.9rem; 
     color: var(--accent);
+}
+
+.car-menu-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    border-color: #263241;
 }
 
 .other-car-btn { 

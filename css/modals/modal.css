@@ -89,12 +89,14 @@
     background: transparent; 
     border: none; 
     color: #fff; 
-    width: 100%; 
-    text-align: right; 
+    width: auto; 
+    flex: 1;
+    min-width: 0;
+    text-align: left; 
     font-size: 1.1rem; 
     font-weight: bold; 
     outline: none; 
-    padding: 0 10px; 
+    padding: 0 10px 0 0; 
     font-family: var(--font-family); 
 }
 
@@ -134,6 +136,88 @@
 .modal-btn.done:hover { 
     background: #22d3ee; 
     transform: translateY(-1px); 
+}
+
+/* Custom car modal redesign */
+#custom-car-modal .custom-car-content {
+    width: 520px;
+    border: 1px solid #24476d;
+    background:
+        radial-gradient(circle at top right, rgba(6, 182, 212, 0.18), transparent 45%),
+        linear-gradient(160deg, #101c38 0%, #0b1730 100%);
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.72);
+}
+
+#custom-car-modal .custom-car-content h3 {
+    font-size: 2rem;
+    letter-spacing: 0.2px;
+    margin-bottom: 12px;
+}
+
+#custom-car-modal .custom-car-content .input-group {
+    gap: 10px;
+}
+
+#custom-car-modal .custom-car-content .input-group label {
+    font-size: 0.95rem;
+    color: #d4deee;
+    font-weight: 600;
+}
+
+#custom-car-modal .custom-car-content .input-wrapper {
+    border-radius: 14px;
+    border-color: #2a4f73;
+    background: rgba(3, 11, 24, 0.85);
+    padding: 14px 16px;
+}
+
+#custom-car-modal .custom-car-content .input-wrapper:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.15);
+}
+
+#custom-car-modal .custom-car-content .input-wrapper input {
+    font-size: 1.15rem;
+    letter-spacing: 0.2px;
+}
+
+/* Remove spinner arrows for number inputs */
+#custom-car-modal input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+#custom-car-modal input[type="number"]::-webkit-outer-spin-button,
+#custom-car-modal input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#custom-car-modal .custom-car-content .modal-buttons {
+    margin-top: 4px;
+    gap: 12px;
+}
+
+#custom-car-modal .custom-car-content .modal-btn {
+    border-radius: 14px;
+    padding: 13px;
+    font-size: 1.02rem;
+}
+
+#custom-car-modal .custom-car-content .modal-btn.cancel {
+    border-color: #33567a;
+    background: rgba(11, 23, 46, 0.75);
+}
+
+#custom-car-modal .custom-car-content .modal-btn.done {
+    border: 1px solid #334155;
+    background: rgba(255,255,255,0.06);
+    color: #f8fafc;
+}
+
+#custom-car-modal .custom-car-content .modal-btn.done:hover {
+    background: rgba(6, 182, 212, 0.2);
+    border-color: rgba(6, 182, 212, 0.65);
 }
 
 

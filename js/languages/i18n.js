@@ -113,6 +113,7 @@ const translations = {
         modelDetailsEstimate: "Estimate",
         modelConfigTitle: "Add vehicle",
         modelConfigChoose: "Choose vehicle",
+        chooseAutomobile: "choose automobile",
 
         // HOW IT WORKS MODAL
         howItWorksBtn: "How does it work?",
@@ -287,6 +288,7 @@ const translations = {
         modelDetailsEstimate: "Výpočet",
         modelConfigTitle: "Pridať vozidlo",
         modelConfigChoose: "Vybrať vozidlo",
+        chooseAutomobile: "vyberte vozidlo",
 
         // HOW IT WORKS MODAL
         howItWorksBtn: "Ako to funguje?",
@@ -465,6 +467,7 @@ const translations = {
         modelDetailsEstimate: "Estimate",
         modelConfigTitle: "Добавить автомобиль",
         modelConfigChoose: "Выбрать автомобиль",
+        chooseAutomobile: "выберите автомобиль",
 
         // HOW IT WORKS MODAL
         howItWorksBtn: "Как это работает?",
@@ -618,6 +621,7 @@ const translations = {
         // CAR MODAL
         modalTitle: "Введіть дані про автомобіль",
         modalRangeLabel: "Максимальний запас ходу на одне зарядження?",
+        chooseAutomobile: "оберіть автомобіль",
         modalBatteryLabel: "Скільки кіловатів має батарея?",
         modalWeightLabel: "Вага електромобіля?",
         modalWrite: "Напишіть: ",

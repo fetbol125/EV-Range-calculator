@@ -54,6 +54,10 @@ function setLanguage(newLang) {
     updateUI(); 
     updateBatteryThermalStatus();
     updateWeatherValue();
+
+    if (currentSelectedCarId === null && typeof setNoCarSelectedState === 'function') {
+        setNoCarSelectedState();
+    }
     
     // Обновляем ползунки после смены языка
     document.querySelectorAll('.pill-group, #ext-climate-group').forEach(group => {

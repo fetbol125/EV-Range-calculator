@@ -14,6 +14,51 @@ function setCarThumbIcon() {
 }
 
 /**
+ * Устанавливает пустое состояние плашки выбора автомобиля
+ */
+function setNoCarSelectedState() {
+    const carBlock = document.querySelector('.car-block');
+    const currentImg = document.getElementById('current-car-img');
+    const infoCarBtn = document.getElementById('info-car-btn');
+    const t = translations[state.lang];
+
+    currentSelectedCarId = null;
+
+    if (carBlock) {
+        carBlock.classList.add('no-car-selected');
+    }
+
+    if (currentCarBrand) {
+        currentCarBrand.innerText = '';
+    }
+
+    if (currentCarName) {
+        currentCarName.innerText = t.chooseAutomobile || 'choose automobile';
+    }
+
+    if (currentCarRange) {
+        currentCarRange.innerText = '--';
+    }
+
+    if (currentCarBattery) {
+        currentCarBattery.innerText = '--';
+    }
+
+    if (footerMaxRange) {
+        footerMaxRange.innerText = '--';
+    }
+
+    if (currentImg) {
+        currentImg.style.display = 'none';
+        currentImg.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+    }
+
+    if (infoCarBtn) {
+        infoCarBtn.disabled = true;
+    }
+}
+
+/**
  * Восстанавливает изображение машины в thumb (удаляет иконку)
  */
 function restoreCarThumbImage() {
@@ -49,8 +94,18 @@ function selectCar(id) {
     const car = allCars.find(c => c.id === id); 
     if (!car) return;
     const t = translations[state.lang];
+    const carBlock = document.querySelector('.car-block');
+    const infoCarBtn = document.getElementById('info-car-btn');
 
     currentSelectedCarId = id;
+
+    if (carBlock) {
+        carBlock.classList.remove('no-car-selected');
+    }
+
+    if (infoCarBtn) {
+        infoCarBtn.disabled = false;
+    }
 
     if (currentCarBrand) currentCarBrand.innerText = car.brand; 
 

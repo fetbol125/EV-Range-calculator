@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Инициализация списка автомобилей
     if (allCars.length > 0) {
         renderCarList(allCars);
-        selectCar(allCars[0].id);
+        setNoCarSelectedState();
     }
 
     // Инициализация различных компонентов

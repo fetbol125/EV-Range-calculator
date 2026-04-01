@@ -15,11 +15,11 @@ function openCustomModal() {
     
     document.querySelector('.modal-content h3').textContent = t.modalTitle;
     document.querySelector('.input-group:nth-child(1) label').textContent = t.modalRangeLabel;
-    document.querySelector('.input-group:nth-child(1) .input-wrapper span:first-child').textContent = t.modalWrite;
     document.querySelector('.input-group:nth-child(2) label').textContent = t.modalBatteryLabel;
-    document.querySelector('.input-group:nth-child(2) .input-wrapper span:first-child').textContent = t.modalWrite;
     document.querySelector('.input-group:nth-child(3) label').textContent = t.modalWeightLabel;
-    document.querySelector('.input-group:nth-child(3) .input-wrapper span:first-child').textContent = t.modalWrite;
+    inputRange.placeholder = t.modalWrite;
+    inputBattery.placeholder = t.modalWrite;
+    inputWeight.placeholder = t.modalWrite;
     document.querySelector('.modal-btn.cancel').textContent = t.modalCancel;
     document.querySelector('.modal-btn.done').textContent = t.modalDone;
 }
@@ -48,6 +48,16 @@ window.applyCustomCar = function() {
     if (currentCarBrand) currentCarBrand.innerText = t.customBrand;
 
     currentCarName.innerText = t.customModel;
+
+    const carBlock = document.querySelector('.car-block');
+    if (carBlock) {
+        carBlock.classList.remove('no-car-selected');
+    }
+
+    const infoCarBtn = document.getElementById('info-car-btn');
+    if (infoCarBtn) {
+        infoCarBtn.disabled = true;
+    }
     
     // Замена изображения машины на иконку вопроса для custom car
     setCarThumbIcon();
