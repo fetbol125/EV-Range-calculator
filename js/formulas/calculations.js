@@ -4,6 +4,13 @@
  * Обновляет расчет дальности в зависимости от режима
  */
 function updateCalculation() {
+    if (typeof isCarSelected === 'function' && !isCarSelected()) {
+        if (rangeDisplay) rangeDisplay.innerText = '--';
+        if (gaugeFill) gaugeFill.style.strokeDashoffset = CIRCUMFERENCE;
+        if (consumptionDisplay) consumptionDisplay.innerText = '--';
+        return;
+    }
+
     let finalRange = 0;
     let extendedConsumption = null;
     try {

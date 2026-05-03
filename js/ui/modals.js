@@ -47,6 +47,7 @@ window.applyCustomCar = function() {
 
     if (currentCarBrand) currentCarBrand.innerText = t.customBrand;
 
+    currentSelectedCarId = 'custom';
     currentCarName.innerText = t.customModel;
 
     const carBlock = document.querySelector('.car-block');
@@ -57,6 +58,10 @@ window.applyCustomCar = function() {
     const infoCarBtn = document.getElementById('info-car-btn');
     if (infoCarBtn) {
         infoCarBtn.disabled = true;
+    }
+
+    if (typeof syncControlsAvailability === 'function') {
+        syncControlsAvailability();
     }
     
     // Замена изображения машины на иконку вопроса для custom car

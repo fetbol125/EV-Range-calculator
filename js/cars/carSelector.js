@@ -16,6 +16,49 @@ function setCarThumbIcon() {
 /**
  * Устанавливает пустое состояние плашки выбора автомобиля
  */
+function isCarSelected() {
+    const carBlock = document.querySelector('.car-block');
+    return Boolean(carBlock && !carBlock.classList.contains('no-car-selected'));
+}
+
+function syncControlsAvailability() {
+    const hasCar = isCarSelected();
+    const controlsRootIds = ['standard-controls', 'extended-controls', 'mode-ext-controls'];
+
+    controlsRootIds.forEach(rootId => {
+        const root = document.getElementById(rootId);
+        if (!root) return;
+
+        root.querySelectorAll('input, button').forEach(control => {
+            control.disabled = !hasCar;
+            control.setAttribute('aria-disabled', String(!hasCar));
+        });
+
+        root.querySelectorAll('.control-group').forEach(group => {
+            group.classList.toggle('locked', !hasCar);
+            group.setAttribute('aria-disabled', String(!hasCar));
+        });
+    });
+
+    const batterySlider = document.getElementById('battery-slider');
+    if (batterySlider) {
+        batterySlider.disabled = !hasCar;
+        batterySlider.setAttribute('aria-disabled', String(!hasCar));
+
+        const batteryGroup = batterySlider.closest('.control-group');
+        if (batteryGroup) {
+            batteryGroup.classList.toggle('locked', !hasCar);
+            batteryGroup.setAttribute('aria-disabled', String(!hasCar));
+        }
+    }
+
+    if (!hasCar) {
+        [energyConsumersMenu, weatherMenu, wheelsMenu].forEach(menu => {
+            if (menu) menu.classList.remove('show');
+        });
+    }
+}
+
 function setNoCarSelectedState() {
     const carBlock = document.querySelector('.car-block');
     const currentImg = document.getElementById('current-car-img');
@@ -56,6 +99,8 @@ function setNoCarSelectedState() {
     if (infoCarBtn) {
         infoCarBtn.disabled = true;
     }
+
+    syncControlsAvailability();
 }
 
 /**
@@ -106,6 +151,8 @@ function selectCar(id) {
     if (infoCarBtn) {
         infoCarBtn.disabled = false;
     }
+
+    syncControlsAvailability();
 
     if (currentCarBrand) currentCarBrand.innerText = car.brand; 
 

@@ -53,4 +53,8 @@ function updateUI() {
     updateImpactVisuals();
     updateCalculation();
     updateBatteryGauge();
+
+    if (typeof syncControlsAvailability === 'function') {
+        syncControlsAvailability();
+    }
 }

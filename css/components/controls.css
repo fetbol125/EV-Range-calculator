@@ -367,14 +367,45 @@ input[type=range]::-moz-range-track {
     pointer-events: none;
 }
 
+.control-group.locked {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
 .control-group.disabled .control-label {
     pointer-events: auto;
     opacity: 1;
 }
 
+.control-group.locked .control-label {
+    opacity: 1;
+}
+
 .control-group.disabled .control-label i,
-.control-group.disabled .control-label {
+.control-group.disabled .control-label,
+.control-group.locked .control-label i,
+.control-group.locked .control-label {
     color: var(--text-muted);
+}
+
+input[type=range]:disabled::-webkit-slider-thumb {
+    cursor: default;
+    background: #64748b;
+}
+
+input[type=range]:disabled::-webkit-slider-runnable-track {
+    cursor: default;
+    background: #334155;
+}
+
+input[type=range]:disabled::-moz-range-thumb {
+    cursor: default;
+    background: #64748b;
+}
+
+input[type=range]:disabled::-moz-range-track {
+    cursor: default;
+    background: #334155;
 }
 
 /* Battery Thermal Warning */
