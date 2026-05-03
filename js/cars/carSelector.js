@@ -33,7 +33,7 @@ function setNoCarSelectedState() {
     }
 
     if (currentCarName) {
-        currentCarName.innerText = t.chooseAutomobile || 'choose automobile';
+        currentCarName.innerText = t.chooseAutomobile || 'choose a car';
     }
 
     if (currentCarRange) {

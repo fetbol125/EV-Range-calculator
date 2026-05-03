@@ -113,7 +113,7 @@ const translations = {
         modelDetailsEstimate: "Estimate",
         modelConfigTitle: "Add vehicle",
         modelConfigChoose: "Choose vehicle",
-        chooseAutomobile: "choose automobile",
+        chooseAutomobile: "choose a car",
 
         // HOW IT WORKS MODAL
         howItWorksBtn: "How does it work?",
