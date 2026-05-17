@@ -84,5 +84,10 @@ const brandsData = [
         id: 'dacia',
         name: 'Dacia',
         logo: 'https://pngdownload.io/wp-content/uploads/2023/12/Dacia-logo-automotive-brand-emblem-simple-transparent-png-jpg-768x768.webp'
+    },
+    {
+        id: 'acura',
+        name: 'Acura',
+        logo: 'https://cdn.brandfetch.io/idQm7VRjgI/w/400/h/400/theme/dark/icon.png?c=1dxbfHSJFAPEGdCLU4o5B'
     }
 ];

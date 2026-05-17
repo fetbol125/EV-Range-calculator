@@ -645,6 +645,195 @@
         year: '2025+'
     },
 
+//=========================================================================BMW=======================================================================
+
+    // ====== i3 ======
+    {
+        id: 'i3-2020',
+        brandId: 'bmw',
+        name: 'i3',
+        trim: 'Standard',
+        range: 260,
+        battery: 42,
+        weightKg: 1365,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_i3.png',
+        power: '125 kW (170 HP)',
+        acceleration: '7.3 s (0-100 km/h)',
+        topSpeed: '150 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '50 kW DC',
+        seats: '4',
+        year: '2019-2023'
+    },
+    {
+        id: 'i3s-2020',
+        brandId: 'bmw',
+        name: 'i3',
+        trim: 'S',
+        range: 250,
+        battery: 42,
+        weightKg: 1375,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_i3.png',
+        power: '135 kW (184 HP)',
+        acceleration: '6.9 s (0-100 km/h)',
+        topSpeed: '150 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '50 kW DC',
+        seats: '4',
+        year: '2019-2023'
+    },
+
+    // ====== i4 ======
+    {
+        id: 'i4-edrive40-2021',
+        brandId: 'bmw',
+        name: 'i4',
+        trim: 'eDrive40',
+        range: 510,
+        battery: 81,
+        weightKg: 2050,
+        dragCoefficient: 0.24,
+        img: 'img/cars/bmw/BMW_i4.png',
+        power: '250 kW (340 HP)',
+        acceleration: '5.7 s (0-100 km/h)',
+        topSpeed: '200 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '200 kW DC',
+        seats: '5',
+        year: '2021+'
+    },
+
+    // ====== i5 ======
+    {
+        id: 'i5-2024',
+        brandId: 'bmw',
+        name: 'i5',
+        trim: 'Standard',
+        range: 650,
+        battery: 90,
+        weightKg: 2100,
+        dragCoefficient: 0.24,
+        img: 'img/cars/bmw/BMW_i5.png',
+        power: '335 kW (455 HP)',
+        acceleration: '4.5 s (0-100 km/h)',
+        topSpeed: '230 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '250 kW DC',
+        seats: '5',
+        year: '2024+'
+    },
+
+    // ====== i7 ======
+    {
+        id: 'i7-2022',
+        brandId: 'bmw',
+        name: 'i7',
+        trim: 'Standard',
+        range: 625,
+        battery: 101,
+        weightKg: 2700,
+        dragCoefficient: 0.23,
+        img: 'img/cars/bmw/BMW_i7.png',
+        power: '400 kW (536 HP)',
+        acceleration: '4.7 s (0-100 km/h)',
+        topSpeed: '250 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '250 kW DC',
+        seats: '5',
+        year: '2022+'
+    },
+
+    // ====== iX ======
+    {
+        id: 'ix-2022',
+        brandId: 'bmw',
+        name: 'iX',
+        trim: 'Standard',
+        range: 600,
+        battery: 105,
+        weightKg: 2550,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_iX.png',
+        power: '300 kW (408 HP)',
+        acceleration: '4.6 s (0-100 km/h)',
+        topSpeed: '210 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '200 kW DC',
+        seats: '5',
+        year: '2022+'
+    },
+
+    // ====== iX1 ======
+    {
+        id: 'ix1-2023',
+        brandId: 'bmw',
+        name: 'iX1',
+        trim: 'Standard',
+        range: 420,
+        battery: 64,
+        weightKg: 1900,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_iX1.png',
+        power: '200 kW (268 HP)',
+        acceleration: '6.6 s (0-100 km/h)',
+        topSpeed: '190 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '150 kW DC',
+        seats: '5',
+        year: '2023+'
+    },
+
+    // ====== iX2 ======
+    {
+        id: 'ix2-2024',
+        brandId: 'bmw',
+        name: 'iX2',
+        trim: 'Standard',
+        range: 450,
+        battery: 64,
+        weightKg: 1950,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_iX2.png',
+        power: '230 kW (310 HP)',
+        acceleration: '6.0 s (0-100 km/h)',
+        topSpeed: '200 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '150 kW DC',
+        seats: '5',
+        year: '2024+'
+    },
+
+    // ====== iX3 ======
+    {
+        id: 'ix3-2020',
+        brandId: 'bmw',
+        name: 'iX3',
+        trim: 'Standard',
+        range: 460,
+        battery: 80,
+        weightKg: 2100,
+        dragCoefficient: 0.29,
+        img: 'img/cars/bmw/BMW_iX3.png',
+        power: '210 kW (286 HP)',
+        acceleration: '6.8 s (0-100 km/h)',
+        topSpeed: '200 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '150 kW DC',
+        seats: '5',
+        year: '2020+'
+    },
+
 //=========================================================================LEXUS=======================================================================
 
     // ====== RZ ======
@@ -785,6 +974,68 @@
         charging: '50 kW DC',
         seats: '5',
         year: '2023+'
+    },
+
+//=========================================================================ACURA=======================================================================
+
+    // ====== ZDX ======
+    // 2025+
+    {
+        id: 'zdx-a-spec-awd-2025',
+        brandId: 'acura',
+        name: 'ZDX',
+        trim: 'A-Spec',
+        range: 520,
+        battery: 102,
+        weightKg: 2250,
+        dragCoefficient: 0.29,
+        img: 'img/cars/acura/Acura_zdx.png',
+        power: '320 kW (429 HP)',
+        acceleration: '4.5 s (0-100 km/h)',
+        topSpeed: '210 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '200 kW DC',
+        seats: '5',
+        year: '2025+'
+    },
+    {
+        id: 'zdx-a-spec-rwd-2025',
+        brandId: 'acura',
+        name: 'ZDX',
+        trim: 'A-Spec',
+        range: 560,
+        battery: 102,
+        weightKg: 2150,
+        dragCoefficient: 0.29,
+        img: 'img/cars/acura/Acura_zdx.png',
+        power: '280 kW (375 HP)',
+        acceleration: '5.1 s (0-100 km/h)',
+        topSpeed: '200 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'RWD',
+        charging: '200 kW DC',
+        seats: '5',
+        year: '2025+'
+    },
+    {
+        id: 'zdx-type-s-2025',
+        brandId: 'acura',
+        name: 'ZDX',
+        trim: 'Type S',
+        range: 500,
+        battery: 102,
+        weightKg: 2300,
+        dragCoefficient: 0.29,
+        img: 'img/cars/acura/Acura_zdx.png',
+        power: '400 kW (536 HP)',
+        acceleration: '3.8 s (0-100 km/h)',
+        topSpeed: '240 km/h',
+        batteryType: 'Li-ion',
+        driveType: 'Dual Motor AWD',
+        charging: '200 kW DC',
+        seats: '5',
+        year: '2025+'
     },
 
 //=========================================================================HONDA=======================================================================
