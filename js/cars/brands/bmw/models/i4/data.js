@@ -1,12 +1,31 @@
 registerCarModels([
     {
-        "id": "i4-edrive40-2021",
+        "id": "i4-edrive35-2022",
+        "brandId": "bmw",
+        "name": "i4",
+        "trim": "eDrive35",
+        "range": 418,
+        "battery": 67,
+        "weightKg": 2070,
+        "dragCoefficient": 0.24,
+        "img": "img/cars/bmw/BMW_i4.png",
+        "power": "210 kW (286 HP)",
+        "acceleration": "5.8 s (0-100 km/h)",
+        "topSpeed": "190 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "180 kW DC",
+        "seats": "5",
+        "year": "2022+"
+    },
+    {
+        "id": "i4-edrive40-2022",
         "brandId": "bmw",
         "name": "i4",
         "trim": "eDrive40",
-        "range": 510,
-        "battery": 81,
-        "weightKg": 2050,
+        "range": 484,
+        "battery": 73.8,
+        "weightKg": 2125,
         "dragCoefficient": 0.24,
         "img": "img/cars/bmw/BMW_i4.png",
         "power": "250 kW (340 HP)",
@@ -16,6 +35,25 @@ registerCarModels([
         "driveType": "RWD",
         "charging": "200 kW DC",
         "seats": "5",
-        "year": "2021+"
+        "year": "2022+"
+    },
+    {
+        "id": "i4-m50-2022",
+        "brandId": "bmw",
+        "name": "i4",
+        "trim": "M50",
+        "range": 435,
+        "battery": 73.8,
+        "weightKg": 2290,
+        "dragCoefficient": 0.25,
+        "img": "img/cars/bmw/BMW_i4.png",
+        "power": "400 kW (544 HP)",
+        "acceleration": "3.9 s (0-100 km/h)",
+        "topSpeed": "225 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "205 kW DC",
+        "seats": "5",
+        "year": "2022+"
     }
 ]);
