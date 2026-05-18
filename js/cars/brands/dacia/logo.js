@@ -1,5 +1,5 @@
 registerCarBrand({
     id: "dacia",
     name: "Dacia",
-    logo: "img/logos/Dacia-logo-automotive-brand-emblem-simple-transparent-png-jpg-768x768.png"
+    logo: "https://upload.wikimedia.org/wikipedia/commons/4/41/Dacia-Logo-2021.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
 });
