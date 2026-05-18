@@ -1,6 +1,14 @@
 // Главный файл инициализации приложения
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        if (window.carCatalogPromise) {
+            await window.carCatalogPromise;
+        }
+    } catch (error) {
+        console.error('Failed to load car catalog:', error);
+    }
+
     // Обработка данных автомобилей и брендов
     if (typeof carsData !== 'undefined' && typeof brandsData !== 'undefined') {
         processCarData();

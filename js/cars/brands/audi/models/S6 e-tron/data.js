@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "s6-e-tron-2025",
+        "brandId": "audi",
+        "name": "S6 e-tron",
+        "trim": "Standard",
+        "range": 680,
+        "battery": 100,
+        "weightKg": 2060,
+        "dragCoefficient": 0.24,
+        "img": "img/cars/audi/Audi_s6_e-tron.png",
+        "power": "430 kW (585 HP)",
+        "acceleration": "3.8 s (0-100 km/h)",
+        "topSpeed": "230 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "270 kW DC",
+        "seats": "5",
+        "year": "2025+"
+    },
+    {
+        "id": "s6-e-tron-plus-2025",
+        "brandId": "audi",
+        "name": "S6 e-tron",
+        "trim": "Plus",
+        "range": 720,
+        "battery": 100,
+        "weightKg": 2080,
+        "dragCoefficient": 0.24,
+        "img": "img/cars/audi/Audi_s6_e-tron.png",
+        "power": "430 kW (585 HP)",
+        "acceleration": "3.7 s (0-100 km/h)",
+        "topSpeed": "230 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "270 kW DC",
+        "seats": "5",
+        "year": "2025+"
+    }
+]);

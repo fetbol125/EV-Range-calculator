@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "e-tron-s-sportback-2024",
+        "brandId": "audi",
+        "name": "e-tron S",
+        "trim": "Sportback",
+        "range": 495,
+        "battery": 100,
+        "weightKg": 2390,
+        "dragCoefficient": 0.26,
+        "img": "img/cars/audi/Audi_e-tron_s.png",
+        "power": "370 kW (502 HP)",
+        "acceleration": "4.3 s (0-100 km/h)",
+        "topSpeed": "210 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "170 kW DC",
+        "seats": "5",
+        "year": "2020-2024"
+    },
+    {
+        "id": "e-tron-s-2024",
+        "brandId": "audi",
+        "name": "e-tron S",
+        "trim": "Standard",
+        "range": 500,
+        "battery": 100,
+        "weightKg": 2390,
+        "dragCoefficient": 0.27,
+        "img": "img/cars/audi/Audi_e-tron_s.png",
+        "power": "370 kW (502 HP)",
+        "acceleration": "4.3 s (0-100 km/h)",
+        "topSpeed": "210 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "170 kW DC",
+        "seats": "5",
+        "year": "2020-2024"
+    }
+]);

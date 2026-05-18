@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "i3-2020",
+        "brandId": "bmw",
+        "name": "i3",
+        "trim": "Standard",
+        "range": 260,
+        "battery": 42,
+        "weightKg": 1365,
+        "dragCoefficient": 0.29,
+        "img": "img/cars/bmw/BMW_i3.png",
+        "power": "125 kW (170 HP)",
+        "acceleration": "7.3 s (0-100 km/h)",
+        "topSpeed": "150 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "50 kW DC",
+        "seats": "4",
+        "year": "2019-2023"
+    },
+    {
+        "id": "i3s-2020",
+        "brandId": "bmw",
+        "name": "i3",
+        "trim": "S",
+        "range": 250,
+        "battery": 42,
+        "weightKg": 1375,
+        "dragCoefficient": 0.29,
+        "img": "img/cars/bmw/BMW_i3.png",
+        "power": "135 kW (184 HP)",
+        "acceleration": "6.9 s (0-100 km/h)",
+        "topSpeed": "150 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "50 kW DC",
+        "seats": "4",
+        "year": "2019-2023"
+    }
+]);

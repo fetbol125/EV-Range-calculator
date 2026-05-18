@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "lyric-awd-2022",
+        "brandId": "cadillac",
+        "name": "Lyric",
+        "trim": "AWD",
+        "range": 480,
+        "battery": 102,
+        "weightKg": 2180,
+        "dragCoefficient": 0.3,
+        "img": "img/cars/cadillac/Cadillac_Lyric.png",
+        "power": "340 kW (462 HP)",
+        "acceleration": "5.5 s (0-100 km/h)",
+        "topSpeed": "210 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "150 kW DC",
+        "seats": "5",
+        "year": "2022+"
+    },
+    {
+        "id": "lyric-rwd-2022",
+        "brandId": "cadillac",
+        "name": "Lyric",
+        "trim": "RWD",
+        "range": 520,
+        "battery": 102,
+        "weightKg": 2120,
+        "dragCoefficient": 0.3,
+        "img": "img/cars/cadillac/Cadillac_Lyric.png",
+        "power": "255 kW (340 HP)",
+        "acceleration": "6.0 s (0-100 km/h)",
+        "topSpeed": "200 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "150 kW DC",
+        "seats": "5",
+        "year": "2022+"
+    }
+]);

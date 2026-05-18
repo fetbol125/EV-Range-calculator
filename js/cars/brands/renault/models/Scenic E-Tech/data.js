@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "scenic-e-tech-ev60-2024",
+        "brandId": "renault",
+        "name": "Scenic E-Tech",
+        "trim": "EV60",
+        "range": 480,
+        "battery": 60,
+        "weightKg": 1800,
+        "dragCoefficient": 0.28,
+        "img": "img/cars/renault/Renault_scenic_e-tech.png",
+        "power": "160 kW (218 HP)",
+        "acceleration": "8.4 s (0-100 km/h)",
+        "topSpeed": "170 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "130 kW DC",
+        "seats": "5",
+        "year": "2024"
+    },
+    {
+        "id": "scenic-e-tech-ev87-2024",
+        "brandId": "renault",
+        "name": "Scenic E-Tech",
+        "trim": "EV87",
+        "range": 620,
+        "battery": 87,
+        "weightKg": 1880,
+        "dragCoefficient": 0.28,
+        "img": "img/cars/renault/Renault_scenic_e-tech.png",
+        "power": "160 kW (218 HP)",
+        "acceleration": "7.9 s (0-100 km/h)",
+        "topSpeed": "170 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "150 kW DC",
+        "seats": "5",
+        "year": "2024"
+    }
+]);

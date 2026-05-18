@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "e-golf-36-2017",
+        "brandId": "volkswagen",
+        "name": "e-Golf",
+        "trim": "36 kWh",
+        "range": 230,
+        "battery": 36,
+        "weightKg": 1615,
+        "dragCoefficient": 0.27,
+        "img": "img/cars/volkswagen/Volkswagen_e-Golf.png",
+        "power": "100 kW (136 HP)",
+        "acceleration": "9.6 s (0-100 km/h)",
+        "topSpeed": "150 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "40 kW DC",
+        "seats": "5",
+        "year": "2017-2021"
+    },
+    {
+        "id": "e-golf-26-2015",
+        "brandId": "volkswagen",
+        "name": "e-Golf",
+        "trim": "26 kWh",
+        "range": 190,
+        "battery": 26,
+        "weightKg": 1510,
+        "dragCoefficient": 0.27,
+        "img": "img/cars/volkswagen/Volkswagen_e-Golf.png",
+        "power": "85 kW (115 HP)",
+        "acceleration": "10.4 s (0-100 km/h)",
+        "topSpeed": "140 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "40 kW DC",
+        "seats": "5",
+        "year": "2015-2016"
+    }
+]);

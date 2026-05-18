@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "twingo-e-tech-28-2026",
+        "brandId": "renault",
+        "name": "Twingo",
+        "trim": "E-Tech",
+        "range": 260,
+        "battery": 28,
+        "weightKg": 1140,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/renault/Renault_twingo_e-tech.png",
+        "power": "60 kW (82 HP)",
+        "acceleration": "12.0 s (0-100 km/h)",
+        "topSpeed": "135 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "22 kW AC",
+        "seats": "4",
+        "year": "2026+"
+    },
+    {
+        "id": "twingo-electric-23-2021",
+        "brandId": "renault",
+        "name": "Twingo",
+        "trim": "Electric",
+        "range": 220,
+        "battery": 23,
+        "weightKg": 1120,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/renault/Renault_twingo_e-tech_early.png",
+        "power": "60 kW (82 HP)",
+        "acceleration": "12.6 s (0-100 km/h)",
+        "topSpeed": "135 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "RWD",
+        "charging": "22 kW AC",
+        "seats": "4",
+        "year": "2021+"
+    }
+]);

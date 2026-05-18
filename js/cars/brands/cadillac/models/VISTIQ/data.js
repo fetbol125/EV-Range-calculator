@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "vistiq-luxury-2025",
+        "brandId": "cadillac",
+        "name": "VISTIQ",
+        "trim": "Luxury",
+        "range": 530,
+        "battery": 102,
+        "weightKg": 2380,
+        "dragCoefficient": 0.32,
+        "img": "img/cars/cadillac/Cadillac_VISTIQ.png",
+        "power": "310 kW (421 HP)",
+        "acceleration": "5.2 s (0-100 km/h)",
+        "topSpeed": "210 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "170 kW DC",
+        "seats": "7",
+        "year": "2025+"
+    },
+    {
+        "id": "vistiq-sport-2025",
+        "brandId": "cadillac",
+        "name": "VISTIQ",
+        "trim": "Sport",
+        "range": 510,
+        "battery": 102,
+        "weightKg": 2400,
+        "dragCoefficient": 0.32,
+        "img": "img/cars/cadillac/Cadillac_VISTIQ.png",
+        "power": "340 kW (462 HP)",
+        "acceleration": "4.8 s (0-100 km/h)",
+        "topSpeed": "220 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "170 kW DC",
+        "seats": "7",
+        "year": "2025+"
+    }
+]);

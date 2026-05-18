@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "zeekr-x-long-range-rwd-2024",
+        "brandId": "zeekr",
+        "name": "X",
+        "trim": "Long Range RWD",
+        "range": 480,
+        "battery": 69,
+        "weightKg": 1650,
+        "dragCoefficient": 0.29,
+        "img": "img/cars/zeekr/Zeekr_X.png",
+        "power": "140 kW (190 HP)",
+        "acceleration": "8.0 s (0-100 km/h)",
+        "topSpeed": "180 km/h",
+        "batteryType": "Li-ion LFP",
+        "driveType": "RWD",
+        "charging": "150 kW DC",
+        "seats": "5",
+        "year": "2024+"
+    },
+    {
+        "id": "zeekr-x-privilege-awd-2024",
+        "brandId": "zeekr",
+        "name": "X",
+        "trim": "Privilege AWD",
+        "range": 450,
+        "battery": 69,
+        "weightKg": 1700,
+        "dragCoefficient": 0.29,
+        "img": "img/cars/zeekr/Zeekr_X.png",
+        "power": "230 kW (313 HP)",
+        "acceleration": "6.5 s (0-100 km/h)",
+        "topSpeed": "200 km/h",
+        "batteryType": "Li-ion LFP",
+        "driveType": "Dual Motor AWD",
+        "charging": "150 kW DC",
+        "seats": "5",
+        "year": "2024+"
+    }
+]);

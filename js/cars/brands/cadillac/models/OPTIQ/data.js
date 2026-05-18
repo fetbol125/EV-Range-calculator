@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "optiq-luxury-2025",
+        "brandId": "cadillac",
+        "name": "OPTIQ",
+        "trim": "Luxury",
+        "range": 450,
+        "battery": 85,
+        "weightKg": 2000,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/cadillac/Cadillac_OPTIQ.png",
+        "power": "280 kW (380 HP)",
+        "acceleration": "5.8 s (0-100 km/h)",
+        "topSpeed": "200 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "135 kW DC",
+        "seats": "5",
+        "year": "2025+"
+    },
+    {
+        "id": "optiq-sport-2025",
+        "brandId": "cadillac",
+        "name": "OPTIQ",
+        "trim": "Sport",
+        "range": 440,
+        "battery": 85,
+        "weightKg": 2010,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/cadillac/Cadillac_OPTIQ.png",
+        "power": "280 kW (380 HP)",
+        "acceleration": "5.8 s (0-100 km/h)",
+        "topSpeed": "200 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "Dual Motor AWD",
+        "charging": "135 kW DC",
+        "seats": "5",
+        "year": "2025+"
+    }
+]);

@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "kangoo-e-tech-45-2022",
+        "brandId": "renault",
+        "name": "Kangoo E-Tech",
+        "trim": "E-Tech 45 kWh",
+        "range": 285,
+        "battery": 45,
+        "weightKg": 1850,
+        "dragCoefficient": 0.33,
+        "img": "img/cars/renault/Renault_kangoo_e-tech.png",
+        "power": "90 kW (122 HP)",
+        "acceleration": "12.6 s (0-100 km/h)",
+        "topSpeed": "132 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "80 kW DC",
+        "seats": "5",
+        "year": "2022+"
+    },
+    {
+        "id": "kangoo-ze-33-2017",
+        "brandId": "renault",
+        "name": "Kangoo E-Tech",
+        "trim": "Z.E. 33 kWh",
+        "range": 230,
+        "battery": 33,
+        "weightKg": 1650,
+        "dragCoefficient": 0.33,
+        "img": "img/cars/renault/Renault_kangoo_e-tech.png",
+        "power": "44 kW (60 HP)",
+        "acceleration": "22.0 s (0-100 km/h)",
+        "topSpeed": "130 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "43 kW AC",
+        "seats": "5",
+        "year": "2017-2022"
+    }
+]);

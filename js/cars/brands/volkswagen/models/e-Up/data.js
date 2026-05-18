@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "e-up-32-2020",
+        "brandId": "volkswagen",
+        "name": "e-Up",
+        "trim": "2020",
+        "range": 260,
+        "battery": 32,
+        "weightKg": 1235,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/volkswagen/Volkswagen_e-up_facelift.png",
+        "power": "61 kW (83 HP)",
+        "acceleration": "11.9 s (0-100 km/h)",
+        "topSpeed": "130 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "40 kW DC",
+        "seats": "4",
+        "year": "2020+"
+    },
+    {
+        "id": "e-up-26-2013",
+        "brandId": "volkswagen",
+        "name": "e-Up",
+        "trim": "2013-2019",
+        "range": 160,
+        "battery": 26,
+        "weightKg": 1214,
+        "dragCoefficient": 0.31,
+        "img": "img/cars/volkswagen/Volkswagen_e-up.png",
+        "power": "60 kW (82 HP)",
+        "acceleration": "12.4 s (0-100 km/h)",
+        "topSpeed": "130 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "40 kW DC",
+        "seats": "4",
+        "year": "2013-2019"
+    }
+]);

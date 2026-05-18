@@ -1,0 +1,40 @@
+registerCarModels([
+    {
+        "id": "5-e-tech-ev40-2025",
+        "brandId": "renault",
+        "name": "5 E-Tech",
+        "trim": "EV40",
+        "range": 300,
+        "battery": 40,
+        "weightKg": 1370,
+        "dragCoefficient": 0.27,
+        "img": "img/cars/renault/Renault_5_e-tech.png",
+        "power": "90 kW (122 HP)",
+        "acceleration": "9.0 s (0-100 km/h)",
+        "topSpeed": "150 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "80 kW DC",
+        "seats": "5",
+        "year": "2025"
+    },
+    {
+        "id": "5-e-tech-ev52-2025",
+        "brandId": "renault",
+        "name": "5 E-Tech",
+        "trim": "EV52",
+        "range": 410,
+        "battery": 52,
+        "weightKg": 1450,
+        "dragCoefficient": 0.27,
+        "img": "img/cars/renault/Renault_5_e-tech.png",
+        "power": "110 kW (150 HP)",
+        "acceleration": "8.0 s (0-100 km/h)",
+        "topSpeed": "150 km/h",
+        "batteryType": "Li-ion",
+        "driveType": "FWD",
+        "charging": "100 kW DC",
+        "seats": "5",
+        "year": "2025"
+    }
+]);
