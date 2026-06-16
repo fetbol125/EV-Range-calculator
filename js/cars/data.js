@@ -51,9 +51,7 @@ function loadCarScript(src) {
 }
 
 function loadCarScriptSeries(srcList) {
-    return srcList.reduce((chain, src) => {
-        return chain.then(() => loadCarScript(src));
-    }, Promise.resolve());
+    return Promise.all(srcList.map(src => loadCarScript(src)));
 }
 
 window.registerCarBrand = registerCarBrand;

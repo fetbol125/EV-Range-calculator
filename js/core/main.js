@@ -1,6 +1,32 @@
 // Главный файл инициализации приложения
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Инициализируем оболочку сразу, не дожидаясь подгрузки каталога автомобилей.
+    initStarfield();
+
+    if(gaugeFill) gaugeFill.style.strokeDasharray = CIRCUMFERENCE;
+
+    initExtendedListeners();
+    initAllSlidersVisuals();
+    initPillGroups();
+    initBatterySlider();
+    initModeToggle();
+    initLanguageMenu();
+    initCarMenuHandlers();
+    initCarSearch();
+    initEnergyConsumersDropdown();
+    initWeatherDropdown();
+    initWheelsDropdown();
+    initModals();
+
+    toggleControlMode(state.rangeType);
+    toggleConsumptionDisplay(state.rangeType === 'extended');
+    if (state.rangeType === 'extended') {
+        modeToggleContainer.classList.add('extended-active');
+    }
+
+    setLanguage(state.lang);
+
     try {
         if (window.carCatalogPromise) {
             await window.carCatalogPromise;
@@ -14,41 +40,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         processCarData();
     }
 
-    // Инициализация фона
-    initStarfield();
-    
-    // Инициализация gauge
-    if(gaugeFill) gaugeFill.style.strokeDasharray = CIRCUMFERENCE;
-
     // Инициализация списка автомобилей
     if (allCars.length > 0) {
         renderCarList(allCars);
         setNoCarSelectedState();
     }
-
-    // Инициализация различных компонентов
-    initExtendedListeners();
-    initAllSlidersVisuals();
-    initPillGroups();
-    initBatterySlider();
-    initModeToggle();
-    initLanguageMenu();
-    initCarMenuHandlers();
-    initCarSearch();
-    initEnergyConsumersDropdown();
-    initWeatherDropdown();
-    initWheelsDropdown();
-    initModals();
-    
-    // Установка начального режима
-    toggleControlMode(state.rangeType); 
-    toggleConsumptionDisplay(state.rangeType === 'extended');
-    if (state.rangeType === 'extended') {
-        modeToggleContainer.classList.add('extended-active');
-    }
-    
-    // Установка начального языка
-    setLanguage(state.lang); 
     
     // Первичное обновление UI после загрузки картинки машины
     if (currentCarImg.complete) {
